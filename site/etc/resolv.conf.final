@@ -1,0 +1,4 @@
+domain collegiumv.org
+lookup file bind
+nameserver 192.168.42.1
+nameserver 192.168.42.2

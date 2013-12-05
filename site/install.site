@@ -1,0 +1,69 @@
+#!/bin/sh
+
+if [ -z $PKG_PATH ]; then
+	echo "No PKG_PATH set. Using rit.edu."
+	export PKG_PATH=ftp://filedump.se.rit.edu/pub/OpenBSD/$(uname -r)/packages/$(uname -p)/
+fi
+pkg_add isc-dhcp-server
+
+# The installer overwrite the hostname.if of the if that was used during installation
+echo 'inet #INT_IP# 255.255.255.0 NONE' > /etc/hostname.bge1
+echo 'inet #PF_IP# 255.255.255.0 NONE' > /etc/hostname.em0
+
+files="/etc/dhclient.conf /etc/dhcpd.conf /etc/hostname.* /etc/ntpd.conf /etc/pf.conf /var/named/etc/named.conf"
+
+if [ $(hostname -s) = "hydrogen" ]; then
+	name="hydrogen"
+	int_ip="192.168.42.1"
+	ext_ip="129.110.157.11"
+	pf_ip="172.16.0.1"
+	other_int_ip="192.168.42.2"
+	other_ext_ip="129.110.157.12"
+	prefix_keep="#H#"
+	prefix_delete="#He#"
+
+elif [ $(hostname -s) = "helium" ]; then
+	name="helium"
+	int_ip="192.168.42.2"
+	ext_ip="129.110.157.12"
+	pf_ip="172.16.0.2"
+	other_int_ip="192.168.42.1"
+	other_ext_ip="129.110.116.11"
+	prefix_keep="#He#"
+	prefix_delete="#H#"
+else
+	exit
+fi
+
+for file in $files; do
+	temp=$(<$file)
+	temp=$( echo "$temp" | sed "s/#NAME#/$name/" )
+	temp=$( echo "$temp" | sed "s/#INT_IP#/$int_ip/" )
+	temp=$( echo "$temp" | sed "s/#EXT_IP#/$ext_ip/" )
+	temp=$( echo "$temp" | sed "s/#PF_IP#/$pf_ip/" )
+	temp=$( echo "$temp" | sed "s/#OTHER_INT_IP#/$other_int_ip/" )
+	temp=$( echo "$temp" | sed "s/#OTHER_EXT_IP#/$other_ext_ip/" )
+	temp=$( echo "$temp" | sed -e "s/^$prefix_keep//" -e "/^$prefix_delete/ d" )
+	echo "$temp" > $file
+done
+
+# Fix the sudoers file
+echo 'Defaults !lecture
+Defaults:%wheel !env_reset
+%wheel ALL=(ALL) SETENV:ALL' >> /etc/sudoers
+
+# isc-dhcpd needs /var/db/dhcpd.leases to exist
+touch /var/db/dhcpd.leases
+
+newcron="\n\n\
+*       *       *       *       *       /etc/rc.d/update_pf_minecraft\n\
+0       22      *       *       *       /etc/rc.d/update_utdns"
+crontab=$(crontab -l)
+echo "${crontab}${newcron}" | crontab -
+
+names="hydrogen helium"
+for name in $names; do
+	if [ -f install.site-$name ]; then
+		. install.site-$name
+	fi
+done

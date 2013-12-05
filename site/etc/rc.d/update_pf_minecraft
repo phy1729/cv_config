@@ -1,0 +1,2 @@
+#!/bin/sh
+pfctl -t minecraft -T replace 'session.minecraft.net' 'snoop.minecraft.net' 2> /dev/null

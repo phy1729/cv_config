@@ -1,0 +1,19 @@
+#!/bin/sh
+
+file='/tmp/UTDNS'
+
+# Get the IP for all the utdallas.edu nameservers
+newUTDNS=$(for ns in $(dig +short ns utdallas.edu)
+do
+	dig +short A "$ns"
+done)
+
+# Put them into a BIND friendly format
+newUTDNS=$(echo "$newUTDNS" | sed 's/$/;/g')
+echo 'forwarders {' > "$file"
+echo "$newUTDNS" >> "$file"
+echo '};' >> "$file"
+
+dig +short ns utdallas.edu > /tmp/UTDNS.boot
+mv "$file" /var/named/etc/UTDNS
+rndc reconfig
