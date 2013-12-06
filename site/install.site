@@ -61,6 +61,11 @@ newcron="\n\n\
 crontab=$(crontab -l)
 echo "${crontab}${newcron}" | crontab -
 
+# Generate named rndc keys
+rndc-confgen -at /var/named
+chown root:named /var/named/etc/rndc.key
+chmod 640 /var/named/etc/rndc.key
+
 names="hydrogen helium"
 for name in $names; do
 	if [ -f install.site-$name ]; then
