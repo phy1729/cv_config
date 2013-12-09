@@ -18,6 +18,7 @@ if [ $(hostname -s) = "hydrogen" ]; then
 	pf_ip="172.16.0.1"
 	other_int_ip="192.168.42.2"
 	other_ext_ip="129.110.157.12"
+	advskew="0"
 	prefix_keep="#H#"
 	prefix_delete="#He#"
 
@@ -28,6 +29,7 @@ elif [ $(hostname -s) = "helium" ]; then
 	pf_ip="172.16.0.2"
 	other_int_ip="192.168.42.1"
 	other_ext_ip="129.110.116.11"
+	advskew="10"
 	prefix_keep="#He#"
 	prefix_delete="#H#"
 else
@@ -42,6 +44,7 @@ for file in $files; do
 	temp=$( echo "$temp" | sed "s/#PF_IP#/$pf_ip/" )
 	temp=$( echo "$temp" | sed "s/#OTHER_INT_IP#/$other_int_ip/" )
 	temp=$( echo "$temp" | sed "s/#OTHER_EXT_IP#/$other_ext_ip/" )
+	temp=$( echo "$temp" | sed "s/#ADVSKEW#/$advskew/" )
 	temp=$( echo "$temp" | sed -e "s/^$prefix_keep//" -e "/^$prefix_delete/ d" )
 	echo "$temp" > $file
 done
