@@ -1,8 +1,3 @@
-if [ -x /usr/local/sbin/dhcpd ]; then
-	echo ' ISC DHCP Server starting...'
-	/usr/local/sbin/dhcpd bge1
-fi
-
 # Use the local bind server and make the domain collegiumv.org instead of DHCP information
 cp /etc/resolv.conf.final /etc/resolv.conf
 

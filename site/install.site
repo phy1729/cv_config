@@ -53,9 +53,6 @@ echo 'Defaults !lecture
 Defaults:%wheel !env_reset
 %wheel ALL=(ALL) SETENV:ALL' >> /etc/sudoers
 
-# isc-dhcpd needs /var/db/dhcpd.leases to exist
-touch /var/db/dhcpd.leases
-
 newcron="\n\n\
 *       *       *       *       *       /etc/rc.d/update_pf_minecraft\n\
 0       22      *       *       *       /etc/rc.d/update_utdns"
