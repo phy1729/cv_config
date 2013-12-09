@@ -7,7 +7,6 @@ pkg_add isc-dhcp-server
 
 # The installer overwrite the hostname.if of the if that was used during installation
 echo 'inet #INT_IP# 255.255.255.0 NONE' > /etc/hostname.bge1
-echo 'inet #PF_IP# 255.255.255.0 NONE' > /etc/hostname.em0
 
 files="/etc/dhclient.conf /etc/dhcpd.conf /etc/hostname.* /etc/ntpd.conf /etc/pf.conf /var/named/etc/named.conf"
 
