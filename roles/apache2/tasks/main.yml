@@ -1,0 +1,34 @@
+---
+- name: Configure firewall for apache2
+  copy: src=apache2.rules dest=/etc/iptables.d/
+  notify:
+  - iptables
+- name: Configure monit for apache2
+  copy: src=monit dest=/etc/monit/conf.d/apache2
+  notify:
+  - monit
+- name: Install packages for webserver
+  apt: pkg={{ item }} state=present
+  with_items:
+  - mailutils
+  - apache2
+  - php5
+  - php5-ldap
+- name: Add sites-available
+  copy: src=sites-available dest=/etc/apache2/
+  notify:
+  - apache2
+- name: Enable default site
+  file: src=../sites-available/default dest=/etc/apache2/sites-enabled/0-default state=link
+  notify:
+  - apache2
+- name: Enable sites
+  file: src=../sites-available/{{ item }} dest=/etc/apache2/sites-enabled/{{ item }} state=link
+  with_items:
+  - irc
+  notify:
+  - apache2
+- name: Copy www files
+  copy: src=www dest=/var/
+- name: Make the sites folder
+  file: path=/var/www/sites state=directory

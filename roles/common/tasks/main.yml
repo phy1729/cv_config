@@ -1,0 +1,43 @@
+---
+- name: Set hostname
+  template: src=hostname.j2 dest=/etc/hostname
+  notify:
+  - hostname
+- name: Configure networking
+  template: src=interfaces.j2 dest=/etc/network/interfaces
+  notify:
+  - networking
+- name: Add iptables script
+  copy: src=iptables dest=/etc/network/if-up.d/iptables
+- name: Make iptables.d
+  file: path=/etc/iptables.d state=directory
+- name: Configure IPv4 firewall
+  copy: src=0common.rules dest=/etc/iptables.d/
+  notify:
+  - iptables
+- name: Configure IPv6 firewall
+  copy: src=ip6tables.conf dest=/etc/ip6tables.conf
+  notify:
+  - iptables
+- name: Remove motd
+  file: path=/etc/motd state=absent
+- name: Install common packages
+  apt: pkg={{ item }} state=present
+  with_items:
+  - ethtool
+  - monit
+  - ntp
+- name: Configure monit
+  template: src=monit.j2 dest=/etc/monit/monitrc
+  notify:
+  - monit
+- name: Add sshd monit conf
+  copy: src=sshd dest=/etc/monit/conf.d/
+  notify:
+  - monit
+- name: Start monit
+  service: name=monit state=started
+- name: Configure ntpd
+  copy: src=ntp.conf dest=/etc/ntp.conf
+  notify:
+  -  ntp

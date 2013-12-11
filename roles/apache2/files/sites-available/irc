@@ -1,0 +1,4 @@
+<VirtualHost *:80>
+	ServerName irc.collegiumv.org
+	Redirect / https://chat.mibbit.com/?server=irc.collegiumv.org%3A+7070&channel=%23main
+</VirtualHost>

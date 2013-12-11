@@ -1,0 +1,6 @@
+#!/bin/sh
+iptables -F
+for file in /etc/iptables.d/*; do
+	iptables-restore -n < $file
+done
+ip6tables-restore < /etc/ip6tables.conf

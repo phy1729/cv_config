@@ -1,0 +1,4 @@
+---
+hostname: sodium
+ip_address: 192.168.42.11
+interface: eth0

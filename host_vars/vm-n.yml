@@ -1,0 +1,4 @@
+---
+hostname: vm-nitrogen
+ip_address: 10.0.2.7
+interface: eth0

@@ -1,0 +1,16 @@
+---
+- name: Copy status files
+  copy: src=status dest=/var/www/sites/
+- name: Make status user
+  user: name=status createhome=no shell=/bin/false state=present
+# Add authorized_keys
+# Change sshd config http://undeadly.org/cgi?action=article&sid=20080220110039
+# 
+- name: Add status site
+  copy: src=status.site dest=/etc/apache2/sites-available/status
+  notify:
+  - apache2
+- name: Enable status site
+  file: src=../sites-available/status dest=/etc/apache2/sites-enabled/status state=link
+  notify:
+  - apache2

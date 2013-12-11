@@ -1,0 +1,9 @@
+---
+name: hydrogen
+external_ip: 129.110.157.11
+internal_ip: 192.168.42.1
+peer_internal_ip: 192.168.42.2
+pf_ip: 172.16.0.1
+advskew: 0
+dhcpd_port: 519
+dhcpd_peer_port: 520

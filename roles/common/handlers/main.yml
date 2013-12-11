@@ -1,0 +1,10 @@
+- name: hostname
+  service: name=hostname.sh state=restarted
+- name: networking
+  service: name=networking state=reloaded
+- name: iptables
+  command: /etc/network/if-up.d/iptables
+- name: ntp
+  service: name=ntp state=restarted
+- name: monit
+  service: name=monit state=restarted

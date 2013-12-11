@@ -1,0 +1,15 @@
+check file sshd_bin with path /usr/sbin/sshd
+        if failed checksum expect 70c093f67f619ae75af783fca9fe672576894be8 then alert
+        if failed permission 755 then alert
+        if failed uid root then alert
+        if failed gid root then alert
+        group ssh
+
+check process sshd with pidfile /var/run/sshd.pid
+        start program = "/etc/init.d/ssh start"
+        stop program = "/etc/init.d/ssh stop"
+        if failed port 22 protocol ssh then restart
+        if 5 restarts within 5 cycles then timeout
+        if cpu > 10% for 2 cycles then alert
+        depends on sshd_bin
+        group ssh

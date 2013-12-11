@@ -1,0 +1,11 @@
+auto lo
+iface lo inet loopback
+
+allow-hotplug {{ interface }}
+iface {{ interface }} inet static
+        address {{ ip_address }}
+        netmask 255.255.255.0
+        gateway {{ gateway }}
+        dns-nameservers {{ dns_server }}
+        dns-search collegiumv.org
+	ethernet-wol g

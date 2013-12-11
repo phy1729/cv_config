@@ -1,0 +1,47 @@
+body {
+background-color: #039;
+font-family: Verdana, Helvetica, Arial, sans-serif;
+font-size: 0.7em;
+color: #000066;
+text-align: center;
+}
+
+#container {
+background-color: #fff;
+border: 2px #666 solid;
+width: 760px;
+margin: auto;
+padding: 0px;
+text-align: left;
+}
+
+#header {
+background-color: #fff;
+background-image: url(http://collegiumv.org/images/header.jpg);
+background-repeat: no-repeat;
+height: 150px;
+width: 760px;
+}
+
+#main {
+position: relative;
+width: 760px;
+background-color: #fff;
+}
+
+#content {
+width: 590px;
+margin-left: 151px;
+margin-top: 0px;
+border-left: dotted 1px #ccc;
+padding-top: 5px;
+padding-left: 10px;
+padding-bottom: 5px;
+padding-right: 10px;
+line-height: 1.5em;
+letter-spacing: 1px;
+}
+
+#footer {
+height: 50px;
+}

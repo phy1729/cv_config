@@ -1,0 +1,6 @@
+---
+- hosts: audio
+  sudo: yes
+  roles:
+  - common
+  - audio

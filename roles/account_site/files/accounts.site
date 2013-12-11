@@ -1,0 +1,4 @@
+<VirtualHost *:80>
+	ServerName accounts.collegiumv.org
+	Redirect / http://account.collegiumv.org
+</VirtualHost>

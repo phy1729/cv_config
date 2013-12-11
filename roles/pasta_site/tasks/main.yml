@@ -1,0 +1,11 @@
+---
+- name: Copy pasta files
+  copy: src=pasta dest=/var/www/sites/
+- name: Add pasta site
+  copy: src=site dest=/etc/apache2/sites-available/pasta
+  notify:
+  - apache2
+- name: Enable pasta site
+  file: src=../sites-available/pasta dest=/etc/apache2/sites-enabled/pasta state=link
+  notify:
+  - apache2

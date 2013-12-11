@@ -1,0 +1,7 @@
+---
+- name: Add audio packages
+  apt: pkg={{ item }} state=present
+  with_items:
+  - alsa-base
+  - alsa-utils
+  - mplayer

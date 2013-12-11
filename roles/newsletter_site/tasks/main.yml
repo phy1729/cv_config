@@ -1,0 +1,17 @@
+---
+- name: Copy newletter files
+  copy: src=newsletter dest=/var/www/sites/
+- name: Add newsletters sites
+  copy: src={{ item }}.site dest=/etc/apache2/sites-available/{{ item }}
+  with_items:
+  - newsletter
+  - newsletters
+  notify:
+  - apache2
+- name: Enable newsletter sites
+  file: src=../sites-available/{{ item }} dest=/etc/apache2/sites-enabled/{{ item }} state=link
+  with_items:
+  - newsletter
+  - newsletters
+  notify:
+  - apache2

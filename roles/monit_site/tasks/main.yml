@@ -1,0 +1,29 @@
+---
+- name: Add monit scripts
+  copy: src={{ item }} dest=/usr/local/bin/
+  with_items:
+  - dns_cv.sh
+  - dns_msdcs.sh
+- name: Add monit tests
+  copy: src={{ item }} dest=/etc/monit/conf.d/
+  with_items:
+  - dns_tests
+  - ping_tests
+  notify:
+  - monit
+- name: Add monit site
+  copy: src=site dest=/etc/apache2/sites-available/monit
+  notify:
+  - apache2
+- name: Enable monit site
+  file: src=../sites-available/monit dest=/etc/apache2/sites-enabled/monit state=link
+  notify:
+  - apache2
+- name: Enable needed apache2 mods
+  file: src=../mods-available/{{ item }} dest=/etc/apache2/mods-enabled/{{ item }} state=link
+  with_items:
+  - proxy.conf
+  - proxy.load
+  - proxy_http.load
+  notify:
+  - apache2

@@ -1,0 +1,42 @@
+check host hydrogen with address 192.168.42.1
+	if failed icmp type echo count 3 with timeout 3 seconds then exec "/usr/local/bin/wakecv 1"
+	if failed icmp type echo count 3 with timeout 3 seconds then alert
+	if failed port 22 protocol ssh then alert
+	if failed port 53 protocol dns then alert
+	if failed port 123 protocol ntp3 then alert
+check host helium with address 192.168.42.2
+	if failed icmp type echo count 3 with timeout 3 seconds then exec "/usr/local/bin/wakecv 2"
+	if failed icmp type echo count 3 with timeout 3 seconds then alert
+	if failed port 22 protocol ssh then alert
+	if failed port 53 protocol dns then alert
+	if failed port 123 protocol ntp3 then alert
+check host beryllium with address 192.168.42.4
+	if failed icmp type echo count 3 with timeout 3 seconds then alert
+	#if failed port 389 protocol ldap3 then alert
+check host boron with address 192.168.42.5
+	if failed icmp type echo count 3 with timeout 3 seconds then alert
+	#if failed port 389 protocol ldap3 then alert
+check host carbon with address 192.168.42.6
+	if failed icmp type echo count 3 with timeout 3 seconds then exec "/usr/local/bin/wakecv 6"
+	if failed icmp type echo count 3 with timeout 3 seconds then alert
+	if failed port 22 protocol ssh then alert
+check host nitrogen with address 192.168.42.7
+	if failed icmp type echo count 3 with timeout 3 seconds then exec "/usr/local/bin/wakecv 7"
+	if failed icmp type echo count 3 with timeout 3 seconds then alert
+	if failed port 22 protocol ssh then alert
+check host flourine with address 192.168.42.9
+	if failed icmp type echo count 3 with timeout 3 seconds then exec "/usr/local/bin/wakecv 9"
+	if failed icmp type echo count 3 with timeout 3 seconds for 3 3 cycles then alert
+	if failed port 22 protocol ssh then alert
+# check host sodium with address 192.168.42.11
+# 	if failed icmp type echo count 3 with timeout 3 seconds then exec "/usr/local/bin/wakecv 11"
+# 	if failed icmp type echo count 3 with timeout 3 seconds then alert
+# 	if failed port 22 protocol ssh then alert
+check host magnesium with address 192.168.42.12
+	if failed icmp type echo count 3 with timeout 3 seconds then exec "/usr/local/bin/wakecv 12"
+	if failed icmp type echo count 3 with timeout 3 seconds then alert
+	if failed port 22 protocol ssh then alert
+check host aluminium with address 192.168.42.13
+	if failed icmp type echo count 3 with timeout 3 seconds then exec "/usr/local/bin/wakecv 13"
+	if failed icmp type echo count 3 with timeout 3 seconds then alert
+	if failed port 22 protocol ssh then alert

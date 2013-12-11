@@ -1,0 +1,7 @@
+<VirtualHost *:80>
+	ServerName account.collegiumv.org
+	DocumentRoot /var/www/sites/account
+	<Directory /var/www/sites/account/config/>
+		Deny from all
+	</Directory>
+</VirtualHost>

@@ -1,0 +1,26 @@
+---
+- name: Configure firewall for InspIRCd
+  copy: src=inspircd.rules dest=/etc/iptables.d/
+  notify:
+  - iptables
+- name: Configure monit for InspIRCd
+  copy: src=monit dest=/etc/monit/conf.d/inspircd
+  notify:
+  - monit
+- name: Copy InspIRCd build artifacts
+  copy: src=inspircd dest=/opt/
+  notify:
+  - inspircd
+- name: Configure InspIRCd
+  copy: src=secret/conf dest=/opt/inspircd/
+  notify:
+  - inspircd
+# copy fails to copy empty directories so this line is needed (c.f. https://github.com/ansible/ansible/issues/5005 )
+- name: Add logs directory
+  file: path=/opt/inspircd/logs/ state=directory
+- name: Make pid file
+  file: path=/var/run/inspircd.pid owner=irc group=irc mode=644 state=touch
+- name: Fix InspIRCd directory permissions
+  file: path=/opt/inspircd state=directory owner=irc group=irc mode=755 recurse=yes
+- name: Start InspIRCd
+  command: /opt/inspircd/inspircd start
