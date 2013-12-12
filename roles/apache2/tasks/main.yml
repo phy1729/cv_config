@@ -3,6 +3,8 @@
   copy: src=apache2.rules dest=/etc/iptables.d/
   notify:
   - iptables
+- name: Make web.d to monitor websites
+  file: path=/etc/monit/web.d state=directory
 - name: Configure monit for apache2
   copy: src=monit dest=/etc/monit/conf.d/apache2
   notify:

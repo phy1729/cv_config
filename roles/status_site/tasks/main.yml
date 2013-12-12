@@ -1,4 +1,8 @@
 ---
+- name: Configure monit for status site
+  copy: src=monit dest=/etc/monit/web.d/status
+  notify:
+  - monit
 - name: Copy status files
   copy: src=status dest=/var/www/sites/
 - name: Make status user

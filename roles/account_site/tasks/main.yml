@@ -1,4 +1,8 @@
 ---
+- name: Configure monit for account site
+  copy: src=monit dest=/etc/monit/web.d/account
+  notify:
+  - monit
 - name: Copy account files
   copy: src=account dest=/var/www/sites/
 - name: Copy config files

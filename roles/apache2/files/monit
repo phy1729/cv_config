@@ -11,8 +11,6 @@ check process apache with pidfile /var/run/apache2.pid
 	if cpu > 60% for 2 cycles then alert
 	if children > 250 then restart
 	if loadavg(5min) greater than 10 for 8 cycles then stop
-	if failed host account.collegiumv.org port 80 protocol http then alert
-	if failed host newsletter.collegiumv.org port 80 protocol http then alert
-	if failed host status.collegiumv.org port 80 protocol http then alert
+	include /etc/monit/web.d/*
 	depends on apache_bin
 	group apache

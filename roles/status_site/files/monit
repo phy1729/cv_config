@@ -1,0 +1,1 @@
+if failed host status.collegiumv.org port 80 protocol http then alert

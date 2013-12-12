@@ -1,4 +1,8 @@
 ---
+- name: Configure monit for newsletter site
+  copy: src=monit dest=/etc/monit/web.d/newsletter
+  notify:
+  - monit
 - name: Copy newletter files
   copy: src=newsletter dest=/var/www/sites/
 - name: Add newsletters sites
