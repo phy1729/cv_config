@@ -16,7 +16,7 @@ set alert cvadmins@utdallas.edu not { instance }
 set httpd port 2812
 	allow localhost
 	allow 192.168.42.0/24
-	allow phy1729:"{{ lookup('file', 'secrets/monit_passwd') }}"
+	allow phy1729:"{{ lookup('file', 'secret/monit_passwd') }}"
 	allow CV:CV read-only
 
 ###############################################################################
