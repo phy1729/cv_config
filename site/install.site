@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ -z $PKG_PATH ]; then
-	export PKG_PATH=ftp://mirror.esc7.net/pub/OpenBSD/$(uname -r)/packages/$(uname -p)/
+	export PKG_PATH=http://mirror.esc7.net/pub/OpenBSD/$(uname -r)/packages/$(uname -p)/
 fi
 pkg_add isc-dhcp-server
 
