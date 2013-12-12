@@ -8,7 +8,7 @@ $netID=strtolower($_GET['netID']);
 $username=$_GET["username"];
 
 require_once('config/config.php');
-require_once('adldap/adLDAP.php');
+require_once('adLDAP/src/adLDAP.php');
 try {
 	$ldap = new adLDAP($ldap_config);
 } catch (adLDAPException $e) {

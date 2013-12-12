@@ -4,4 +4,7 @@
 	<Directory /var/www/sites/account/config/>
 		Deny from all
 	</Directory>
+	<Directory /var/www/sites/account/adLDAP/>
+		Deny from all
+	</Directory>
 </VirtualHost>
