@@ -1,0 +1,5 @@
+---
+- hosts: he
+  sudo: yes
+  roles:
+  - openbsd

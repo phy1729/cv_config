@@ -4,47 +4,54 @@ if [ -z $PKG_PATH ]; then
 	export PKG_PATH=http://mirror.esc7.net/pub/OpenBSD/$(uname -r)/packages/$(uname -p)/
 fi
 pkg_add isc-dhcp-server
+pkg_add python-2.7.5
+ln -s /usr/local/bin/python2.7 /usr/bin/python
 
 # The installer overwrite the hostname.if of the if that was used during installation
-echo 'inet #INT_IP# 255.255.255.0 NONE' > /etc/hostname.bge1
+echo 'inet {{ internal_ip }} 255.255.255.0 NONE' > /etc/hostname.bge1
 
 files="/etc/dhclient.conf /etc/dhcpd.conf /etc/hostname.* /etc/ntpd.conf /etc/pf.conf /var/named/etc/named.conf"
 
 if [ $(hostname -s) = "hydrogen" ]; then
 	name="hydrogen"
+	other_name="helium"
 	int_ip="192.168.42.1"
 	ext_ip="129.110.157.11"
 	pf_ip="172.16.0.1"
 	other_int_ip="192.168.42.2"
 	other_ext_ip="129.110.157.12"
 	advskew="0"
-	prefix_keep="#H#"
-	prefix_delete="#He#"
+	dhcpd_type="primary"
+	named_type="master"
 
 elif [ $(hostname -s) = "helium" ]; then
 	name="helium"
+	other_name="hydrogen"
 	int_ip="192.168.42.2"
 	ext_ip="129.110.157.12"
 	pf_ip="172.16.0.2"
 	other_int_ip="192.168.42.1"
 	other_ext_ip="129.110.116.11"
 	advskew="10"
-	prefix_keep="#He#"
-	prefix_delete="#H#"
+	dhcpd_type="secondary"
+	named_type="slave"
 else
 	exit
 fi
 
 for file in $files; do
 	temp=$(<$file)
-	temp=$( echo "$temp" | sed "s/#NAME#/$name/" )
-	temp=$( echo "$temp" | sed "s/#INT_IP#/$int_ip/" )
-	temp=$( echo "$temp" | sed "s/#EXT_IP#/$ext_ip/" )
-	temp=$( echo "$temp" | sed "s/#PF_IP#/$pf_ip/" )
-	temp=$( echo "$temp" | sed "s/#OTHER_INT_IP#/$other_int_ip/" )
-	temp=$( echo "$temp" | sed "s/#OTHER_EXT_IP#/$other_ext_ip/" )
-	temp=$( echo "$temp" | sed "s/#ADVSKEW#/$advskew/" )
-	temp=$( echo "$temp" | sed -e "s/^$prefix_keep//" -e "/^$prefix_delete/ d" )
+	temp=$( echo "$temp" | sed "s/{{ name }}/$name/" )
+	temp=$( echo "$temp" | sed "s/{{ internal_ip }}/$int_ip/" )
+	temp=$( echo "$temp" | sed "s/{{ external_ip }}/$ext_ip/" )
+	temp=$( echo "$temp" | sed "s/{{ pf_ip }}/$pf_ip/" )
+	temp=$( echo "$temp" | sed "s/{{ peer_internal_ip }}/$other_int_ip/" )
+	temp=$( echo "$temp" | sed "s/{{ advskew }}/$advskew/" )
+	temp=$( echo "$temp" | sed "s/{{ dhcpd_type }}/$dhcpd_type/" )
+	temp=$( echo "$temp" | sed "s/{{ named_type }}/$named_type/" )
+	temp=$( echo "$temp" | perl -0pe 's/\{% if name == '"'$other_name'"' %\}.+?\{% endif %\}\n//s' )
+	temp=$( echo "$temp" | sed "/{% if name == '$name' %}/d" )
+	temp=$( echo "$temp" | sed "/{% endif %}/d" )
 	echo "$temp" > $file
 done
 

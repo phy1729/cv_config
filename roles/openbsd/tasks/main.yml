@@ -1,0 +1,39 @@
+---
+- name: Copy hostname files
+  template: src={{ item }} dest=/
+  with_fileglob:
+  - etc/hostname.*
+  notify:
+  - netstart
+- name: Copy dhcpd config
+  template: src=etc/dhcpd.conf dest=/etc/dhcpd.conf
+  notify:
+  -  dhcpd
+- name: Copy dhclient config
+  template: src=etc/dhclient.conf dest=/etc/dhclient.conf
+- name: Copy ntpd config
+  template: src=etc/ntpd.conf dest=/etc/ntpd.conf
+  notify:
+  - ntpd
+- name: Copy named config
+  template: src=var/named/etc/named.conf dest=/var/named/etc/named.conf
+  notify:
+  - named
+- name: Copy firewall
+  copy: src=etc/pf.conf dest=/etc/pf.conf
+- copy: src=etc/mygate dest=/etc/mygate
+
+- copy: src=etc/rc.conf.local dest=/etc/rc.conf.local
+- copy: src=etc/rc.local dest=/etc/rc.local
+- copy: src=etc/rc.securelevel dest=/etc/rc.securelevel
+- copy: src=etc/resolv.conf.final dest=/etc/resolv.conf.final
+- copy: src=etc/sysctl.conf dest=/etc/sysctl.conf
+
+- copy: src=etc/rc.d/dhcpd dest=/etc/rc.d/dhcpd
+- copy: src=etc/rc.d/update_pf_minecraft dest=/etc/rc.d/update_pf_minecraft
+- copy: src=etc/rc.d/update_utdns dest=/etc/rc.d/update_utdns
+
+- copy: src=var/named/etc/UTDNS dest=/var/named/etc/UTDNS
+
+- copy: src=var/named/master/db.0 dest=/var/named/master/db.0
+- copy: src=var/named/master/db.255 dest=/var/named/master/db.255

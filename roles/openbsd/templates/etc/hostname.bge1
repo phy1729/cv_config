@@ -1,0 +1,1 @@
+inet {{ internal_ip }} 255.255.255.0 NONE

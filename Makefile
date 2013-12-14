@@ -1,7 +1,9 @@
 .PHONY: site clean
 
-site:
-	cp -rf site tmp
+site: clean
+	cp -Rf site tmp
+	cp -Rf roles/openbsd/files/* tmp
+	cp -Rf roles/openbsd/templates/* tmp
 	secret/inject_secrets.sh
 	tar czf site54.tgz -Ctmp/ .
 

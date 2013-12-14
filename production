@@ -1,3 +1,6 @@
+[gateway]
+he
+
 [ssh]
 mg
 
@@ -8,6 +11,7 @@ n
 f
 
 [production:children]
+gateway
 ssh
 utility
 audio
