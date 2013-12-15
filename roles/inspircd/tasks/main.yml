@@ -22,5 +22,7 @@
   file: path=/var/run/inspircd.pid owner=irc group=irc mode=644 state=touch
 - name: Fix InspIRCd directory permissions
   file: path=/opt/inspircd state=directory owner=irc group=irc mode=755 recurse=yes
+- name: Add InspIRCd init script
+  copy: src=service dest=/etc/init.d/inspircd
 - name: Start InspIRCd
-  command: /opt/inspircd/inspircd start
+  service: name=inspircd state=started
