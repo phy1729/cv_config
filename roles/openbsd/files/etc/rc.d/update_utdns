@@ -6,7 +6,7 @@ file='/tmp/UTDNS'
 newUTDNS=$(for ns in $(dig +short ns utdallas.edu)
 do
 	dig +short A "$ns"
-done)
+done | sort)
 
 # Put them into a BIND friendly format
 newUTDNS=$(echo "$newUTDNS" | sed 's/$/;/g')
