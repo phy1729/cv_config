@@ -21,6 +21,8 @@
   - named
 - name: Copy firewall
   copy: src=etc/pf.conf dest=/etc/pf.conf
+  notify:
+  - pf
 - copy: src=etc/mygate dest=/etc/mygate
 
 - copy: src=etc/rc.conf.local dest=/etc/rc.conf.local

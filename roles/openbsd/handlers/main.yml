@@ -7,3 +7,5 @@
   command: /etc/rc.d/ntpd restart
 - name: named
   command: /etc/rc.d/named restart
+- name: pf
+  command: pfctl -f /etc/pf.conf
