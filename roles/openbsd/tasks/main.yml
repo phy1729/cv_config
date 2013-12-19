@@ -1,8 +1,14 @@
 ---
 - name: Copy hostname files
-  template: src={{ item }} dest=/
-  with_fileglob:
-  - etc/hostname.*
+  template: src={{ item }} dest=/etc/
+  with_items:
+  - etc/hostname.bge0
+  - etc/hostname.bge1
+  - etc/hostname.carp0
+  - etc/hostname.carp1
+  - etc/hostname.carp2
+  - etc/hostname.em0
+  - etc/hostname.pfsync0
   notify:
   - netstart
 - name: Copy dhcpd config
