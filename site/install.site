@@ -49,7 +49,7 @@ for file in $files; do
 	temp=$( echo "$temp" | sed "s/{{ advskew }}/$advskew/" )
 	temp=$( echo "$temp" | sed "s/{{ dhcpd_type }}/$dhcpd_type/" )
 	temp=$( echo "$temp" | sed "s/{{ named_type }}/$named_type/" )
-	temp=$( echo "$temp" | perl -0pe 's/\{% if name == '"'$other_name'"' %\}.+?\{% endif %\}\n//s' )
+	temp=$( echo "$temp" | perl -0pe 's/\{% if name == '"'$other_name'"' %\}.+?\{% endif %\}\n//sg' )
 	temp=$( echo "$temp" | sed "/{% if name == '$name' %}/d" )
 	temp=$( echo "$temp" | sed "/{% endif %}/d" )
 	echo "$temp" > $file
