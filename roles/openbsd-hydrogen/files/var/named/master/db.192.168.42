@@ -1,0 +1,54 @@
+$TTL 3h
+
+@ IN SOA helium.collegiumv.org. cvadmins.utdallas.edu. (
+	2013021802
+	3h	;refresh
+	1h	;retry
+	1w	;expire
+	1h )	;negative cache
+
+
+	IN NS	h.collegiumv.org.
+	IN NS	helium.collegiumv.org.
+
+1	IN PTR	h.collegiumv.org.
+2	IN PTR	helium.collegiumv.org.
+3	IN PTR	lithium.collegiumv.org.
+4	IN PTR	beryllium.collegiumv.org.
+5	IN PTR	boron.collegiumv.org.
+6	IN PTR	carbon.collegiumv.org.
+7	IN PTR	nitrogen.collegiumv.org.
+8	IN PTR	oxygen.collegiumv.org.
+9	IN PTR	fluorine.collegiumv.org.
+10	IN PTR	neon.collegiumv.org.
+11	IN PTR	sodium.collegiumv.org.
+12	IN PTR	magnesium.collegiumv.org.
+13	IN PTR	aluminium.collegiumv.org.
+14	IN PTR	silicon.collegiumv.org.
+15	IN PTR	phosphorus.collegiumv.org.
+
+;printers
+16	IN PTR	franklin.collegiumv.org.
+17	IN PTR	gutenburg.collegiumv.org.
+18	IN PTR	koster.collegiumv.org.
+
+;clients
+32	IN PTR	argus.collegiumv.org.
+33	IN PTR	busterjangle.collegiumv.org.
+34	IN PTR	crossroads.collegiumv.org.
+35	IN PTR	dominic.collegiumv.org.
+36	IN PTR	emery.collegiumv.org.
+37	IN PTR	flintlock.collegiumv.org.
+38	IN PTR	greenhouse.collegiumv.org.
+39	IN PTR	hardtack.collegiumv.org.
+40	IN PTR	ivy.collegiumv.org.
+41	IN PTR	julin.collegiumv.org.
+42	IN PTR	kittens.collegiumv.org.
+43	IN PTR	latchkey.collegiumv.org.
+44	IN PTR	mandrel.collegiumv.org.
+45	IN PTR	niblick.collegiumv.org.
+46	IN PTR	oberon.collegiumv.org.
+47	IN PTR	phlanx.collegiumv.org.
+48	IN PTR	quicksilver.collegiumv.org.
+49	IN PTR	redwing.collegiumv.org.
+

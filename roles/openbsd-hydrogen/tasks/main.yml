@@ -1,0 +1,8 @@
+---
+- copy: src=etc/pfstat.conf dest=/etc/pfstat.conf
+- copy: src=etc/update_pfstat_batch dest=/etc/update_pfstat_batch
+- copy: src=etc/rc.d/update_pfstat dest=/etc/rc.d/update_pfstat
+- copy: src=var/named/master/collegiumv.org dest=/var/named/master/collegiumv.org
+- copy: src=var/named/master/db.192.168.42 dest=/var/named/master/db.192.168.42
+
+# TODO: Add cron job

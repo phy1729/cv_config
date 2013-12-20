@@ -1,0 +1,105 @@
+$TTL 10m
+
+@ IN SOA helium.collegiumv.org. cvadmins.utdallas.edu. (
+	2013093001
+	1h	;refresh
+	3m	;retry
+	2w	;expire
+	1h )	;negative cache
+
+
+	IN NS	h.collegiumv.org.
+	IN NS	helium.collegiumv.org.
+	IN A	192.168.42.7
+
+
+_msdcs.collegiumv.org.	IN NS	beryllium.collegiumv.org.
+_msdcs.collegiumv.org.	IN NS	boron.collegiumv.org.
+_sites.collegiumv.org.	IN NS	beryllium.collegiumv.org.
+_sites.collegiumv.org.	IN NS	boron.collegiumv.org.
+_tcp.collegiumv.org.	IN NS	beryllium.collegiumv.org.
+_tcp.collegiumv.org.	IN NS	boron.collegiumv.org.
+_udp.collegiumv.org.	IN NS	beryllium.collegiumv.org.
+_udp.collegiumv.org.	IN NS	boron.collegiumv.org.
+DomainDnsZones.collegiumv.org.	IN NS	beryllium.collegiumv.org.
+DomainDnsZones.collegiumv.org.	IN NS	boron.collegiumv.org.
+ForestDnsZones.collegiumv.org.	IN NS	beryllium.collegiumv.org.
+ForestDnsZones.collegiumv.org.	IN NS	boron.collegiumv.org.
+
+
+hydrogen	IN A	192.168.42.4
+helium		IN A	192.168.42.2
+lithium		IN A	192.168.42.3
+beryllium	IN A	192.168.42.4
+boron		IN A	192.168.42.5
+carbon		IN A	192.168.42.6
+nitrogen	IN A	192.168.42.7
+oxygen		IN A	192.168.42.8
+fluorine	IN A	192.168.42.9
+neon		IN A	192.168.42.10
+sodium		IN A	192.168.42.11
+magnesium	IN A	192.168.42.12
+aluminium	IN A	192.168.42.13
+silicon		IN A	192.168.42.14
+phosphorus	IN A	192.168.42.15
+
+
+h	IN A	192.168.42.1
+he	IN CNAME	helium
+li	IN CNAME	lithium
+be	IN CNAME	beryllium
+b	IN CNAME	boron
+c	IN CNAME	carbon
+n	IN CNAME	nitrogen
+o	IN CNAME	oxygen
+f	IN CNAME	fluorine
+ne	IN CNAME	neon
+na	IN CNAME	sodium	  
+mg	IN CNAME	magnesium 
+al	IN CNAME	aluminium 
+si	IN CNAME	silicon	  
+p	IN CNAME	phosphorus
+
+
+
+account	IN CNAME	nitrogen
+accounts	IN CNAME	account
+dns	IN CNAME	lithium
+irc	IN CNAME	nitrogen
+minecraft	IN CNAME	nitrogen
+monit	IN CNAME	nitrogen
+newsletter	IN CNAME	nitrogen
+newsletters	IN CNAME	newsletter
+ntp	IN CNAME	lithium
+pasta	IN CNAME	nitrogen
+status	IN CNAME	nitrogen
+wiki	IN CNAME	nitrogen
+www	IN CNAME	collegiumv.org.
+
+
+franklin	IN A	192.168.42.16
+gutenburg	IN A	192.168.42.17
+koster	IN A	192.168.42.18
+
+argus	IN A	192.168.42.32
+busterjangle	IN A	192.168.42.33
+crossroads	IN A	192.168.42.34
+dominic	IN A	192.168.42.35
+emery	IN A	192.168.42.36
+flintlock	IN A	192.168.42.37
+greenhouse	IN A	192.168.42.38
+hardtack	IN A	192.168.42.39
+ivy	IN A	192.168.42.40
+julin	IN A	192.168.42.41
+kittens	IN A	192.168.42.42
+latchkey	IN A	192.168.42.43
+mandrel	IN A	192.168.42.44
+niblick	IN A	192.168.42.45
+oberon	IN A	192.168.42.46
+phalanx	IN A	192.168.42.47
+quicksilver	IN A	192.168.42.48
+redwing	IN A	192.168.42.49
+
+; must keep this cname for matlab license
+flex	IN CNAME	flex.utdallas.edu.
+
