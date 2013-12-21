@@ -1,0 +1,15 @@
+check file vsftpd_bin with path /usr/sbin/vsftpd
+	if failed checksum expect 8cd7e41c4ac5447e45031c79c2bb6557c850e618 then alert
+	if failed permission 755 then alert
+	if failed uid root then alert
+	if failed gid root then alert
+	group vsftpd
+
+check process vsftpd with pidfile /var/run/vsftpd/vsftpd.pid
+	start program = "/usr/sbin/service vsftpd start" with timeout 60 seconds
+	stop program  = "/usr/sbin/service vsftpd stop"
+	if cpu > 60% for 2 cycles then alert
+	if children > 250 then restart
+	if loadavg(5min) greater than 10 for 8 cycles then stop
+	depends on vsftpd_bin
+	group vsftpd

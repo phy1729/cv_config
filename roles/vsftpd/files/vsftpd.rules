@@ -1,0 +1,4 @@
+*filter
+# All the crazy ftp port stuff is handled by the ip_conntrack_ftp module
+-A INPUT -s 192.168.42.0/24 -p tcp --dport 21 -j ACCEPT
+COMMIT
