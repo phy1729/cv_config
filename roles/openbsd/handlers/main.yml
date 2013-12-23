@@ -6,6 +6,6 @@
 - name: ntpd
   command: /etc/rc.d/ntpd restart
 - name: named
-  command: /etc/rc.d/named restart
+  command: rndc reload
 - name: pf
   command: pfctl -f /etc/pf.conf
