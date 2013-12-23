@@ -1,5 +1,0 @@
----
-- hosts: h
-  sudo: yes
-  roles:
-  - openbsd-hydrogen

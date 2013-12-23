@@ -1,5 +1,12 @@
 ---
-- hosts: gateway
+- name: gateway-common
+  hosts: gateway
   sudo: yes
   roles:
   - openbsd
+
+- name: gateway-master
+  hosts: h
+  sudo: yes
+  roles:
+  - openbsd-hydrogen
