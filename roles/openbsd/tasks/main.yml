@@ -11,6 +11,10 @@
   - etc/hostname.pfsync0
   notify:
   - netstart
+- name: Copy firewall
+  copy: src=etc/pf.conf dest=/etc/pf.conf mode=0600
+  notify:
+  - pf
 - name: Copy dhcpd config
   template: src=etc/dhcpd.conf dest=/etc/dhcpd.conf mode=0644
   notify:
@@ -21,32 +25,35 @@
   template: src=etc/ntpd.conf dest=/etc/ntpd.conf mode=0644
   notify:
   - ntpd
+- name: Copy common config
+  copy: src={{ item }} dest=/{{ item }} mode=0644
+  with_items:
+  - etc/mygate
+  - etc/rc.conf.local
+  - etc/rc.local
+  - etc/rc.securelevel
+  - etc/resolv.conf.final
+  - etc/sysctl.conf
+
+- name: Copy rc.d scripts
+  copy: src={{ item }} dest=/{{ item }}
+  with_items:
+  - etc/rc.d/dhcpd dest=/etc/rc.d/dhcpd
+  - etc/rc.d/update_pf_minecraft
+  - etc/rc.d/update_utdns
+
 - name: Copy named config
   template: src=var/named/etc/named.conf dest=/var/named/etc/named.conf mode=0644
   notify:
   - named
-- name: Copy firewall
-  copy: src=etc/pf.conf dest=/etc/pf.conf mode=0600
-  notify:
-  - pf
-- copy: src=etc/mygate dest=/etc/mygate mode=0644
-
-- copy: src=etc/rc.conf.local dest=/etc/rc.conf.local mode=0644
-- copy: src=etc/rc.local dest=/etc/rc.local mode=0644
-- copy: src=etc/rc.securelevel dest=/etc/rc.securelevel mode=0644
-- copy: src=etc/resolv.conf.final dest=/etc/resolv.conf.final mode=0644
-- copy: src=etc/sysctl.conf dest=/etc/sysctl.conf mode=0644
-
-- copy: src=etc/rc.d/dhcpd dest=/etc/rc.d/dhcpd
-- copy: src=etc/rc.d/update_pf_minecraft dest=/etc/rc.d/update_pf_minecraft
-- copy: src=etc/rc.d/update_utdns dest=/etc/rc.d/update_utdns
-
-- copy: src=var/named/etc/UTDNS dest=/var/named/etc/UTDNS
+- name: Add UTD forwarders
+  copy: src=var/named/etc/UTDNS dest=/var/named/etc/UTDNS
   notify:
   - named
-- copy: src=var/named/master/db.0 dest=/var/named/master/db.0 mode=0644
-  notify:
-  - named
-- copy: src=var/named/master/db.255 dest=/var/named/master/db.255 mode=0644
+- name: Add dummy zones
+  copy: src=var/named/master/{{ item }} dest=/var/named/master/{{ item }} mode=0644
+  with_items:
+  - db.0
+  - db.255
   notify:
   - named
