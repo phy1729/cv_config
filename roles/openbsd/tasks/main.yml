@@ -42,6 +42,11 @@
 - copy: src=etc/rc.d/update_utdns dest=/etc/rc.d/update_utdns
 
 - copy: src=var/named/etc/UTDNS dest=/var/named/etc/UTDNS
-
+  notify:
+  - named
 - copy: src=var/named/master/db.0 dest=/var/named/master/db.0 mode=0644
+  notify:
+  - named
 - copy: src=var/named/master/db.255 dest=/var/named/master/db.255 mode=0644
+  notify:
+  - named
