@@ -12,7 +12,7 @@
   notify:
   - inspircd
 - name: Configure InspIRCd
-  copy: src=secret/conf dest=/opt/inspircd/
+  copy: src=secret/inspircd-conf dest=/opt/inspircd/
   notify:
   - inspircd
 # copy fails to copy empty directories so this line is needed (c.f. https://github.com/ansible/ansible/issues/5005 )
