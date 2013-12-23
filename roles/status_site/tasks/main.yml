@@ -7,11 +7,15 @@
   copy: src=status dest=/var/www/sites/
 - name: Add status user config in sshd_config
   lineinfile: dest=/etc/ssh/sshd_config state=present line='Match user status'
+  notify:
+  - sshd
 - name: Make status user sftp only
   lineinfile: dest=/etc/ssh/sshd_config state=present insertafter='Match user status' line='{{ item }}' # ' # Fix hilighting
   with_items:
   - '	ForceCommand internal-sftp'
   - '	ChrootDirectory /var/www/sites/status'
+  notify:
+  - sshd
 - name: Make status user
   user: name=status createhome=no shell=/bin/false state=present
 - name: Add pubkey for status user
