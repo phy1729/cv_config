@@ -55,6 +55,13 @@ for file in $files; do
 	echo "$temp" > $file
 done
 
+# Fix file permissions
+files=$files" /etc/rc.conf.local /etc/rc.local /etc/rc.securelevel /var/named/master/*"
+for file in $files; do
+	chmod 644 $file
+done
+chmod 600 /etc/pf.conf
+
 # Fix the sudoers file
 echo 'Defaults !lecture
 Defaults:%wheel !env_reset
