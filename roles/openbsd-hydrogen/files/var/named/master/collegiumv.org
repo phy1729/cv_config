@@ -99,6 +99,14 @@ oberon	IN A	192.168.42.46
 phalanx	IN A	192.168.42.47
 quicksilver	IN A	192.168.42.48
 redwing	IN A	192.168.42.49
+sunbeam	IN A	192.168.42.50
+touchstone	IN A	192.168.42.51
+unicorn	IN A	192.168.42.52
+vixen	IN A	192.168.42.53
+wigwam	IN A	192.168.42.54
+xray	IN A	192.168.42.55
+yuma	IN A	192.168.42.56
+zinnia	IN A	192.168.42.57
 
 ; must keep this cname for matlab license
 flex	IN CNAME	flex.utdallas.edu.
