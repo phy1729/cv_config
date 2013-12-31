@@ -5,21 +5,32 @@
   - monit
 - name: Copy status files
   copy: src=status dest=/var/www/sites/
+- name: Make images directory
+  file: path=/var/www/sites/status/images state=directory owner=status group=status
 - name: Add status user config in sshd_config
   lineinfile: dest=/etc/ssh/sshd_config state=present line='Match user status'
   notify:
   - sshd
+- name: Use internal sftp server
+  lineinfile: dest=/etc/ssh/sshd_config regexp="Subsystem\s+sftp" line="Subsystem       sftp    internal-sftp" state=present
 - name: Make status user sftp only
   lineinfile: dest=/etc/ssh/sshd_config state=present insertafter='Match user status' line='{{ item }}' # ' # Fix hilighting
   with_items:
   - '	ForceCommand internal-sftp'
   - '	ChrootDirectory /var/www/sites/status'
+  - '   AllowTcpForwarding no'
+  - '   X11Forwarding no'
+  - '   PermitTunnel no'
+  - '   GatewayPorts no'
+  - '   AllowAgentForwarding no'
   notify:
   - sshd
 - name: Make status user
   user: name=status createhome=no shell=/bin/false state=present
+- name: Add .ssh directory
+  file: path=/home/status/.ssh state=directory owner=status group=status mode=755
 - name: Add pubkey for status user
-  copy: src=secret/status_id_rsa.pub dest=/home/status/.ssh/authorized_keys
+  copy: src=secret/status_id_rsa.pub dest=/home/status/.ssh/authorized_keys owner=status group=status mode=600
 - name: Add status site
   copy: src=status.site dest=/etc/apache2/sites-available/status
   notify:

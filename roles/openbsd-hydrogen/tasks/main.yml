@@ -4,7 +4,10 @@
   with_items:
   - etc/pfstat.conf
   - etc/update_pfstat_batch
-  - etc/rc.d/update_pfstat
+- name: Add pfstat cron script
+  copy: src=etc/rc.d/update_pfstat dest=/etc/rc.d/update_pfstat mode=0555
+- name: Add private key for pfstat
+  copy: src=secret/status_id_rsa dest=/etc/ssh/status_id_rsa owner=root group=wheel mode=0600
 - name: Add master zones
   copy: src=var/named/master/{{ item }} dest=/var/named/master/{{ item }} mode=0644
   with_items:
