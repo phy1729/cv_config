@@ -3,6 +3,8 @@
   copy: src=monit dest=/etc/monit/web.d/status
   notify:
   - monit
+- name: Make status user
+  user: name=status createhome=no shell=/bin/false state=present
 - name: Copy status files
   copy: src=status dest=/var/www/sites/
 - name: Make images directory
@@ -25,8 +27,6 @@
   - '   AllowAgentForwarding no'
   notify:
   - sshd
-- name: Make status user
-  user: name=status createhome=no shell=/bin/false state=present
 - name: Add .ssh directory
   file: path=/home/status/.ssh state=directory owner=status group=status mode=755
 - name: Add pubkey for status user
