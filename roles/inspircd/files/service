@@ -21,10 +21,6 @@ IRCDARGS="--logfile $IRCDLOG --config $IRCDCONF"
 USER="irc"
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
-if [ -f "/etc/default/inspircd" ]; then
-	. /etc/default/inspircd
-fi
-
 # Define LSB log_* functions (status_of_proc)
 . /lib/lsb/init-functions
 
@@ -62,10 +58,6 @@ reload_ircd()
 
 case "$1" in
   start)
-	if [ "$INSPIRCD_ENABLED" != "1" ]; then
-		echo -n "Please configure inspircd first and edit /etc/default/inspircd, otherwise inspircd won't start"
-		exit 0
-	fi
         echo -n "Starting Inspircd... "
         start_ircd && echo "done."
         ;;
