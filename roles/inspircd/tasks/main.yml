@@ -15,11 +15,6 @@
   copy: src=secret/inspircd-conf dest=/opt/inspircd/
   notify:
   - inspircd
-# copy fails to copy empty directories so this line is needed (c.f. https://github.com/ansible/ansible/issues/5005 )
-- name: Add logs directory
-  file: path=/opt/inspircd/logs/ state=directory
-- name: Make pid file
-  file: path=/var/run/inspircd.pid owner=irc group=irc mode=644 state=touch
 - name: Fix InspIRCd directory permissions
   file: path=/opt/inspircd state=directory owner=irc group=irc mode=755 recurse=yes
 - name: Add InspIRCd init script
