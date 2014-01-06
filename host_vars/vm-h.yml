@@ -1,0 +1,9 @@
+---
+name: hydrogen
+external_ip: 10.0.0.101
+internal_ip: 192.168.42.1
+peer_internal_ip: 192.168.42.2
+pf_ip: 172.16.0.1
+advskew: 0
+dhcpd_type: primary
+named_type: master

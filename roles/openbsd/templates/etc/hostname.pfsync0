@@ -1,1 +1,1 @@
-up syncdev em0
+up syncdev {{ pf_if }}

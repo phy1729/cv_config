@@ -2,19 +2,33 @@
 - name: Copy hostname files
   template: src={{ item }} dest=/etc/ mode=0644
   with_items:
-  - etc/hostname.bge0
-  - etc/hostname.bge1
   - etc/hostname.carp0
   - etc/hostname.carp1
   - etc/hostname.carp2
-  - etc/hostname.em0
   - etc/hostname.pfsync0
   notify:
   - netstart
+- name: Copy internal hostname file
+  template: src=etc/hostname.bge1 dest=/etc/hostname.{{ internal_if }} mode=0644
+  notify:
+  - netstart
+- name: Copy external hostname file
+  template: src=etc/hostname.bge0 dest=/etc/hostname.{{ external_if }} mode=0644
+  notify:
+  - netstart
+- name: Copy pfsync hostname file
+  template: src=etc/hostname.em0 dest=/etc/hostname.{{ pf_if }} mode=0644
+  notify:
+  - netstart
+
 - name: Copy firewall
-  copy: src=etc/pf.conf dest=/etc/pf.conf mode=0600
+  template: src=etc/pf.conf dest=/etc/pf.conf mode=0600
   notify:
   - pf
+- name: Install isc-dhcpd
+  openbsd_pkg: name=isc-dhcp-server state=present
+  environment:
+    PKG_PATH: "{{ PKG_PATH }}"
 - name: Copy dhcpd config
   template: src=etc/dhcpd.conf dest=/etc/dhcpd.conf mode=0644
   notify:
@@ -25,11 +39,12 @@
   template: src=etc/ntpd.conf dest=/etc/ntpd.conf mode=0644
   notify:
   - ntpd
+- name: Copy rc.conf.local
+  template: src=etc/rc.conf.local dest=/etc/rc.conf.local mode=0644
 - name: Copy common config
   copy: src={{ item }} dest=/{{ item }} mode=0644
   with_items:
   - etc/mygate
-  - etc/rc.conf.local
   - etc/rc.local
   - etc/rc.securelevel
   - etc/resolv.conf.final
@@ -42,18 +57,24 @@
   - etc/rc.d/update_pf_minecraft
   - etc/rc.d/update_utdns
 
+- name: Generate rndc keys
+  command: rndc-confgen -at /var/named creates=/etc/rndc.key
+  notify:
+  - restart named
+- name: Fix permissions of rndc key
+  file: path=/var/named/etc/rndc.key owner=root group=named mode=0640
 - name: Copy named config
   template: src=var/named/etc/named.conf dest=/var/named/etc/named.conf mode=0644
   notify:
-  - named
+  - reload named
 - name: Add UTD forwarders
   copy: src=var/named/etc/UTDNS dest=/var/named/etc/UTDNS
   notify:
-  - named
+  - reload named
 - name: Add dummy zones
   copy: src=var/named/master/{{ item }} dest=/var/named/master/{{ item }} mode=0644
   with_items:
   - db.0
   - db.255
   notify:
-  - named
+  - reload named

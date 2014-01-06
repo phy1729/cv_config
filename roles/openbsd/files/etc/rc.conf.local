@@ -1,3 +1,0 @@
-dhcpd_flags="bge1"
-named_flags=""
-ntpd_flags=""

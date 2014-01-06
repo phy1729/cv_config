@@ -1,12 +1,27 @@
 ---
+- name: Install python on vm
+  hosts: vm:&gateway
+  gather_facts: false
+  sudo: true
+  pre_tasks:
+  - name: Install python
+    raw: export PKG_PATH=http://mirror.esc7.net/pub/OpenBSD/$(uname -r)/packages/$(uname -p)/ && pkg_add python-2.7.3p1
+  - name: Link python
+    raw: ln -sf /usr/local/bin/python2.7 /usr/bin/python
+  tasks:
+  - name: Add dummy record for utdallas internal names.
+    lineinfile: line="127.0.0.1 timelord.utdallas.edu smtp.utdallas.edu" dest=/etc/hosts state=present
+
 - name: gateway-common
   hosts: gateway
   sudo: yes
+  vars:
+    PKG_PATH: 'http://mirror.esc7.net/pub/OpenBSD/5.3/packages/amd64/'
   roles:
   - openbsd
 
 - name: gateway-master
-  hosts: h
+  hosts: h:vm-h
   sudo: yes
   roles:
   - openbsd-hydrogen

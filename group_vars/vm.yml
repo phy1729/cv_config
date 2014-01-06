@@ -3,7 +3,7 @@ gateway: 192.168.42.3
 dns_server: 192.168.42.3
 
 # For openbsd
-vm_if: ""
-internal_if: bge1
-external_if: bge0
-pf_if: em0
+vm_if: em0
+internal_if: em1
+external_if: em2
+pf_if: em3

@@ -1,0 +1,3 @@
+dhcpd_flags="{{ internal_if }}"
+named_flags=""
+ntpd_flags=""
