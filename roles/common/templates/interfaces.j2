@@ -5,7 +5,7 @@ allow-hotplug {{ interface }}
 iface {{ interface }} inet static
         address {{ ip_address }}
         netmask 255.255.255.0
-        gateway {{ gateway }}
-        dns-nameservers {{ dns_server }}
+        gateway 192.168.42.3
+        dns-nameservers 192.168.42.3
         dns-search collegiumv.org
 	ethernet-wol g
