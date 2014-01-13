@@ -12,13 +12,13 @@ try {
 }
 
 if (isValidKey($netID, $key)) { // Recieved confirmation key; reset pass or create account
-	if (hasAccount($netID)) {
+	if (hasAccount($ldap, $netID)) {
 		$content = resetUserPassword($ldap, $netID);
 	} elseif (inACL($netID) && isValidUsername($username)) {
 		$content = createUser($ldap, $user, $username);
 	}
 } elseif (isValidNetID($netID)) { // If we already have a netID, send a confirmation email
-	if (hasAccount($netID)) {
+	if (hasAccount($ldap, $netID)) {
 		$content = sendResetEmail($netID);
 	} elseif (inACL($netID)) {
 		if (isValidUsername($username)) { // Need a username too if it's a new user
