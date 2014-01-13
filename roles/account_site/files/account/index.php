@@ -1,7 +1,7 @@
 <?php
-$key=$_GET['key'];
-$netID=strtolower($_GET['netID']);
-$username=$_GET["username"];
+$key=@$_GET['key'];
+$netID=@strtolower($_GET['netID']);
+$username=@$_GET["username"];
 
 require_once('config/config.php');
 require_once('adLDAP/src/adLDAP.php');
