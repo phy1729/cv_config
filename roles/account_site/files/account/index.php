@@ -97,7 +97,7 @@ function sendResetEmail($netID) {
 	return "Please check your zmail to finish resetting your password.";
 }
 
-function sendCreateEmail($netID, $username) {
+function sendCreationEmail($netID, $username) {
 	mail($netID.'@utdallas.edu','CV Account Creation','An account creation was requested for your netID. If you did not request this, please disregard this email. To finish creating the account click on the following link.'."\n".getLink($netID,$username),'From:cthulhu@collegiumv.org');
 	CVlog("Sent creation email for u:$username n:$netID");
 	return "Please check your zmail to finish creating your account.";
