@@ -31,7 +31,6 @@ if (isValidKey($netID, $key)) { // Recieved confirmation key; reset pass or crea
 				<input type="submit" value="Submit"/>
 				</form>';
 		}
-
 	} else {
 		$content = 'Sorry, your netID ('.$netID.') is not recognized. Please email <a href="mailto:cvadmins@utdallas.edu">cvadmins@utdallas.edu</a> for assistence.';
 	}
