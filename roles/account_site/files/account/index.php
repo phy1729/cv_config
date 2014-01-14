@@ -103,7 +103,8 @@ function sendCreationEmail($netID, $username) {
 }
 
 function hasAccount($ldap, $netID) { // redundant
-	$search_results=ldap_get_entries($ldap, ldap_search($ldap, "ou=Lounge Users,dc=COLLEGIUMV,dc=ORG", "(description=$netID)"));
+	$search=ldap_search($ldap->getLdapConnection(), "ou=Lounge Users,dc=COLLEGIUMV,dc=ORG", "(description=$netID)");
+	$search_results=ldap_get_entries($ldap->getLdapConnection(), $search);
 	if ($search_results["count"]===1) {
 		return true;
 	} elseif ($search_results["count"]===0) {
@@ -162,7 +163,7 @@ function getUser($netID) {
 }
 
 function getUsernameFromNetID($ldap, $netID) {
-	$search_results=ldap_get_entries($ldap, ldap_search($ldap, "ou=Lounge Users,dc=COLLEGIUMV,dc=ORG", "(description=$netID)"));
+	$search_results=ldap_get_entries($ldap->getLdapConnection(), ldap_search($ldap->getLdapConnection(), "ou=Lounge Users,dc=COLLEGIUMV,dc=ORG", "(description=$netID)"));
 	if ($search_results["count"]===1) {
 		return $search_results[0]['samaccountname'][0];
 	} elseif ($search_results["count"]===0) {
