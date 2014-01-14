@@ -15,7 +15,7 @@ if (isValidKey($netID, $key)) { // Recieved confirmation key; reset pass or crea
 	if (hasAccount($ldap, $netID)) {
 		$content = resetUserPassword($ldap, $netID);
 	} elseif (inACL($netID) && isValidUsername($username)) {
-		$content = createUser($ldap, $user, $username);
+		$content = createUser($ldap, $netID, $username);
 	}
 } elseif (isValidNetID($netID)) { // If we already have a netID, send a confirmation email
 	if (hasAccount($ldap, $netID)) {
@@ -117,8 +117,8 @@ function hasAccount($ldap, $netID) { // redundant
 
 function getACL() {
 	$ACL_filename="config/access.list";
-	define("FIRST_NAME", 0);
-	define("LAST_NAME", 1);
+	define("FIRST_NAME", 1);
+	define("LAST_NAME", 0);
 	define("NETID", 2);
 
 	$ACL_handle=fopen($ACL_filename, "r");
