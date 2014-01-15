@@ -125,6 +125,9 @@ function getACL() {
 	$ACL_handle=fopen($ACL_filename, "r");
 	$lines=explode("\n",fread($ACL_handle,filesize($ACL_filename)));
 	foreach ($lines as $line) {
+		if ($line == '' || $line[0] == '#') {
+			continue;
+		}
 		$ACL[]=explode(',',$line);
 	}
 	fclose($ACL_handle);
