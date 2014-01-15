@@ -125,15 +125,7 @@ function getACL() {
 	$ACL_handle=fopen($ACL_filename, "r");
 	$lines=explode("\n",fread($ACL_handle,filesize($ACL_filename)));
 	foreach ($lines as $line) {
-		$temp=explode(',',$line);
-		if (strstr($temp[NETID], '@')) {
-			$temp[NETID]=strtolower(substr($temp[NETID],0,9));
-			if (! isValidNetID($temp[NETID])) {
-				echo $temp[NETID];
-				die('Error parsing NetID from email');
-			}
-		}
-		$ACL[]=$temp;
+		$ACL[]=explode(',',$line);
 	}
 	fclose($ACL_handle);
 	return $ACL;
