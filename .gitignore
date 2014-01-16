@@ -3,6 +3,5 @@
 tmp*/*
 **/secret/**
 group_vars/gateway.yml
-roles/openbsd/files/var/named/etc/UTDNS
 .vagrant/*
 vagrant_ansible_inventory_*
