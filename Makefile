@@ -15,5 +15,3 @@ clean:
 
 secrets:
 	echo "dhcpd_omapi: '11111111111111111111111111111111111111111111111111111111111111111111111111111111111111=='" >> group_vars/gateway.yml
-	mkdir roles/openbsd/files/var/named/etc
-	echo "forwarders {\n10.1.2.3;\n};" >> roles/openbsd/files/var/named/etc/UTDNS
