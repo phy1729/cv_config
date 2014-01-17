@@ -76,8 +76,7 @@ Defaults:%wheel !env_reset
 %wheel ALL=(ALL) SETENV:ALL' >> /etc/sudoers
 
 newcron="\n\n\
-*       *       *       *       *       /etc/rc.d/update_pf_minecraft\n\
-0       22      *       *       *       /etc/rc.d/update_utdns"
+*       *       *       *       *       /etc/rc.d/update_pf_minecraft"
 crontab=$(crontab -l)
 echo "${crontab}${newcron}" | crontab -
 

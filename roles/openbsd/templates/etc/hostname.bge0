@@ -1,5 +1,2 @@
-dhcp
-!cp /etc/resolv.conf /etc/resolv.conf.dhcp
+!cp /etc/resolv.conf.boot /etc/resolv.conf
 inet {{ external_ip }} 255.255.255.0 NONE
-!route -v add default 129.110.157.1 1> /dev/null
-!cp /etc/resolv.conf.dhcp /etc/resolv.conf

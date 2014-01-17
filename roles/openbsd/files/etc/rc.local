@@ -1,11 +1,2 @@
 # Use the local bind server and make the domain collegiumv.org instead of DHCP information
 cp /etc/resolv.conf.final /etc/resolv.conf
-
-# Bootstrap the forwarders for the utdallas.edu and 10.in-addr.arpa domain with the info from DHCP
-echo 'forwarders {' > /var/named/etc/UTDNS
-awk '/^nameserver/ {print $2";"}' /etc/resolv.conf.dhcp >> /var/named/etc/UTDNS
-echo '};' >> /var/named/etc/UTDNS
-rndc reconfig
-
-# Then use the nameservers listed in the NS records of the utdallas.edu domain
-/etc/rc.d/update_utdns

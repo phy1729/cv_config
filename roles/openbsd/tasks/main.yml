@@ -47,6 +47,7 @@
   - etc/mygate
   - etc/rc.local
   - etc/rc.securelevel
+  - etc/resolv.conf.boot
   - etc/resolv.conf.final
   - etc/sysctl.conf
 
@@ -55,7 +56,6 @@
   with_items:
   - etc/rc.d/dhcpd dest=/etc/rc.d/dhcpd
   - etc/rc.d/update_pf_minecraft
-  - etc/rc.d/update_utdns
 
 - name: Generate rndc keys
   command: rndc-confgen -at /var/named creates=/etc/rndc.key
