@@ -1,0 +1,4 @@
+*filter
+# smtp.utdallas.edu
+-A OUTPUT -p tcp -d 10.110.20.31 --dport 25 -j ACCEPT
+COMMIT

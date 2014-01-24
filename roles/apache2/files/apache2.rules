@@ -1,8 +1,6 @@
 # Firewall configuration written by phy1729
 *filter
 -A INPUT -p tcp --dport 80 -j ACCEPT
-# smtp.utdallas.edu for the account site
--A OUTPUT -p tcp -d 10.110.20.31 --dport 25 -j ACCEPT
 # LDAP for the account site
 -A OUTPUT -p tcp -d 192.168.42.4 --dport 389 -j ACCEPT
 -A OUTPUT -d 192.168.42.4 -j ACCEPT

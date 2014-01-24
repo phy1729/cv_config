@@ -1,0 +1,19 @@
+---
+# These packages are included in Debian base but are listed to show the dependency explicitly.
+- name: Install exim4
+  apt: pkg={{ item }} state=present
+  with_items:
+  - mailutils
+  - exim4
+- name: Configure firewall
+  copy: src=exim4.rules dest=/etc/iptables.d/exim4.rules
+  notify:
+  - iptables
+- name: Configure monit
+  copy: src=monit dest=/etc/monit/conf.d/exim4
+  notify:
+  - monit
+- name: Configure exim4
+  copy: src=exim4.conf dest=/etc/exim4/exim4.conf
+  notify:
+  - exim4

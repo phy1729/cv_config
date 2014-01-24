@@ -1,0 +1,15 @@
+check file exim4_bin with path /usr/sbin/exim4
+	if failed checksum expect efc4ea7a8baa9572f992f81877a08e1e495b858e then alert
+	if failed permission 4755 then alert
+	if failed uid root then alert
+	if failed gid root then alert
+	group exim4
+
+check process exim4 with pidfile /var/run/exim4/exim.pid
+	start program = "/usr/sbin/service exim4 start" with timeout 60 seconds
+	stop program  = "/usr/sbin/service exim4 stop"
+	if cpu > 60% for 2 cycles then alert
+	if children > 250 then restart
+	if loadavg(5min) greater than 10 for 8 cycles then stop
+	depends on exim4_bin
+	group exim4
