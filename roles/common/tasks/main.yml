@@ -21,6 +21,8 @@
   - iptables
 - name: Remove motd
   file: path=/etc/motd state=absent
+- name: Set apt sources
+  copy: src=sources.list dest=/etc/apt/sources.list owner=root group=root mode=0644
 - name: Install common packages
   apt: pkg={{ item }} state=present
   with_items:
