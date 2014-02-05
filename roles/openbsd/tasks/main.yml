@@ -45,6 +45,7 @@
   copy: src={{ item }} dest=/{{ item }} mode=0644
   with_items:
   - etc/mygate
+  - etc/pkg.conf
   - etc/rc.local
   - etc/rc.securelevel
   - etc/resolv.conf.boot
