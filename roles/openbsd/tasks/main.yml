@@ -1,6 +1,6 @@
 ---
 - name: Copy hostname files
-  template: src={{ item }} dest=/etc/ mode=0644
+  template: src={{ item }} dest=/etc/ owner=root group=wheel mode=0644
   with_items:
   - etc/hostname.carp0
   - etc/hostname.carp1
@@ -9,20 +9,20 @@
   notify:
   - netstart
 - name: Copy internal hostname file
-  template: src=etc/hostname.bge1 dest=/etc/hostname.{{ internal_if }} mode=0644
+  template: src=etc/hostname.bge1 dest=/etc/hostname.{{ internal_if }} owner=root group=wheel mode=0644
   notify:
   - netstart
 - name: Copy external hostname file
-  template: src=etc/hostname.bge0 dest=/etc/hostname.{{ external_if }} mode=0644
+  template: src=etc/hostname.bge0 dest=/etc/hostname.{{ external_if }} owner=root group=wheel mode=0644
   notify:
   - netstart
 - name: Copy pfsync hostname file
-  template: src=etc/hostname.em0 dest=/etc/hostname.{{ pf_if }} mode=0644
+  template: src=etc/hostname.em0 dest=/etc/hostname.{{ pf_if }} owner=root group=wheel mode=0644
   notify:
   - netstart
 
 - name: Copy firewall
-  template: src=etc/pf.conf dest=/etc/pf.conf mode=0600
+  template: src=etc/pf.conf dest=/etc/pf.conf owner=root group=wheel mode=0600
   notify:
   - pf
 - name: Install isc-dhcpd
@@ -30,19 +30,19 @@
   environment:
     PKG_PATH: "{{ PKG_PATH }}"
 - name: Copy dhcpd config
-  template: src=etc/dhcpd.conf dest=/etc/dhcpd.conf mode=0644
+  template: src=etc/dhcpd.conf dest=/etc/dhcpd.conf owner=root group=wheel mode=0644
   notify:
   -  dhcpd
 - name: Copy dhclient config
-  template: src=etc/dhclient.conf dest=/etc/dhclient.conf mode=0644
+  template: src=etc/dhclient.conf dest=/etc/dhclient.conf owner=root group=wheel mode=0644
 - name: Copy ntpd config
-  template: src=etc/ntpd.conf dest=/etc/ntpd.conf mode=0644
+  template: src=etc/ntpd.conf dest=/etc/ntpd.conf owner=root group=wheel mode=0644
   notify:
   - ntpd
 - name: Copy rc.conf.local
-  template: src=etc/rc.conf.local dest=/etc/rc.conf.local mode=0644
+  template: src=etc/rc.conf.local dest=/etc/rc.conf.local owner=root group=wheel mode=0644
 - name: Copy common config
-  copy: src={{ item }} dest=/{{ item }} mode=0644
+  copy: src={{ item }} dest=/{{ item }} owner=root group=wheel mode=0644
   with_items:
   - etc/mygate
   - etc/pkg.conf
@@ -53,7 +53,7 @@
   - etc/sysctl.conf
 
 - name: Copy rc.d scripts
-  copy: src={{ item }} dest=/{{ item }}
+  copy: src={{ item }} dest=/{{ item }} owner=root group=wheel mode=0555
   with_items:
   - etc/rc.d/dhcpd dest=/etc/rc.d/dhcpd
   - etc/rc.d/update_pf_minecraft
@@ -65,15 +65,15 @@
 - name: Fix permissions of rndc key
   file: path=/var/named/etc/rndc.key owner=root group=named mode=0640
 - name: Copy named config
-  template: src=var/named/etc/named.conf dest=/var/named/etc/named.conf mode=0644
+  template: src=var/named/etc/named.conf dest=/var/named/etc/named.conf owner=root group=wheel mode=0644
   notify:
   - reload named
 - name: Add UTD forwarders
-  copy: src=var/named/etc/UTDNS dest=/var/named/etc/UTDNS
+  copy: src=var/named/etc/UTDNS dest=/var/named/etc/UTDNS owner=root group=wheel mode=0644
   notify:
   - reload named
 - name: Add dummy zones
-  copy: src=var/named/master/{{ item }} dest=/var/named/master/{{ item }} mode=0644
+  copy: src=var/named/master/{{ item }} dest=/var/named/master/{{ item }} owner=root group=wheel mode=0644
   with_items:
   - db.0
   - db.255
