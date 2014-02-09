@@ -12,10 +12,18 @@ check host helium with address 192.168.42.2
 	if failed port 123 protocol ntp3 then alert
 check host beryllium with address 192.168.42.4
 	if failed icmp type echo count 3 with timeout 3 seconds then alert
-	#if failed port 389 protocol ldap3 then alert
+	if failed port 53 protocol dns then alert
+	if failed port 80 protocol http then alert
+	if failed port 389 then alert
+	if failed port 636 type tcpssl then alert
+	if failed port 3389 then alert
+	if failed port 9191 protocol http then alert
 check host boron with address 192.168.42.5
 	if failed icmp type echo count 3 with timeout 3 seconds then alert
-	#if failed port 389 protocol ldap3 then alert
+	if failed port 53 protocol dns then alert
+	if failed port 389 then alert
+	if failed port 636 type tcpssl then alert
+	if failed port 3389 then alert
 check host carbon with address 192.168.42.6
 	if failed icmp type echo count 3 with timeout 3 seconds then exec "/usr/local/bin/wakecv 6"
 	if failed icmp type echo count 3 with timeout 3 seconds then alert
