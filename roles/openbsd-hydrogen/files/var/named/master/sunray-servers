@@ -1,0 +1,13 @@
+$TTL 10m
+
+@ IN SOA helium.collegiumv.org. cvadmins.utdallas.edu. (
+	2014021901
+	1h	;refresh
+	3m	;retry
+	2w	;expire
+	1h )	;negative cache
+
+
+	IN NS	h.collegiumv.org.
+	IN NS	helium.collegiumv.org.
+	IN A	192.168.42.251

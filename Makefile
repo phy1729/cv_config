@@ -70,6 +70,7 @@ site-hydrogen:
 		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 644 files/etc/update_pfstat_batch ${H_DESTDIR}/etc; \
 		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 644 files/var/named/master/collegiumv.org ${H_DESTDIR}/var/named/master; \
 		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 644 files/var/named/master/db.192.168.42 ${H_DESTDIR}/var/named/master
+		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 644 files/var/named/master/sunray-servers ${H_DESTDIR}/var/named/master
 	${SUDO} tar czf site${OSrev}-hydrogen.tgz -C${H_DESTDIR} .
 
 clean:

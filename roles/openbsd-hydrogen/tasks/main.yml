@@ -12,6 +12,7 @@
   with_items:
   - collegiumv.org
   - db.192.168.42
+  - sunray-servers
   notify:
   - named
 
