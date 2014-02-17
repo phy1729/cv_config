@@ -2,4 +2,4 @@
 
 /usr/local/bin/pfstat -q
 /usr/local/bin/pfstat -p
-sftp -i /etc/ssh/status_id_rsa -b /etc/update_pfstat_batch status@n 1> /dev/null 2> /dev/null
+sftp -i /etc/ssh/status_id_rsa -b /etc/update_pfstat_batch status@n >/dev/null 2>&1
