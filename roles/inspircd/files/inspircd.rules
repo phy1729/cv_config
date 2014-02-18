@@ -1,6 +1,6 @@
 # Firewall configuration written by phy1729
 *filter
--A INPUT -p tcp -m multiport --destination-port 7070,8080 -j ACCEPT
+-A INPUT -p tcp -m multiport --destination-port 6667,6697,7070,8080 -j ACCEPT
 # madhax for IRC
 -A OUTPUT -p tcp -d 209.236.123.144 --dport 7700 -j ACCEPT
 COMMIT
