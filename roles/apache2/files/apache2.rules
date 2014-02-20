@@ -2,6 +2,6 @@
 *filter
 -A INPUT -p tcp --dport 80 -j ACCEPT
 # LDAP for the account site
--A OUTPUT -p tcp -d 192.168.42.4 --dport 389 -j ACCEPT
--A OUTPUT -d 192.168.42.4 -j ACCEPT
+-A OUTPUT -p tcp -d 192.168.42.4/31 --dport 389 -j ACCEPT
+-A OUTPUT -d 192.168.42.4/31 -j ACCEPT
 COMMIT
