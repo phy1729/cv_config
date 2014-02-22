@@ -24,7 +24,7 @@
 - name: Set apt sources
   copy: src=sources.list dest=/etc/apt/sources.list owner=root group=root mode=0644
 - name: Install common packages
-  apt: pkg={{ item }} state=present
+  apt: pkg={{ item }} state=present update_cache=yes
   with_items:
   - ethtool
   - monit

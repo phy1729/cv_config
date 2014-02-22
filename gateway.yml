@@ -9,6 +9,8 @@
   - name: Link python
     raw: ln -sf /usr/local/bin/python2.7 /usr/bin/python
   tasks:
+  - name: Overwrite vagrant configuration
+    copy: src=vagrant/hostname.vagrant dest=/etc/hostname.em0 owner=root group=wheel mode=0644
   - name: Add dummy record for utdallas internal names.
     lineinfile: line="127.0.0.1 timelord.utdallas.edu smtp.utdallas.edu" dest=/etc/hosts state=present
 

@@ -11,6 +11,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 		hydrogen.vm.network :private_network, ip: "192.168.42.100", virtualbox__intnet: "cv_int"
 		hydrogen.vm.network :private_network, ip: "10.0.0.101"
 		hydrogen.vm.network :private_network, ip: "172.16.0.100", virtualbox__intnet: "cv_pf"
+
+		hydrogen.vm.provider "virtualbox" do |v|
+			v.customize ["natnetwork", "add", "--netname", "cv_ext", "--network", "10.0.0.0/24"]
+			v.customize ["modifyvm", :id, "--nic3", "natnetwork"]
+			v.customize ["modifyvm", :id, "--nat-network3", "cv_ext"]
+			v.customize ["modifyvm", :id, "--nicpromisc2", "allow-all"]
+			v.customize ["modifyvm", :id, "--nicpromisc3", "allow-all"]
+		end
 	end
 
 	config.vm.define "vm-he" do |helium|
@@ -19,6 +27,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 		helium.vm.network :private_network, ip: "192.168.42.2", virtualbox__intnet: "cv_int"
 		helium.vm.network :private_network, ip: "10.0.0.102"
 		helium.vm.network :private_network, ip: "172.16.0.2", virtualbox__intnet: "cv_pf"
+
+		helium.vm.provider "virtualbox" do |v|
+			v.customize ["modifyvm", :id, "--nic3", "natnetwork"]
+			v.customize ["modifyvm", :id, "--nat-network3", "cv_ext"]
+			v.customize ["modifyvm", :id, "--nicpromisc2", "allow-all"]
+			v.customize ["modifyvm", :id, "--nicpromisc3", "allow-all"]
+		end
 	end
 
 	config.vm.provision "ansible" do |ansible|

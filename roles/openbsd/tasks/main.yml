@@ -20,6 +20,10 @@
   template: src=etc/hostname.em0 dest=/etc/hostname.{{ pf_if }} owner=root group=wheel mode=0644
   notify:
   - netstart
+- name: Copy mygate file
+  template: src=etc/mygate dest=/etc/mygate owner=root group=wheel mode=0644
+  notify:
+  - netstart
 
 - name: Copy firewall
   template: src=etc/pf.conf dest=/etc/pf.conf owner=root group=wheel mode=0600
@@ -44,7 +48,6 @@
 - name: Copy common config
   copy: src={{ item }} dest=/{{ item }} owner=root group=wheel mode=0644
   with_items:
-  - etc/mygate
   - etc/pkg.conf
   - etc/rc.local
   - etc/rc.securelevel
