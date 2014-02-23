@@ -6,5 +6,3 @@
   command: /etc/network/if-up.d/iptables
 - name: ntp
   service: name=ntp state=restarted
-- name: monit
-  service: name=monit state=restarted

@@ -27,18 +27,7 @@
   apt: pkg={{ item }} state=present update_cache=yes
   with_items:
   - ethtool
-  - monit
   - ntp
-- name: Configure monit
-  template: src=monit.j2 dest=/etc/monit/monitrc
-  notify:
-  - monit
-- name: Add sshd monit conf
-  copy: src=sshd dest=/etc/monit/conf.d/
-  notify:
-  - monit
-- name: Start monit
-  service: name=monit state=started
 - name: Configure ntpd
   copy: src=ntp.conf dest=/etc/ntp.conf
   notify:
