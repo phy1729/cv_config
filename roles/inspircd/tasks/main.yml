@@ -12,7 +12,7 @@
   notify:
   - inspircd
 - name: Configure InspIRCd
-  copy: src=secret/inspircd-conf dest=/opt/inspircd/config
+  copy: src=secret/inspircd/conf dest=/opt/inspircd/conf
   notify:
   - inspircd
 - name: Fix InspIRCd directory permissions
