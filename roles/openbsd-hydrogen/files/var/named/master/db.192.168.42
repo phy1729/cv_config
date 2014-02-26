@@ -48,7 +48,7 @@ $TTL 3h
 44	IN PTR	mandrel.collegiumv.org.
 45	IN PTR	niblick.collegiumv.org.
 46	IN PTR	oberon.collegiumv.org.
-47	IN PTR	phlanx.collegiumv.org.
+47	IN PTR	phalanx.collegiumv.org.
 48	IN PTR	quicksilver.collegiumv.org.
 49	IN PTR	redwing.collegiumv.org.
 50	IN PTR	sunbeam.collegiumv.org.
