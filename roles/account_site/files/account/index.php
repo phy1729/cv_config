@@ -60,9 +60,9 @@ function isValidUsername($username) {
 
 function resetUserPassword($ldap, $netID) {
 	$password=makePassword();
-	$ldap->user()->password(getUsernameFromNetID($netID),$password);
-	$ldap->user()->modify(getUsernameFromNetID($netID),array('change_password'=>1));
-	mail($netID.'@utdallas.edu','CV Password Reset','Your new password is "'.$password.'". This is a temporary password. To set your real password login on a lounge computer with your username ('.getUsernameFromNetID($netID).').','From:cthulhu@collegiumv.org');
+	$ldap->user()->password(getUsernameFromNetID($ldap, $netID),$password);
+	$ldap->user()->modify(getUsernameFromNetID($ldap, $netID),array('change_password'=>1));
+	mail($netID.'@utdallas.edu','CV Password Reset','Your new password is "'.$password.'". This is a temporary password. To set your real password login on a lounge computer with your username ('.getUsernameFromNetID($ldap, $netID).').','From:cthulhu@collegiumv.org');
 	CVlog("Reset password for n:$netID");
 	return "Please check your zmail for your new password. Press the \"Get Mail\" icon in the upper left to refresh your inbox.";
 }
