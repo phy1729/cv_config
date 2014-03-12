@@ -15,3 +15,6 @@ clean:
 
 secrets:
 	echo "dhcpd_omapi: '11111111111111111111111111111111111111111111111111111111111111111111111111111111111111=='" >> group_vars/gateway.yml
+
+status_key:
+	ssh-keygen -t rsa -b 4096 -f secret/status_id_rsa
