@@ -16,7 +16,8 @@
 # ssh to other servers
 -A OUTPUT -p tcp -d 192.168.42.0/28 --dport 22 -j ACCEPT
 # ssh to macs
--A OUTPUT -p tcp -d 192.168.42.46/31 --dport 22 -j ACCEPT
+-A OUTPUT -p tcp -d 192.168.42.39 --dport 22 -j ACCEPT
+-A OUTPUT -p tcp -d 192.168.42.47 --dport 22 -j ACCEPT
 # DNS
 -A OUTPUT -p udp -d 192.168.42.0/30 --dport 53 -j ACCEPT
 -A OUTPUT -p tcp -d 192.168.42.0/30 --dport 53 -j ACCEPT
