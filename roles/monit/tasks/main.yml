@@ -11,3 +11,7 @@
   - monit
 - name: Start monit
   service: name=monit state=started
+- name: Configure firewall
+  copy: src=monit.rules dest=/etc/iptables.d/
+  notify:
+  - iptables
