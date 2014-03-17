@@ -21,10 +21,7 @@
 -A OUTPUT -p tcp -d 192.168.42.0/30 --dport 53 -j ACCEPT
 # NTP
 -A OUTPUT -p udp -d 192.168.42.0/30 --dport 123 -j ACCEPT
-# Allow bitbucket for dotfiles
--A OUTPUT -p tcp -d 131.103.20.167 --dport 22 -j ACCEPT
--A OUTPUT -p tcp -d 131.103.20.168 --dport 22 -j ACCEPT
-# Allow github for vim plugins
+# Allow github for dotfiles and vim plugins
 -A OUTPUT -p tcp -d 192.30.252.129 --dport 443 -j ACCEPT
 
 # For apt
