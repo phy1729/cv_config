@@ -54,7 +54,7 @@ for file in $files; do
 	temp=$( echo "$temp" | sed "s/{{ internal_ip }}/$int_ip/" )
 	temp=$( echo "$temp" | sed "s/{{ external_ip }}/$ext_ip/" )
 	temp=$( echo "$temp" | sed "s/{{ pf_ip }}/$pf_ip/" )
-	temp=$( echo "$temp" | sed "s/{{ gateway }}//" )
+	temp=$( echo "$temp" | sed "s/{{ gateway }}/129.110.157.1/" )
 	temp=$( echo "$temp" | sed "s/{{ peer_internal_ip }}/$other_int_ip/" )
 	temp=$( echo "$temp" | sed "s/{{ advskew }}/$advskew/" )
 	temp=$( echo "$temp" | sed "s/{{ dhcpd_type }}/$dhcpd_type/" )
