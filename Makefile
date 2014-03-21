@@ -1,4 +1,4 @@
-.PHONY: sites site site-hydrogen site-helium clean secrets
+.PHONY: sites site site-hydrogen site-helium clean secrets monit_passwd status_key
 
 sites: site site-hydrogen
 
@@ -12,7 +12,10 @@ clean:
 	rm -rf tmp*
 	rm -f site*.tgz
 
-secrets:
+secrets: monit_passwd status_key
+
+monit_passwd:
+	export LC_CTYPE=C; tr -dc '!-~' < /dev/urandom | fold -w 32 | head -n 1 > secret/monit_passwd
 
 status_key:
 	ssh-keygen -t rsa -b 4096 -f secret/status_id_rsa
