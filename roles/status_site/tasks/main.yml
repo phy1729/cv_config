@@ -16,7 +16,7 @@
 - name: Use internal sftp server
   lineinfile: dest=/etc/ssh/sshd_config regexp="Subsystem\s+sftp" line="Subsystem       sftp    internal-sftp" state=present
 - name: Make status user sftp only
-  lineinfile: dest=/etc/ssh/sshd_config state=present insertafter='Match user status' line='{{ item }}' # ' # Fix hilighting
+  lineinfile: dest=/etc/ssh/sshd_config state=present insertafter='Match user status' line='{{ item }}'
   with_items:
   - '	ForceCommand internal-sftp'
   - '	ChrootDirectory /var/www/sites/status'
