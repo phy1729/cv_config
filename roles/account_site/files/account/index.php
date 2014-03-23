@@ -8,7 +8,9 @@ require_once('adLDAP/src/adLDAP.php');
 try {
 	$ldap = new adLDAP($ldap_config);
 } catch (adLDAPException $e) {
-	echo $e; exit();
+	CVlog("LDAP error: $e");
+	echo "The account page is currently unavailable. Please email cvadmins@utdallas.edu for assistance.";
+	exit();
 }
 
 if (isValidKey($netID, $key)) { // Recieved confirmation key; reset pass or create account
