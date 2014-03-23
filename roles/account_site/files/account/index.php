@@ -203,6 +203,7 @@ function CVlog($text) {
 	$logfile="config/account.log";
 	$handle=fopen($logfile,"a");
 	fwrite($handle, date(DateTime::ISO8601).'  '.$text."\n");
+	fclose($handle);
 }
 
 ?>
