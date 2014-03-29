@@ -1,6 +1,6 @@
 .DS_Store
-*.tgz
-tmp*/*
-**/secret/**
-.vagrant/*
-vagrant_ansible_inventory_*
+/site*.tgz
+/tmp*/
+/secret/
+/.vagrant/
+/vagrant_ansible_inventory_*
