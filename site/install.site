@@ -65,25 +65,6 @@ for file in $files; do
 	echo "$temp" > $file
 done
 
-# Fix permissions
-for folder in / /etc /var; do
-	chown root:wheel $folder
-done
-for folder in /etc/rc.d /var/named /var/named/*; do
-	chown root:staff $folder
-done
-files=$files" /etc/pkg.conf /etc/rc.conf.local /etc/rc.local /etc/rc.securelevel /etc/resolv.conf.boot /etc/resolv.conf.final /etc/sysctl.conf /var/named/master/*"
-for file in $files; do
-	chown root:staff $file
-	chmod 644 $file
-done
-for file in /etc/hostname.* /etc/ntpd.conf /etc/passwd /etc/pf.conf /etc/rc.conf.local /etc/rc.local /etc/rc.securelevel; do
-	chown root:wheel $file
-	chmod 640 $file
-done
-chmod 600 /etc/pf.conf
-chgrp named /var/named/slave /var/named/tmp
-
 # Fix the sudoers file
 echo 'Defaults !lecture
 Defaults:%wheel !env_reset
