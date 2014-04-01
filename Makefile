@@ -1,4 +1,4 @@
-.PHONY: sites site site-hydrogen clean mkdir_secrets secrets monit_passwd
+.PHONY: sites site site-hydrogen clean mkdir_secrets secrets account_admin_password account_salt monit_passwd
 
 DESTDIR = ${CURDIR}/tmp
 H_DESTDIR = ${CURDIR}/tmp-hydrogen
@@ -72,10 +72,10 @@ clean:
 	${SUDO} rm -rf ${DESTDIR} ${H_DESTDIR}
 	${SUDO} rm -f site*.tgz
 
-secrets: mkdir_secrets monit_passwd
+secrets: mkdir_secrets account_admin_password account_salt monit_passwd
 
 mkdir_secret:
 	mkdir -m 0700 secret
 
-monit_passwd:
-	export LC_CTYPE=C; tr -dc '!-~' < /dev/urandom | fold -w 32 | head -n 1 > secret/monit_passwd
+account_admin_password account_salt monit_passwd:
+	export LC_CTYPE=C; tr -dc '!-~' < /dev/urandom | fold -w 32 | head -n 1 > secret/$@

@@ -1,0 +1,2 @@
+---
+monit_passwd: "{{ lookup('file', 'secret/monit_passwd') }}"
