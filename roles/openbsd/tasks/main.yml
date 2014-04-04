@@ -1,6 +1,6 @@
 ---
 - name: Copy hostname files
-  template: src={{ item }} dest=/etc/ owner=root group=wheel mode=0644
+  template: src={{ item }} dest=/etc/ owner=root group=wheel mode=0640
   with_items:
   - etc/hostname.carp0
   - etc/hostname.carp1
@@ -9,19 +9,19 @@
   notify:
   - netstart
 - name: Copy internal hostname file
-  template: src=etc/hostname.bge1 dest=/etc/hostname.{{ internal_if }} owner=root group=wheel mode=0644
+  template: src=etc/hostname.bge1 dest=/etc/hostname.{{ internal_if }} owner=root group=wheel mode=0640
   notify:
   - netstart
 - name: Copy external hostname file
-  template: src=etc/hostname.bge0 dest=/etc/hostname.{{ external_if }} owner=root group=wheel mode=0644
+  template: src=etc/hostname.bge0 dest=/etc/hostname.{{ external_if }} owner=root group=wheel mode=0640
   notify:
   - netstart
 - name: Copy pfsync hostname file
-  template: src=etc/hostname.em0 dest=/etc/hostname.{{ pf_if }} owner=root group=wheel mode=0644
+  template: src=etc/hostname.em0 dest=/etc/hostname.{{ pf_if }} owner=root group=wheel mode=0640
   notify:
   - netstart
 - name: Copy mygate file
-  template: src=etc/mygate dest=/etc/mygate owner=root group=wheel mode=0644
+  template: src=etc/mygate dest=/etc/mygate owner=root group=wheel mode=0640
   notify:
   - netstart
 
@@ -68,11 +68,11 @@
 - name: Fix permissions of rndc key
   file: path=/var/named/etc/rndc.key owner=root group=named mode=0640
 - name: Copy named config
-  template: src=var/named/etc/named.conf dest=/var/named/etc/named.conf owner=root group=wheel mode=0644
+  template: src=var/named/etc/named.conf dest=/var/named/etc/named.conf owner=root group=named mode=0640
   notify:
   - reload named
 - name: Add UTD forwarders
-  copy: src=var/named/etc/UTDNS dest=/var/named/etc/UTDNS owner=root group=wheel mode=0644
+  copy: src=var/named/etc/UTDNS dest=/var/named/etc/UTDNS owner=root group=named mode=0640
   notify:
   - reload named
 - name: Add dummy zones
