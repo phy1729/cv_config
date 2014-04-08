@@ -59,7 +59,6 @@
   copy: src={{ item }} dest=/{{ item }} owner=root group=wheel mode=0555
   with_items:
   - etc/rc.d/dhcpd dest=/etc/rc.d/dhcpd
-  - etc/rc.d/update_pf_minecraft
 
 - name: Generate rndc keys
   command: rndc-confgen -at /var/named creates=/etc/rndc.key

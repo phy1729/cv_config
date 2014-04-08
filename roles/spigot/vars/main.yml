@@ -1,0 +1,62 @@
+---
+spigotURL: http://ci.md-5.net/view/Spigot/job/Spigot/1387/artifact/Spigot-Server/target/spigot-1.7.5-R0.1-SNAPSHOT.jar
+bungeeURL: http://ci.md-5.net/job/BungeeCord/893/artifact/bootstrap/target/BungeeCord.jar
+
+servers:
+  lobby:
+    allowEnd: false
+    allowNether: false
+    levelName: hub
+    instanceQueryEnabled: false
+    instancePort: 25570
+    instanceSeed:
+    instanceGamemode: 2
+    instanceMOTD: Hub
+    spawnNPCs: false
+    spawnAnimals: false
+    spawnMonsters: false
+    maxPlayers: 15
+    pvpEnabled: false
+    xrayEnable: false
+    defaultOp: maldridge
+    minMemory: 128M
+    maxMemory: 256M
+    instanceDir: lobby
+  creative:
+    allowEnd: true
+    allowNether: true
+    levelName: world
+    instanceQueryEnabled: false
+    instancePort: 25571
+    instanceSeed: drharpham
+    instanceGamemode: 1
+    instanceMOTD: Survival
+    spawnNPCs: true
+    spawnAnimals: true
+    spawnMonsters: true
+    maxPlayers: 15
+    pvpEnabled: true
+    xrayEnable: true
+    defaultOp: maldridge
+    minMemory: 128M
+    maxMemory: 1G
+    instanceDir: creative
+  survival:
+    allowEnd: true
+    allowNether: true
+    levelName: world
+    instanceQueryEnabled: false
+    instancePort: 25572
+    instanceSeed: 5116315820322785826
+    instanceGamemode: 0
+    instanceMOTD: Creative
+    spawnNPCs: false
+    spawnAnimals: false
+    spawnMonsters: false
+    maxPlayers: 15
+    pvpEnabled: false
+    xrayEnable: false
+    defaultOp: maldridge
+    minMemory: 128M
+    maxMemory: 1G
+    instanceDir: survival

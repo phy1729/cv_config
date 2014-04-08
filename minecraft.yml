@@ -1,0 +1,6 @@
+---
+- hosts: minecraft
+  sudo: yes
+  roles:
+  - common
+  - spigot

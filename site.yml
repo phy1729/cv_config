@@ -2,4 +2,5 @@
 - include: gateway.yml
 - include: ssh-box.yml
 - include: utility.yml
+- include: minecraft.yml
 - include: audio.yml

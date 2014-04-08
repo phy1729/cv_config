@@ -1,0 +1,73 @@
+---
+- name: Add minecraft support packages
+  sudo: yes
+  apt: pkg={{ item }} state=present install_recommends=no
+  with_items:
+  - openjdk-7-jre
+  - byobu
+  - tmux
+
+- name: Copy over iptables rules
+  copy: src=spigot.rules dest=/etc/iptables.d/ owner=root group=root mode=644
+  notify: iptables
+
+- name: Create the minecraft user
+  user: name=minecraft state=present system=yes
+
+- name: Create the minecraft base directories
+  file: path=/srv/minecraft state=directory owner=minecraft group=minecraft mode=0755
+  file: path=/srv/minecraft/backend state=directory owner=minecraft group=minecraft mode=0755
+
+- name: Copy Docs
+  copy: src=ports dest=/srv/minecraft/serverListing owner=minecraft group=minecraft mode=0644
+
+- name: Copy init scripts
+  copy: src=allStart.sh dest=/srv/minecraft/start.sh owner=minecraft group=minecraft mode=0755
+
+- name: Create bungeeCord root
+  file: path=/srv/minecraft/bungeeCord/ state=directory owner=minecraft group=minecraft mode=0744
+
+- name: Make bin folder
+  file: path=/srv/minecraft/bin/ state=directory owner=minecraft group=minecraft mode=0755
+
+- name: Get Spigot Binary
+  get_url: url={{ spigotURL }} dest=/srv/minecraft/bin/spigot.jar owner=minecraft group=minecraft mode=0755
+
+- name: Get Bungee Binary
+  get_url: url={{ bungeeURL }} dest=/srv/minecraft/bin/BungeeCord.jar owner=minecraft group=minecraft mode=0755
+
+- name: Create the minecraft server folders
+  file: path=/srv/minecraft state=directory owner=minecraft group=minecraft mode=0755
+  file: path=/srv/minecraft/backend/{{ item.value.instanceDir  }} state=directory owner=minecraft group=minecraft mode=0755
+  with_dict: servers
+
+- name: Copy hub world
+  copy: src=hub/ dest=/srv/minecraft/backend/lobby/hub/ owner=minecraft group=minecraft mode=0644
+
+- name: Link spigot binaries
+  file: src=/srv/minecraft/bin/spigot.jar dest=/srv/minecraft/backend/{{ item.value.instanceDir  }}/spigot.jar state=link
+  with_dict: servers
+
+- name: Link BungeeCord binary
+  file: src=/srv/minecraft/bin/BungeeCord.jar dest=/srv/minecraft/bungeeCord/bungeeCord.jar state=link
+
+- name: Configure Bungee
+  copy: src=bungeeConfig.yml dest=/srv/minecraft/bungeeCord/config.yml owner=minecraft group=minecraft mode=0644
+
+- name: Configure servers
+  template: src=server.properties.j2 dest=/srv/minecraft/backend/{{ item.value.instanceDir }}/server.properties owner=minecraft group=minecraft mode=644
+  with_dict: servers
+
+- name: Create start scripts
+  template: src=start.sh.j2 dest=/srv/minecraft/backend/{{ item.value.instanceDir }}/start.sh owner=minecraft group=minecraft mode=0755
+  with_dict: servers
+
+- name: BuneeCord start script
+  copy: src=bungeeStart.sh dest=/srv/minecraft/bungeeCord/start.sh owner=minecraft group=minecraft mode=0755
+
+- name: Fix BungeeCord Permissions
+  file: path=/srv/minecraft/bungeeCord/start.sh owner=minecraft group=minecraft mode=755
+
+- name: Set Default Ops
+  template: src=ops.txt.j2 dest=/srv/minecraft/backend/{{ item.value.instanceDir }}/ops.txt owner=minecraft group=minecraft mode=0644
+  with_dict: servers

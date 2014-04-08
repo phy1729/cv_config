@@ -71,11 +71,6 @@ echo 'Defaults !lecture
 Defaults:%wheel !env_reset
 %wheel ALL=(ALL) SETENV:ALL' >> /etc/sudoers
 
-newcron="\n\n\
-*       *       *       *       *       /etc/rc.d/update_pf_minecraft"
-crontab=$(crontab -l)
-echo "${crontab}${newcron}" | crontab -
-
 # Generate named rndc keys
 rndc-confgen -at /var/named
 chown root:named /var/named/etc/rndc.key

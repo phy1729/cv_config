@@ -33,8 +33,7 @@ HOSTNAMES=	templates/etc/hostname.bge0 \
 		templates/etc/hostname.pfsync0
 
 # -r-xr-xr-x
-RCDAEMONS=	files/etc/rc.d/dhcpd \
-		files/etc/rc.d/update_pf_minecraft
+RCDAEMONS=	files/etc/rc.d/dhcpd
 
 sites: site site-hydrogen
 

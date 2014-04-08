@@ -46,6 +46,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 		nitrogen.vm.network :private_network, ip: "192.168.42.7", virtualbox__intnet: "cv_int"
 	end
 
+	config.vm.define "vm-o" do |oxygen|
+		oxygen.vm.network :private_network, ip: "192.168.42.8", virtualbox__intnet: "cv_int"
+	end
+
 	config.vm.define "vm-f" do |fluorine|
 		fluorine.vm.network :private_network, ip: "192.168.42.9", virtualbox__intnet: "cv_int"
 	end
@@ -54,6 +58,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 		ansible.playbook = "site.yml"
 		ansible.host_key_checking = false
 
-		ansible.groups = { "vm:children" => ["gateway", "ssh", "utility", "audio"], "gateway" => ["vm-h", "vm-he"], "ssh" => ["vm-c"], "utility" => ["vm-n"], "audio" => ["vm-f"] }
+		ansible.groups = { "vm:children" => ["gateway", "ssh", "utility", "minecraft", "audio"], "gateway" => ["vm-h", "vm-he"], "ssh" => ["vm-c"], "utility" => ["vm-n"], "minecraft" => ["vm-o"], "audio" => ["vm-f"] }
 	end
 end

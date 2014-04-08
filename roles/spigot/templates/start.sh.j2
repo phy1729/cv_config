@@ -1,0 +1,2 @@
+#!/bin/bash
+java -Xms{{ item.value.minMemory }} -Xmx{{ item.value.maxMemory }} -XX:MaxPermSize=128M -jar spigot.jar

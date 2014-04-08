@@ -1,0 +1,48 @@
+groups:
+  md_5:
+  - admin
+disabled_commands:
+- disabledcommandhere
+player_limit: -1
+stats: 64564fd0-b101-4486-800a-452fea786a1c
+permissions:
+  default:
+  - bungeecord.command.server
+  - bungeecord.command.list
+  admin:
+  - bungeecord.command.alert
+  - bungeecord.command.end
+  - bungeecord.command.ip
+  - bungeecord.command.reload
+listeners:
+- max_players: 32
+  fallback_server: lobby
+  host: 0.0.0.0:25565
+  bind_local_address: true
+  ping_passthrough: false
+  tab_list: GLOBAL_PING
+  default_server: lobby
+  forced_hosts:
+    pvp.md-5.net: pvp
+  tab_size: 60
+  force_default_server: false
+  motd: 'The CV Voxel based clubhouse'
+  query_enabled: false
+  query_port: 25577
+timeout: 30000
+connection_throttle: 4000
+servers:
+  lobby:
+    address: localhost:25570
+    restricted: false
+    motd: 'Lobby Server'
+  creative:
+    address: localhost:25571
+    restricted: false
+    motd: 'Be Creative'
+  survival:
+    address: localhost:25572
+    restricted: false
+    motd: 'Survival, Can you do it'
+ip_forward: false
+online_mode: true
