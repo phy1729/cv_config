@@ -1,5 +1,5 @@
 check file sshd_bin with path /usr/sbin/sshd
-        if failed checksum expect 70c093f67f619ae75af783fca9fe672576894be8 then alert
+        if failed checksum expect 8d5a72964d3228a662be6d3104ce2098a6364784 then alert
         if failed permission 755 then alert
         if failed uid root then alert
         if failed gid root then alert
