@@ -1,4 +1,4 @@
 ---
-hostname: vm-carbon
-ip_address: 10.0.2.6
-interface: eth0
+hostname: carbon
+ip_address: 192.168.42.6
+interface: eth1

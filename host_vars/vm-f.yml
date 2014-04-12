@@ -1,4 +1,4 @@
 ---
-hostname: vm-flourine
-ip_address: 10.0.2.9
-interface: eth0
+hostname: flourine
+ip_address: 192.168.42.9
+interface: eth1

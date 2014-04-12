@@ -1,4 +1,4 @@
 ---
-hostname: vm-nitrogen
-ip_address: 10.0.2.7
-interface: eth0
+hostname: nitrogen
+ip_address: 192.168.42.7
+interface: eth1

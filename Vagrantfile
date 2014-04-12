@@ -2,6 +2,8 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+	config.vm.box = "debian_7.2"
+	config.vm.box_url = "https://dl.dropboxusercontent.com/u/197673519/debian-7.2.0.box"
 	config.vm.synced_folder ".", "/vagrant", disabled: true
 
 	config.vm.define "vm-h" do |hydrogen|
@@ -34,6 +36,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 			v.customize ["modifyvm", :id, "--nicpromisc2", "allow-all"]
 			v.customize ["modifyvm", :id, "--nicpromisc3", "allow-all"]
 		end
+	end
+
+	config.vm.define "vm-c" do |carbon|
+		carbon.vm.network :private_network, ip: "192.168.42.6", virtualbox__intnet: "cv_int"
+	end
+
+	config.vm.define "vm-n" do |nitrogen|
+		nitrogen.vm.network :private_network, ip: "192.168.42.7", virtualbox__intnet: "cv_int"
+	end
+
+	config.vm.define "vm-f" do |fluorine|
+		fluorine.vm.network :private_network, ip: "192.168.42.9", virtualbox__intnet: "cv_int"
 	end
 
 	config.vm.provision "ansible" do |ansible|
