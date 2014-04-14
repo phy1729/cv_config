@@ -1,0 +1,8 @@
+---
+- name: Install packages
+  apt: pkg={{ item }} state=present install_recommends=false
+  with_items:
+  - libpam-mount
+  - cifs-utils
+- name: Configure pam_mount
+  copy: src=pam_mount.conf.xml dest=/etc/security/pam_mount.conf.xml owner=root group=root mode=0644

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE pam_mount SYSTEM "pam_mount.conf.xml.dtd">
+<pam_mount>
+	<debug enable="0" />
+
+	<volume fstype="cifs" server="192.168.42.4" path="Users/%(USER)" mountpoint="~" />
+	<mntoptions allow="nosuid,nodev,loop,encryption,fsck,nonempty,allow_root,allow_other" />
+	<mntoptions require="nosuid,nodev" />
+	<logout wait="0" hup="0" term="0" kill="0" />
+	<mkmountpoint enable="1" remove="true" />
+</pam_mount>

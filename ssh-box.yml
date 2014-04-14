@@ -1,0 +1,9 @@
+---
+- hosts: ssh
+  sudo: yes
+  roles:
+  - common
+  - public
+  - nslcd
+  - pam_mount
+  - ssh-box

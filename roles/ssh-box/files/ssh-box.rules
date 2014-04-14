@@ -1,0 +1,4 @@
+*filter
+# Allow IRC, IRC SSL, jabber, HTTP, and HTTPS
+-A OUTPUT -p tcp -m multiport --destination-port 6667,6697,5222,80,443 -j ACCEPT
+COMMIT

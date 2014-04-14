@@ -1,0 +1,16 @@
+---
+- name: Configure firewall for ssh-box
+  copy: src=ssh-box.rules dest=/etc/iptables.d/
+  notify:
+  - iptables
+- name: Install ssh-box packages
+  apt: pkg={{ item }} state=present
+  with_items:
+  - zsh
+  - irssi
+  - screen
+  - tmux
+  # For SASL
+  - libcrypt-blowfish-perl
+  - libcrypt-dh-perl
+  - libcrypt-openssl-bignum-perl

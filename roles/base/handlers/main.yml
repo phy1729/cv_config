@@ -6,3 +6,5 @@
   command: /etc/network/if-up.d/iptables
 - name: ntp
   service: name=ntp state=restarted
+- name: sshd
+  service: name=ssh state=restarted
