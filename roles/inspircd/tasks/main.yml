@@ -20,4 +20,4 @@
 - name: Add InspIRCd init script
   copy: src=service dest=/etc/init.d/inspircd
 - name: Start InspIRCd
-  service: name=inspircd state=started
+  service: name=inspircd state=started enabled=yes
