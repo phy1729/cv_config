@@ -1,4 +1,4 @@
-.PHONY: sites site site-hydrogen clean secrets monit_passwd status_key
+.PHONY: sites site site-hydrogen clean mkdir_secrets secrets monit_passwd status_key
 
 DESTDIR = ${CURDIR}/tmp
 H_DESTDIR = ${CURDIR}/tmp-hydrogen
@@ -75,7 +75,10 @@ clean:
 	${SUDO} rm -rf ${DESTDIR} ${H_DESTDIR}
 	${SUDO} rm -f site*.tgz
 
-secrets: monit_passwd status_key
+secrets: mkdir_secrets monit_passwd status_key
+
+mkdir_secret:
+	mkdir -m 0700 secret
 
 monit_passwd:
 	export LC_CTYPE=C; tr -dc '!-~' < /dev/urandom | fold -w 32 | head -n 1 > secret/monit_passwd
