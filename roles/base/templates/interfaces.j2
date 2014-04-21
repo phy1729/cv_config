@@ -1,7 +1,7 @@
 auto lo {{ interface }}
 iface lo inet loopback
 
-{% if ansible_env["USER"] == "vagrant" %}
+{% if ansible_ssh_user == "vagrant" %}
 auto eth0
 iface eth0 inet dhcp
 
