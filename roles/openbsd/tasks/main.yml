@@ -81,3 +81,10 @@
   - db.255
   notify:
   - reload named
+
+- name: Configure pf rules for gaming anchor
+  copy: src=etc/pf.games dest=/etc/pf.games
+- name: Add cron job for gaming pf rules
+  cron: job="/sbin/pfctl -a gaming -f /etc/pf.games" weekday=1-5 hour=9 minute=0 state=present
+- name: Add cron job for gaming pf rules
+  cron: job="/sbin/pfctl -a gaming -F rules" weekday=1-5 hour=17 minute=0 state=present

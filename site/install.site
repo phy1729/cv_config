@@ -71,6 +71,12 @@ echo 'Defaults !lecture
 Defaults:%wheel !env_reset
 %wheel ALL=(ALL) SETENV:ALL' >> /etc/sudoers
 
+newcron="\n\n\
+0	9	*	*	1-5	/sbin/pfctl -a gaming -f /etc/pf.games
+0	17	*	*	1-5	/sbin/pfctl -a gaming -F rules"
+crontab=$(crontab -l)
+echo "${crontab}${newcron}" | crontab -
+
 # Generate named rndc keys
 rndc-confgen -at /var/named
 chown root:named /var/named/etc/rndc.key

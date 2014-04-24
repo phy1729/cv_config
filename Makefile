@@ -51,6 +51,7 @@ site:
 		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 640 ${HOSTNAMES} ${DESTDIR}/etc; \
 		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 640 templates/etc/mygate ${DESTDIR}/etc; \
 		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 600 templates/etc/pf.conf ${DESTDIR}/etc; \
+		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 600 files/etc/pf.games ${DESTDIR}/etc; \
 		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 555 ${RCDAEMONS} ${DESTDIR}/etc/rc.d; \
 		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${NAMED_G} -m 640 files/var/named/etc/UTDNS ${DESTDIR}/var/named/etc; \
 		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${NAMED_G} -m 640 templates/var/named/etc/named.conf ${DESTDIR}/var/named/etc; \
