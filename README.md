@@ -17,10 +17,14 @@ Use
 ---
 1. Add ansible to your PATH: `. ~/ansible/hacking/env-setup`
 2. Spin up the virtual machines: `vagrant up`
-	* Vagrant is setting up 2 virtual machines. This step may take some time.
+	* Vagrant is setting up 6 virtual machines. This step may take some time.
 3. SSH into any virtual machine with `vagrant ssh <machine>` where `<machine>` is any of
 	* vm-h
 	* vm-he
+	* vm-c
+	* vm-n
+	* vm-o
+	* vm-f
 4. When done with the virtual network, run `vagrant halt`, `vagrant suspend`, or `vagrant destroy` to pause, shutdown, or delete the virtual machines.
 
 Documentation
