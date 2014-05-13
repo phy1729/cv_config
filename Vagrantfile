@@ -54,10 +54,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 		fluorine.vm.network :private_network, ip: "192.168.42.9", virtualbox__intnet: "cv_int"
 	end
 
+	config.vm.define "vm-ne" do |neon|
+		neon.vm.network :private_network, ip: "192.168.42.10", virtualbox__intnet: "cv_int"
+	end
+
 	config.vm.provision "ansible" do |ansible|
 		ansible.playbook = "site.yml"
 		ansible.host_key_checking = false
 
-		ansible.groups = { "vm:children" => ["gateway", "ssh", "utility", "minecraft", "audio"], "gateway" => ["vm-h", "vm-he"], "ssh" => ["vm-c"], "utility" => ["vm-n"], "minecraft" => ["vm-o"], "audio" => ["vm-f"] }
+		ansible.groups = { "vm:children" => ["gateway", "ssh", "utility", "minecraft", "audio", "tv"], "gateway" => ["vm-h", "vm-he"], "ssh" => ["vm-c"], "utility" => ["vm-n"], "minecraft" => ["vm-o"], "audio" => ["vm-f"], "tv" => ["vm-ne"] }
 	end
 end
