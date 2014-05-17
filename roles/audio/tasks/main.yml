@@ -5,3 +5,6 @@
   - alsa-base
   - alsa-utils
   - mplayer
+  - mpd
+  - mpc
+  - ncmpcpp
