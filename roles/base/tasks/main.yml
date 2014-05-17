@@ -7,6 +7,8 @@
   template: src=interfaces.j2 dest=/etc/network/interfaces
   notify:
   - networking
+- name: Configure resolv.conf
+  copy: src=resolv.conf dest=/etc/resolv.conf mode=0644
 - name: Add iptables script
   copy: src=iptables dest=/etc/network/if-up.d/iptables
 - name: Make iptables.d
