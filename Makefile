@@ -4,7 +4,7 @@ DESTDIR = ${CURDIR}/tmp
 H_DESTDIR = ${CURDIR}/tmp-hydrogen
 SUDO = sudo
 INSTALL = install
-OSrev=54
+OSrev=55
 
 # OpenBSD UID and GID definitions
 ROOT_U = 0
