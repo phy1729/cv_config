@@ -1,14 +1,14 @@
 $TTL 10m
 
-@ IN SOA helium.collegiumv.org. cvadmins.utdallas.edu. (
-	2013093001
+@ IN SOA hydrogen.collegiumv.org. cvadmins.utdallas.edu. (
+	2014051701
 	1h	;refresh
 	3m	;retry
 	2w	;expire
 	1h )	;negative cache
 
 
-	IN NS	h.collegiumv.org.
+	IN NS	hydrogen.collegiumv.org.
 	IN NS	helium.collegiumv.org.
 	IN A	192.168.42.7
 
@@ -27,7 +27,7 @@ ForestDnsZones.collegiumv.org.	IN NS	beryllium.collegiumv.org.
 ForestDnsZones.collegiumv.org.	IN NS	boron.collegiumv.org.
 
 
-hydrogen	IN A	192.168.42.4
+hydrogen	IN A	192.168.42.1
 helium		IN A	192.168.42.2
 lithium		IN A	192.168.42.3
 beryllium	IN A	192.168.42.4
@@ -44,7 +44,7 @@ silicon		IN A	192.168.42.14
 phosphorus	IN A	192.168.42.15
 
 
-h	IN A	192.168.42.1
+h	IN CNAME	hydrogen
 he	IN CNAME	helium
 li	IN CNAME	lithium
 be	IN CNAME	beryllium

@@ -1,17 +1,17 @@
 $TTL 3h
 
-@ IN SOA helium.collegiumv.org. cvadmins.utdallas.edu. (
-	2014022501
+@ IN SOA hydrogen.collegiumv.org. cvadmins.utdallas.edu. (
+	2014051701
 	3h	;refresh
 	1h	;retry
 	1w	;expire
 	1h )	;negative cache
 
 
-	IN NS	h.collegiumv.org.
+	IN NS	hydrogen.collegiumv.org.
 	IN NS	helium.collegiumv.org.
 
-1	IN PTR	h.collegiumv.org.
+1	IN PTR	hydrogen.collegiumv.org.
 2	IN PTR	helium.collegiumv.org.
 3	IN PTR	lithium.collegiumv.org.
 4	IN PTR	beryllium.collegiumv.org.
