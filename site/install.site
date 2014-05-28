@@ -11,7 +11,7 @@ ln -s /usr/local/bin/python2.7 /usr/bin/python
 echo 'inet {{ internal_ip }} 255.255.255.0 NONE' > /etc/hostname.bge1
 echo '{{ gateway }}' > /etc/mygate
 
-files="/etc/dhclient.conf /etc/dhcpd.conf /etc/hostname.* /etc/mygate /etc/ntpd.conf /etc/pf.conf /etc/rc.conf.local /var/named/etc/named.conf"
+files="/etc/dhcpd.conf /etc/hostname.* /etc/mygate /etc/ntpd.conf /etc/pf.conf /etc/rc.conf.local /var/named/etc/named.conf"
 
 int_if="bge1"
 ext_if="bge0"

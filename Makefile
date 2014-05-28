@@ -12,8 +12,7 @@ WHEEL_G = 0
 NAMED_G = 70
 
 # -rw-r--r--
-BIN1=	templates/etc/dhclient.conf \
-	templates/etc/dhcpd.conf \
+BIN1=	templates/etc/dhcpd.conf \
 	templates/etc/ntpd.conf \
 	files/etc/pkg.conf \
 	templates/etc/rc.conf.local \
