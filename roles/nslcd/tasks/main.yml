@@ -1,6 +1,6 @@
 ---
 - name: Configure firewall
-  copy: src=nslcd.rules dest=/etc/iptables.d/
+  copy: src=nslcd.rules dest=/etc/iptables.d/nslcd.rules owner=root group=root mode=0644
   notify:
   - iptables
 - name: Install libpam-ldapd and zsh
@@ -27,11 +27,11 @@
 - name: Add authorizedkeyscommand user
   user: name=autorizedkeyscommand createhome=no groups= shell=/bin/false system=yes state=present
 - name: Fix /usr/local permissions
-  file: path=/usr/local mode=0555 state=directory
+  file: path=/usr/local state=directory owner=root group=staff mode=0555
 - name: Add AuthorizedKeysCommand script
   copy: src=ssh_pubkeys dest=/usr/local/sbin/ssh_pubkeys owner=root group=root mode=0755
 - name: Make /usr/local/sbin safe
-  file: path=/usr/local/sbin/ state=directory owner=root group=root mode=0775
+  file: path=/usr/local/sbin/ state=directory owner=root group=root mode=0755
 - name: Create authorizedkeyscommand user
   user: name=authorizedkeyscommand system=yes createhome=no
 - name: Require pubkey and password

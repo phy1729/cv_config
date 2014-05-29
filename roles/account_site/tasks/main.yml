@@ -1,28 +1,28 @@
 ---
 - name: Configure monit for account site
-  copy: src=monit dest=/etc/monit/web.d/account
+  copy: src=monit dest=/etc/monit/web.d/account owner=root group=root mode=0644
   notify:
   - monit
 - name: Copy account files
-  copy: src=account dest=/var/www/sites/
+  copy: src=account dest=/var/www/sites/ owner=root group=root mode=0755
 - name: Create config directory
   file: path=/var/www/sites/account/config state=directory owner=root group=www-data mode=0750
 - name: Copy config file
-  template: src=config.php dest=/var/www/sites/account/config/config.php
+  template: src=config.php dest=/var/www/sites/account/config/config.php owner=root group=www-data mode=0640
 - name: Copy config files
-  copy: src=secret/account_{{ item }} dest=/var/www/sites/account/config/{{ item }}
+  copy: src=secret/account_{{ item }} dest=/var/www/sites/account/config/{{ item }} owner=root group=www-data mode=0640
   with_items:
   - access.list
   - words.txt
 - name: Add account sites
-  copy: src={{ item }}.site dest=/etc/apache2/sites-available/{{ item }}
+  copy: src={{ item }}.site dest=/etc/apache2/sites-available/{{ item }} owner=root group=root mode=0644
   with_items:
   - account
   - accounts
   notify:
   - apache2
 - name: Enable account sites
-  file: src=../sites-available/{{ item }} dest=/etc/apache2/sites-enabled/{{ item }} state=link
+  file: src=../sites-available/{{ item }} dest=/etc/apache2/sites-enabled/{{ item }} state=link owner=root group=root
   with_items:
   - account
   - accounts

@@ -1,11 +1,11 @@
 ---
 - name: Copy pasta files
-  copy: src=pasta dest=/var/www/sites/
+  copy: src=pasta dest=/var/www/sites/ owner=root group=root mode=0755
 - name: Add pasta site
-  copy: src=site dest=/etc/apache2/sites-available/pasta
+  copy: src=site dest=/etc/apache2/sites-available/pasta owner=root group=root mode=0644
   notify:
   - apache2
 - name: Enable pasta site
-  file: src=../sites-available/pasta dest=/etc/apache2/sites-enabled/pasta state=link
+  file: src=../sites-available/pasta dest=/etc/apache2/sites-enabled/pasta state=link owner=root group=root
   notify:
   - apache2

@@ -1,12 +1,12 @@
 ---
 - name: Configure firewall for apache2
-  copy: src=apache2.rules dest=/etc/iptables.d/
+  copy: src=apache2.rules dest=/etc/iptables.d/apache2.rules owner=root group=root mode=0644
   notify:
   - iptables
 - name: Make web.d to monitor websites
-  file: path=/etc/monit/web.d state=directory
+  file: path=/etc/monit/web.d state=directory owner=root group=root mode=0755
 - name: Configure monit for apache2
-  copy: src=monit dest=/etc/monit/conf.d/apache2
+  copy: src=monit dest=/etc/monit/conf.d/apache2 owner=root group=root mode=0644
   notify:
   - monit
 - name: Install packages for webserver
@@ -17,20 +17,20 @@
   - php5
   - php5-ldap
 - name: Add sites-available
-  copy: src=sites-available dest=/etc/apache2/
+  copy: src=sites-available dest=/etc/apache2/ owner=root group=root mode=0755
   notify:
   - apache2
 - name: Enable default site
-  file: src=../sites-available/default dest=/etc/apache2/sites-enabled/0-default state=link
+  file: src=../sites-available/default dest=/etc/apache2/sites-enabled/0-default state=link owner=root group=root
   notify:
   - apache2
 - name: Enable sites
-  file: src=../sites-available/{{ item }} dest=/etc/apache2/sites-enabled/{{ item }} state=link
+  file: src=../sites-available/{{ item }} dest=/etc/apache2/sites-enabled/{{ item }} state=link owner=root group=root
   with_items:
   - irc
   notify:
   - apache2
 - name: Copy www files
-  copy: src=www dest=/var/
+  copy: src=www dest=/var/ owner=root group=root mode=0755
 - name: Make the sites folder
-  file: path=/var/www/sites state=directory
+  file: path=/var/www/sites state=directory owner=root group=root mode=0755

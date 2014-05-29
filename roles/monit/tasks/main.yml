@@ -2,16 +2,16 @@
 - name: Install monit
   apt: pkg=monit state=present
 - name: Configure monit
-  template: src=monit.j2 dest=/etc/monit/monitrc
+  template: src=monit.j2 dest=/etc/monit/monitrc owner=root group=root mode=0600
   notify:
   - monit
 - name: Add sshd monit conf
-  copy: src=sshd dest=/etc/monit/conf.d/
+  copy: src=sshd dest=/etc/monit/conf.d/sshd owner=root group=root mode=0644
   notify:
   - monit
 - name: Start monit
   service: name=monit state=started
 - name: Configure firewall
-  copy: src=monit.rules dest=/etc/iptables.d/
+  copy: src=monit.rules dest=/etc/iptables.d/monit.rules owner=root group=root mode=0644
   notify:
   - iptables

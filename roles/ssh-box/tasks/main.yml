@@ -1,6 +1,6 @@
 ---
 - name: Configure firewall for ssh-box
-  copy: src=ssh-box.rules dest=/etc/iptables.d/
+  copy: src=ssh-box.rules dest=/etc/iptables.d/ssh-box.rules owner=root group=root mode=0644
   notify:
   - iptables
 - name: Install ssh-box packages

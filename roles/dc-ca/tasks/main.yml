@@ -2,7 +2,7 @@
 - name: Make CollegiumV cert dir
   file: path=/usr/share/ca-certificates/collegiumv state=directory owner=root group=root mode=0755
 - name: Copy CA cert
-  copy: src={{ item }}.crt dest=/usr/share/ca-certificates/collegiumv/{{ item }}.crt
+  copy: src={{ item }}.crt dest=/usr/share/ca-certificates/collegiumv/{{ item }}.crt owner=root group=root mode=0644
   with_items:
   - beryllium
   - boron

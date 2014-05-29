@@ -1,24 +1,24 @@
 ---
 - name: Set hostname
-  template: src=hostname.j2 dest=/etc/hostname
+  template: src=hostname.j2 dest=/etc/hostname owner=root group=root mode=0644
   notify:
   - hostname
 - name: Configure networking
-  template: src=interfaces.j2 dest=/etc/network/interfaces
+  template: src=interfaces.j2 dest=/etc/network/interfaces owner=root group=root mode=0644
   notify:
   - networking
 - name: Configure resolv.conf
-  copy: src=resolv.conf dest=/etc/resolv.conf mode=0644
+  copy: src=resolv.conf dest=/etc/resolv.conf owner=root group=root mode=0644
 - name: Add iptables script
-  copy: src=iptables dest=/etc/network/if-up.d/iptables
+  copy: src=iptables dest=/etc/network/if-up.d/iptables owner=root group=root mode=0755
 - name: Make iptables.d
-  file: path=/etc/iptables.d state=directory
+  file: path=/etc/iptables.d state=directory owner=root group=root mode=0755
 - name: Configure IPv4 firewall
-  copy: src=0common.rules dest=/etc/iptables.d/
+  copy: src=0common.rules dest=/etc/iptables.d/0common.rules owner=root group=root mode=0644
   notify:
   - iptables
 - name: Configure IPv6 firewall
-  copy: src=ip6tables.conf dest=/etc/ip6tables.conf
+  copy: src=ip6tables.conf dest=/etc/ip6tables.conf owner=root group=root mode=0644
   notify:
   - iptables
 - name: Remove motd
@@ -31,6 +31,6 @@
   - ethtool
   - ntp
 - name: Configure ntpd
-  copy: src=ntp.conf dest=/etc/ntp.conf
+  copy: src=ntp.conf dest=/etc/ntp.conf owner=root group=root mode=0644
   notify:
   -  ntp
