@@ -1,9 +1,0 @@
-cd images
-put /tmp/pfstat-bandwidth_day.jpg
-put /tmp/pfstat-bandwidth_week.jpg
-put /tmp/pfstat-states_day.jpg
-put /tmp/pfstat-states_week.jpg
-put /tmp/pfstat-errors_day.jpg
-put /tmp/pfstat-errors_week.jpg
-put /tmp/pfstat-blocked_day.jpg
-put /tmp/pfstat-blocked_week.jpg

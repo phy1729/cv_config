@@ -1,4 +1,4 @@
-.PHONY: sites site site-hydrogen clean mkdir_secrets secrets monit_passwd status_key
+.PHONY: sites site site-hydrogen clean mkdir_secrets secrets monit_passwd
 
 DESTDIR = ${CURDIR}/tmp
 H_DESTDIR = ${CURDIR}/tmp-hydrogen
@@ -60,13 +60,9 @@ site:
 
 site-hydrogen:
 	${SUDO} ${INSTALL} -d -o ${ROOT_U} -g ${WHEEL_G} -m 755 ${H_DESTDIR}
-	${SUDO} ${INSTALL} -d -o ${ROOT_U} -g ${WHEEL_G} -m 755 ${H_DESTDIR}/etc/rc.d
 	${SUDO} ${INSTALL} -d -o ${ROOT_U} -g ${WHEEL_G} -m 755 ${H_DESTDIR}/var/named/master
 	${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 550 site-hydrogen/install.site-hydrogen ${H_DESTDIR}
 	cd roles/openbsd-hydrogen; \
-		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 644 templates/etc/pfstat.conf ${H_DESTDIR}/etc; \
-		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 555 files/etc/rc.d/update_pfstat ${H_DESTDIR}/etc/rc.d; \
-		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 644 files/etc/update_pfstat_batch ${H_DESTDIR}/etc; \
 		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 644 files/var/named/master/collegiumv.org ${H_DESTDIR}/var/named/master; \
 		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 644 files/var/named/master/db.192.168.42 ${H_DESTDIR}/var/named/master; \
 		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 644 files/var/named/master/sunray-servers ${H_DESTDIR}/var/named/master
@@ -76,13 +72,10 @@ clean:
 	${SUDO} rm -rf ${DESTDIR} ${H_DESTDIR}
 	${SUDO} rm -f site*.tgz
 
-secrets: mkdir_secrets monit_passwd status_key
+secrets: mkdir_secrets monit_passwd
 
 mkdir_secret:
 	mkdir -m 0700 secret
 
 monit_passwd:
 	export LC_CTYPE=C; tr -dc '!-~' < /dev/urandom | fold -w 32 | head -n 1 > secret/monit_passwd
-
-status_key:
-	ssh-keygen -t rsa -b 4096 -f secret/status_id_rsa

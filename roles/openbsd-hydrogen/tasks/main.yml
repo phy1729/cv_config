@@ -1,12 +1,4 @@
 ---
-- name: Add pfstat config
-  template: src=etc/pfstat.conf dest=/etc/pfstat.conf owner=root group=wheel mode=0644
-- name: Add pfstat sftp batch file
-  copy: src=etc/update_pfstat_batch dest=/etc/update_pfstat_batch owner=root group=wheel mode=0644
-- name: Add pfstat cron script
-  copy: src=etc/rc.d/update_pfstat dest=/etc/rc.d/update_pfstat owner=root group=wheel mode=0555
-- name: Add private key for pfstat
-  copy: src=secret/status_id_rsa dest=/etc/ssh/status_id_rsa owner=root group=wheel mode=0600
 - name: Add master zones
   copy: src=var/named/master/{{ item }} dest=/var/named/master/{{ item }} owner=root group=wheel mode=0644
   with_items:
