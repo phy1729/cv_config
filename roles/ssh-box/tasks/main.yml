@@ -8,10 +8,13 @@
   with_items:
   - zsh
   - irssi
+  - weechat
   - mosh
   - screen
   - tmux
-  # For SASL
+  # For SASL in irssi
   - libcrypt-blowfish-perl
   - libcrypt-dh-perl
   - libcrypt-openssl-bignum-perl
+  # For jabber in weechat
+  - python-xmpp
