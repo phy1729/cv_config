@@ -30,6 +30,10 @@
   file: path=/usr/local mode=0555 state=directory
 - name: Add AuthorizedKeysCommand script
   copy: src=ssh_pubkeys dest=/usr/local/sbin/ssh_pubkeys owner=root group=root mode=0755
+- name: Make /usr/local/sbin safe
+  file: path=/usr/local/sbin/ state=directory owner=root group=root mode=0775
+- name: Create authorizedkeyscommand user
+  user: name=authorizedkeyscommand system=yes createhome=no
 - name: Require pubkey and password
   lineinfile: dest=/etc/ssh/sshd_config state=present line='{{ item }}'
   with_items:
