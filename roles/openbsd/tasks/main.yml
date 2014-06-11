@@ -29,8 +29,11 @@
   template: src=etc/pf.conf dest=/etc/pf.conf owner=root group=wheel mode=0600
   notify:
   - pf
-- name: Install isc-dhcpd
-  openbsd_pkg: name=isc-dhcp-server state=present
+- name: Install isc-dhcpd and unbound
+  openbsd_pkg: name={{ item }} state=present
+  with_items:
+  - isc-dhcp-server
+  - unbound
   environment:
     PKG_PATH: "{{ PKG_PATH }}"
 - name: Copy dhcpd config
@@ -58,24 +61,21 @@
   with_items:
   - etc/rc.d/dhcpd dest=/etc/rc.d/dhcpd
 
-- name: Generate rndc keys
-  command: rndc-confgen -at /var/named creates=/etc/rndc.key
+- name: Copy nsd config
+  template: src=var/nsd/etc/nsd.conf dest=/var/nsd/etc/nsd.conf owner=root group=_nsd mode=0640 validate='nsd-checkconf %s'
   notify:
-  - restart named
-- name: Fix permissions of rndc key
-  file: path=/var/named/etc/rndc.key owner=root group=named mode=0640
-- name: Copy named config
-  template: src=var/named/etc/named.conf dest=/var/named/etc/named.conf owner=root group=named mode=0640
-  notify:
-  - reload named
-- name: Add UTD forwarders
-  copy: src=var/named/etc/UTDNS dest=/var/named/etc/UTDNS owner=root group=named mode=0640
-  notify:
-  - reload named
-- name: Add dummy zones
-  copy: src=var/named/master/{{ item }} dest=/var/named/master/{{ item }} owner=root group=wheel mode=0644
+  - nsd
+- name: Add master zones
+  copy: src=var/nsd/zones/{{ item }} dest=/var/nsd/zones/{{ item }} owner=root group=wheel mode=0644
   with_items:
-  - db.0
-  - db.255
+  - collegiumv.org
+  - db.192.168.42
+  - sunray-servers
   notify:
-  - reload named
+  - nsd
+- name: Copy unbound config
+  template: src=var/unbound/etc/unbound.conf dest=/var/unbound/etc/unbound.conf owner=root group=wheel mode=0644 validate='unbound-checkconf %s'
+  notify:
+  - unbound
+- name: Copy root.hint
+  file: src=var/unbound/etc/root.hint dest=/var/unbound/etc/root.hint owner=root group=wheel mode=0644

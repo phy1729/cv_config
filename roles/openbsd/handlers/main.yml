@@ -5,9 +5,9 @@
   command: /etc/rc.d/dhcpd restart
 - name: ntpd
   command: /etc/rc.d/ntpd restart
-- name: restart named
-  command: /etc/rc.d/named restart
-- name: reload named
-  command: rndc reload
+- name: nsd
+  command: nsd-control reconfig
+- name: unbound
+  command: unbound-control reload
 - name: pf
   command: pfctl -f /etc/pf.conf

@@ -54,10 +54,10 @@ n	IN CNAME	nitrogen
 o	IN CNAME	oxygen
 f	IN CNAME	fluorine
 ne	IN CNAME	neon
-na	IN CNAME	sodium	  
-mg	IN CNAME	magnesium 
-al	IN CNAME	aluminium 
-si	IN CNAME	silicon	  
+na	IN CNAME	sodium
+mg	IN CNAME	magnesium
+al	IN CNAME	aluminium
+si	IN CNAME	silicon
 p	IN CNAME	phosphorus
 
 

@@ -1,3 +1,5 @@
 dhcpd_flags="{{ internal_if }}"
-named_flags=""
+nsd_flags=""
 ntpd_flags=""
+
+pkg_scripts="unbound"
