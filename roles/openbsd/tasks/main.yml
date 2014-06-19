@@ -69,7 +69,7 @@
   copy: src=var/nsd/zones/{{ item }} dest=/var/nsd/zones/{{ item }} owner=root group=wheel mode=0644
   with_items:
   - collegiumv.org
-  - db.192.168.42
+  - 42.168.192.in-addr.arpa
   - sunray-servers
   notify:
   - nsd
