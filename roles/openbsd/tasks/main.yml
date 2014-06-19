@@ -74,7 +74,7 @@
   notify:
   - nsd
 - name: Copy unbound config
-  template: src=var/unbound/etc/unbound.conf dest=/var/unbound/etc/unbound.conf owner=root group=wheel mode=0644 validate='unbound-checkconf %s'
+  template: src=var/unbound/etc/unbound.conf dest=/var/unbound/etc/unbound.conf owner=root group=wheel mode=0644 validate='unbound-checkconf /var/unbound/../../%s'
   notify:
   - unbound
 - name: Copy root.hint
