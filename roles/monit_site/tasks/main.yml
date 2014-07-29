@@ -4,6 +4,7 @@
   with_items:
   - dns_cv.sh
   - dns_msdcs.sh
+  - dns_pf.sh
 - name: Add monit tests
   copy: src={{ item }} dest=/etc/monit/conf.d/
   with_items:

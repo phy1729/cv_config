@@ -1,0 +1,22 @@
+127.0.0.1	localhost
+::1		localhost
+
+64.50.233.100	ftp.us.debian.org
+64.50.236.52 	ftp.us.debian.org
+128.61.240.89 	ftp.us.debian.org
+146.6.54.21	ftp.utexas.edu
+209.236.123.144	madhax.net
+72.53.191.10	mirror.esc7.net
+128.252.19.1	navobs1.wustl.edu
+139.78.135.14	ntp.okstate.edu
+76.185.189.253	omgpwned.net
+128.101.240.212	security.debian.org
+128.31.0.36 	security.debian.org
+128.61.240.73 	security.debian.org
+149.20.20.6	security.debian.org
+10.180.15.187	smtp.utdallas.edu
+10.180.15.188 	smtp.utdallas.edu
+10.182.70.205 	smtp.utdallas.edu
+10.182.70.208	smtp.utdallas.edu
+129.7.1.66	tick.uh.edu
+10.110.10.11	timelord.utdallas.edu

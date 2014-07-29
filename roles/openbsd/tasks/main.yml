@@ -49,6 +49,7 @@
 - name: Copy common config
   copy: src={{ item }} dest=/{{ item }} owner=root group=wheel mode=0644
   with_items:
+  - etc/hosts
   - etc/pkg.conf
   - etc/rc.local
   - etc/rc.securelevel

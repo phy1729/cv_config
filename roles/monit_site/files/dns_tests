@@ -3,3 +3,6 @@ check program dns_cv with path /usr/local/bin/dns_cv.sh
 
 check program dns_msdcs with path /usr/local/bin/dns_msdcs.sh
 	if status != 0 then alert
+
+check program dns_pf with path /usr/local/bin/dns_pf.sh
+	if status != 0 then alert

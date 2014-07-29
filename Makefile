@@ -14,6 +14,7 @@ NSD_G = 97
 
 # -rw-r--r--
 BIN1=	templates/etc/dhcpd.conf \
+	files/etc/hosts \
 	templates/etc/ntpd.conf \
 	files/etc/pkg.conf \
 	templates/etc/rc.conf.local \
