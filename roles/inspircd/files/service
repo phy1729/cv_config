@@ -13,12 +13,11 @@
 # GPL Licensed
 
 NAME="inspircd"
-IRCD="/opt/inspircd/bin/inspircd"
+IRCD="/opt/inspircd/inspircd"
 IRCDPID="/var/run/inspircd.pid"
 IRCDLOG="/var/log/inspircd.log"
 IRCDCONF="/opt/inspircd/conf/inspircd.conf"
-IRCDARGS="--logfile $IRCDLOG --config $IRCDCONF"
-USER="irc"
+USER="irc:irc"
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
 # Define LSB log_* functions (status_of_proc)
@@ -33,9 +32,9 @@ fi
 start_ircd()
 {
 	[ -f "$IRCDPID" ] || ( touch "$IRCDPID" ; chown "$USER" "$IRCDPID" )
-	[ -f "$IRCDLOG" ] || ( touch "$IRCDLOG" ; chown "$USER:adm" "$IRCDLOG" ; chmod 0640 "$IRCDLOG" )
+	[ -f "$IRCDLOG" ] || ( touch "$IRCDLOG" ; chown "$USER" "$IRCDLOG" ; chmod 0640 "$IRCDLOG" )
         export LD_LIBRARY_PATH=/usr/lib/inspircd
-	start-stop-daemon --start --quiet --oknodo --chuid "$USER" --pidfile "$IRCDPID" --exec "$IRCD" -- $IRCDARGS start > /dev/null
+	start-stop-daemon --start --quiet --oknodo --chuid "$USER" --pidfile "$IRCDPID" --exec "$IRCD" -- start > /dev/null
 }
 
 stop_ircd()

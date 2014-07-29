@@ -1,0 +1,14 @@
+#!/usr/bin/env python
+
+import base64
+import getpass
+import hmac
+import hashlib
+import os
+import sys
+
+password = getpass.getpass(sys.argv[1])
+salt = os.urandom(16)
+
+digest = hmac.new(salt, password, hashlib.sha256).digest()
+print base64.b64encode(salt).rstrip("=")+"$"+base64.b64encode(digest).rstrip("=")

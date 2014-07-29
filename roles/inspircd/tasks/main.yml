@@ -12,7 +12,19 @@
   notify:
   - inspircd
 - name: Configure InspIRCd
-  copy: src=secret/inspircd/conf dest=/opt/inspircd/
+  template: src={{ item }} dest=/opt/inspircd/conf/{{ item }} owner=root group=irc mode=0640
+  with_items:
+  - inspircd.conf
+  - links.conf
+  - modules.conf
+  - opers.conf
+  notify:
+  - inspircd
+- name: Copy SSL key and cert
+  copy: src=secret/{{ item }} dest=/opt/inspircd/conf/{{ item }} owner=root group=irc mode=0640
+  with_items:
+  - cert.pem
+  - key.pem
   notify:
   - inspircd
 - name: Make data directory

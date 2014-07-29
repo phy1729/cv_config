@@ -1,4 +1,6 @@
-.PHONY: site clean mkdir_secrets secrets account_admin_password account_salt monit_passwd
+.PHONY: site clean mkdir_secrets secrets account_admin_password account_salt inspircd_inspircd_power_diepass inspircd_inspircd_power_restartpass inspircd_links_madhax_recvpass inspircd_links_madhax_sendpass inspircd_links_minecraft_recvpass inspircd_links_minecraft_sendpass inspircd_modules_cloak_key inspircd_opers_password monit_passwd nslcd_bind_passwd
+
+SECRETS_DIR = secret
 
 DESTDIR = ${CURDIR}/tmp
 SUDO = sudo
@@ -63,10 +65,20 @@ clean:
 	${SUDO} rm -rf ${DESTDIR}
 	${SUDO} rm -f site*.tgz
 
-secrets: mkdir_secrets account_admin_password account_salt monit_passwd
+secrets: mkdir_secrets account_admin_password account_salt inspircd_inspircd_power_diepass inspircd_inspircd_power_restartpass inspircd_links_madhax_recvpass inspircd_links_madhax_sendpass inspircd_links_minecraft_recvpass inspircd_links_minecraft_sendpass inspircd_modules_cloak_key inspircd_opers_password monit_passwd nslcd_bind_passwd
+	$(info Don't forget to get account_access.list and account_words.txt, generate cert.pem and key.pem, and edit account_admin_username and nslcd_bind_user)
 
-mkdir_secret:
-	mkdir -m 0700 secret
+mkdir_secrets:
+	mkdir -pm 0700 ${SECRETS_DIR}
 
-account_admin_password account_salt monit_passwd:
-	export LC_CTYPE=C; tr -dc '!-~' < /dev/urandom | fold -w 32 | head -n 1 > secret/$@
+account_admin_password account_salt inspircd_links_madhax_recvpass inspircd_links_madhax_sendpass inspircd_links_minecraft_recvpass inspircd_links_minecraft_sendpass inspircd_modules_cloak_key monit_passwd nslcd_bind_passwd:
+	export LC_CTYPE=C; tr -dc '!-~' < /dev/urandom | fold -w 32 | head -n 1 > ${SECRETS_DIR}/$@
+
+inspircd_inspircd_power_diepass:
+	./inspircd_hmac "Password to shutdown the IRC server: " > ${SECRETS_DIR}/inspircd_inspircd_power_diepass
+
+inspircd_inspircd_power_restartpass:
+	./inspircd_hmac "Password to restart the IRC server: " > ${SECRETS_DIR}/inspircd_inspircd_power_restartpass
+
+inspircd_opers_password:
+	./inspircd_hmac "Password to oper up on IRC: " > ${SECRETS_DIR}/inspircd_opers_phy1729_password
