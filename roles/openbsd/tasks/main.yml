@@ -60,7 +60,7 @@
 - name: Copy rc.d scripts
   copy: src={{ item }} dest=/{{ item }} owner=root group=wheel mode=0555
   with_items:
-  - etc/rc.d/dhcpd dest=/etc/rc.d/dhcpd
+  - etc/rc.d/dhcpd
 
 - name: Copy nsd config
   template: src=var/nsd/etc/nsd.conf dest=/var/nsd/etc/nsd.conf owner=root group=_nsd mode=0640 validate='nsd-checkconf %s'
