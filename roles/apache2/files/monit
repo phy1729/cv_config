@@ -1,5 +1,5 @@
 check file apache_bin with path /usr/sbin/apache2
-	if failed checksum expect 095b139a4c0188fb5c3b6e0e1288d03c1fd853b5 then alert
+	if failed checksum expect b45f5f0690be86972f0308d47ddfbb071c23bf57 then alert
 	if failed permission 755 then alert
 	if failed uid root then alert
 	if failed gid root then alert
