@@ -5,6 +5,8 @@
   - monit
 - name: Copy account files
   copy: src=account dest=/var/www/sites/
+- name: Create config directory
+  file: path=/var/www/sites/account/config state=directory owner=root group=www-data mode=0750
 - name: Copy config file
   template: src=config.php dest=/var/www/sites/account/config/config.php
 - name: Copy config files
