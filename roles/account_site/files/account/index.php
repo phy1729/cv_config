@@ -86,10 +86,15 @@ function isValidKey($key, $netID, $username="") {
 function resetUserPassword($netID) {
 	global $ldap;
 	$password=makePassword();
-	ldap_modify($ldap, getDNFromNetID($netID), array('unicodePwd' => encodePassword($password), 'pwdLastSet' => '0'));
-	sendMail($netID, 'CV Password Reset', 'Your new password is "'.$password.'". This is a temporary password. To set your real password login on a lounge computer with your username ('.getUsernameFromNetID($netID).').');
-	CVlog("Reset password for n:$netID");
-	return "Please check your zmail for your new password. Press the \"Get Mail\" icon in the upper left to refresh your inbox.";
+	$result = ldap_modify($ldap, getDNFromNetID($netID), array('unicodePwd' => encodePassword($password), 'pwdLastSet' => '0'));
+	if ($result) {
+		sendMail($netID, 'CV Password Reset', 'Your new password is "'.$password.'". This is a temporary password. To set your real password login on a lounge computer with your username ('.getUsernameFromNetID($netID).').');
+		CVlog("Reset password for n:$netID");
+		return "Please check your zmail for your new password. Press the \"Get Mail\" icon in the upper left to refresh your inbox.";
+	} else {
+		CVlog("Error resetting password for n:$netID");
+		return 'There was an error resetting your password. Please email <a href="mailto:cvadmins@utdallas.edu">cvadmins@utdallas.edu</a> for assistance.';
+	}
 }
 
 function sendResetEmail($netID) {
@@ -121,7 +126,15 @@ function createUser($netID, $username) {
 	$user_attributes['objectclass'][3] = 'user';
 	$user_attributes['userAccountControl'][0] = 512; // NORMAL_ACCOUNT
 	$user_attributes['uidNumber'][0] = getnextUID();
-	ldap_add($ldap, "CN=" . $first . " " . $last . ", " . $base_dn, $user_attributes);
+	$result = ldap_add($ldap, "CN=" . $first . " " . $last . ", " . $base_dn, $user_attributes);
+	if ($result) {
+		sendMail($netID, 'CV Account Creation', 'Your new password is "'.$password.'". This is a temporary password. To set your real password login on a lounge computer.');
+		CVlog("Made account for $first $last u:$username n:$netID");
+		return  "Please check your zmail to finish creating your account. Press the \"Get Mail\" icon in the upper left to refresh your inbox.";
+	} else {
+		CVlog("Error creating account for n:$netID");
+		return 'There was an error creating your account. Please email <a href="mailto:cvadmins@utdallas.edu">cvadmins@utdallas.edu</a> for assistance.';
+	}
 }
 
 function sendCreationEmail($netID, $username) {
