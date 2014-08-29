@@ -182,7 +182,7 @@ function getKey($netID, $past=0) {
 	global $config_salt;
 	$date = new DateTime();
 	$date->modify($past.' day');
-	return hash("sha256", $config_salt.strtolower($netID).$date->format('Y-m-d'));
+	return hash_hmac("sha256", strtolower($netID).$date->format('Y-m-d'), $config_salt);
 }
 
 function CVlog($text) {
