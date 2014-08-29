@@ -64,13 +64,13 @@ function resetUserPassword($ldap, $netID) {
 	$password=makePassword();
 	$ldap->user()->password(getUsernameFromNetID($ldap, $netID), $password);
 	$ldap->user()->modify(getUsernameFromNetID($ldap, $netID), array('change_password'=>1));
-	mail($netID.'@utdallas.edu', 'CV Password Reset', 'Your new password is "'.$password.'". This is a temporary password. To set your real password login on a lounge computer with your username ('.getUsernameFromNetID($ldap, $netID).').', 'From:cthulhu@collegiumv.org');
+	sendMail($netID, 'CV Password Reset', 'Your new password is "'.$password.'". This is a temporary password. To set your real password login on a lounge computer with your username ('.getUsernameFromNetID($netID).').');
 	CVlog("Reset password for n:$netID");
 	return "Please check your zmail for your new password. Press the \"Get Mail\" icon in the upper left to refresh your inbox.";
 }
 
 function sendResetEmail($netID) {
-	mail($netID.'@utdallas.edu', 'CV Password Reset', 'A password reset was requested for your account. If you did not request this, please disregard this email. To complete the password reset click on the following link.'."\n".getLink($netID), 'From:cthulhu@collegiumv.org');
+	sendMail($netID, 'CV Password Reset', 'A password reset was requested for your account. If you did not request this, please disregard this email. To complete the password reset click on the following link.'."\n".getLink($netID));
 	CVlog("Sent reset email for n:$netID");
 	return "Please check your zmail to finish resetting your password.";
 }
@@ -93,15 +93,19 @@ function createUser($ldap, $netID, $username) {
 		'change_password' => 1,
 	);
 	$ldap->user()->create($user);
-	mail($netID.'@utdallas.edu', 'CV Account Creation', 'Your new password is "'.$password.'". This is a temporary password. To set your real password login on a lounge computer.', 'From:cthulhu@collegiumv.org');
+	sendMail($netID, 'CV Account Creation', 'Your new password is "'.$password.'". This is a temporary password. To set your real password login on a lounge computer.');
 	CVlog("Made account for $first $last u:$username n:$netID");
 	return  "Please check your zmail to finish creating your account. Press the \"Get Mail\" icon in the upper left to refresh your inbox.";
 }
 
 function sendCreationEmail($netID, $username) {
-	mail($netID.'@utdallas.edu', 'CV Account Creation', 'An account creation was requested for your netID. If you did not request this, please disregard this email. To finish creating the account click on the following link.'."\n".getLink($netID, $username), 'From:cthulhu@collegiumv.org');
+	sendMail($netID, 'CV Account Creation', 'An account creation was requested for your netID. If you did not request this, please disregard this email. To finish creating the account click on the following link.'."\n".getLink($netID, $username));
 	CVlog("Sent creation email for u:$username n:$netID");
 	return "Please check your zmail to finish creating your account.";
+}
+
+function sendMail($netID, $subject, $body) {
+	mail($netID.'@utdallas.edu', $subject, $body, 'From:cthulhu@collegiumv.org');
 }
 
 function makePassword() {
