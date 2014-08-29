@@ -120,6 +120,7 @@ function createUser($netID, $username) {
 	$user_attributes['objectclass'][2] = 'organizationalPerson';
 	$user_attributes['objectclass'][3] = 'user';
 	$user_attributes['userAccountControl'][0] = 512; // NORMAL_ACCOUNT
+	$user_attributes['uidNumber'][0] = getnextUID();
 	ldap_add($ldap, "CN=" . $first . " " . $last . ", " . $base_dn, $user_attributes);
 }
 
@@ -181,6 +182,25 @@ function getDNFromNetID($netID) {
 	} else {
 		CVLog("Too many matches for ".$netID);
 		return false;
+	}
+}
+
+function getNextUID($max = 0) {
+	global $ldap, $base_dn;
+	$search=ldap_search($ldap, $base_dn, "(|(uidNumber>=" . $max . ")(uidNumber=" . $max . "))", array('uidNumber'));
+	$search_results=ldap_get_entries($ldap, $search);
+	if ($search_results["count"] === 1) {
+		return $search_results[0]['uidnumber'][0] + 1;
+	} elseif ($search_results === NULL) {
+		CVLog('No UIDs!');
+		echo "There has been an error. Please contact cvadmins@utdallas.edu .";
+		exit();
+	} else {
+		foreach ($search_results as $result) {
+			if ($result['uidnumber'][0] > $max)
+				$max = $result['uidnumber'][0];
+		}
+		return getNextUID($max);
 	}
 }
 
