@@ -52,12 +52,17 @@ function isValidUsername($username) {
 	return preg_match("/^[A-Za-z0-9.-_]{1,30}$/", $username);
 }
 
-function isValidKey($netID, $key) {
-	if ($key === getKey($netID) || $key === getKey($netID, -1)) {
-		return true;
+function isValidKey($key, $netID, $username="") {
+	if (empty($username)) {
+		if ($key === getKey($netID) || $key === getKey($netID, "", -1)) {
+			return true;
+		}
 	} else {
-		return false;
+		if ($key === getKey($netID, $username) || $key === getKey($netID, $username, -1)) {
+			return true;
+		}
 	}
+	return false;
 }
 
 function resetUserPassword($ldap, $netID) {
@@ -172,17 +177,19 @@ function getUser($netID) {
 }
 
 function getLink($netID, $username="") {
-	if ($username != "") {
-		return 'http://account.collegiumv.org/index.php?netID='.$netID.'&username='.$username.'&key='.getkey($netID);
+	if (!empty($username)) {
+		return 'http://account.collegiumv.org/index.php?netID='.$netID.'&username='.$username.'&key='.getkey($netID, $username);
 	} else {
 		return 'http://account.collegiumv.org/index.php?netID='.$netID.'&key='.getkey($netID);
 	}
 }
-function getKey($netID, $past=0) {
+function getKey($netID, $username="", $past=0) {
 	global $config_salt;
 	$date = new DateTime();
 	$date->modify($past.' day');
-	return hash_hmac("sha256", strtolower($netID).$date->format('Y-m-d'), $config_salt);
+	$data = strtolower($netID).$date->format('Y-m-d');
+	if (!empty($username)) $data .= $username;
+	return hash_hmac("sha256", $data, $config_salt);
 }
 
 function CVlog($text) {
