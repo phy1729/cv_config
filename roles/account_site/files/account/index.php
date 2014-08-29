@@ -37,7 +37,8 @@ if(!empty($key) && isValidNetID($netID)) { // Received confirmation key; reset p
 		if (isValidUsername($username)) { // Need a username too if it's a new user
 			$content = sendCreationEmail($netID, $username);
 		} else {
-			$content = 'Enter your desired username to continue creating your account:
+			if (!empty($username)) $content = 'Error: Invalid username <br />';
+			@$content .= 'Enter your desired username to continue creating your account:
 				<form action="index.php" method="get">
 				<input type="hidden" name="netID" value="'.$netID.'">
 				<input type="text" size="9" name="username" />
@@ -48,7 +49,8 @@ if(!empty($key) && isValidNetID($netID)) { // Received confirmation key; reset p
 		$content = 'Sorry, your netID ('.$netID.') is not recognized. Please email <a href="mailto:cvadmins@utdallas.edu">cvadmins@utdallas.edu</a> for assistance.';
 	}
 } else { //else get the netID
-	$content = 'Enter your netID to reset your password or create an account:
+	if (!empty($netID)) $content = 'Error: Invalid netID. <br />';
+	@$content .= 'Enter your netID to reset your password or create an account:
 		<form action="index.php" method="get">
 		<input type="text" size="9" name="netID" />
 		<input type="submit" value="Submit"/>
