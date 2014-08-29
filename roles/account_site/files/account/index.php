@@ -53,7 +53,7 @@ function isValidUsername($username) {
 }
 
 function isValidKey($netID, $key) {
-	if ($key == getKey($netID) || $key == getKey($netID, -1)) {
+	if ($key === getKey($netID) || $key === getKey($netID, -1)) {
 		return true;
 	} else {
 		return false;
@@ -147,7 +147,7 @@ function getACL() {
 	$ACL_handle=fopen($ACL_filename, "r");
 	$lines=explode("\n", fread($ACL_handle, filesize($ACL_filename)));
 	foreach ($lines as $line) {
-		if ($line == '' || $line[0] == '#') {
+		if ($line === '' || $line[0] === '#') {
 			continue;
 		}
 		$ACL[]=explode(',', $line);
@@ -164,7 +164,7 @@ function getUser($netID) {
 	$ACL=getACL();
 
 	foreach ($ACL as $person) {
-		if ($person[NETID] == $netID) {
+		if ($person[NETID] === $netID) {
 			return $person;
 		}
 	}
