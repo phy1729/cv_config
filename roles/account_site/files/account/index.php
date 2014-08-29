@@ -34,7 +34,7 @@ if (isValidKey($netID, $key)) { // Recieved confirmation key; reset pass or crea
 				</form>';
 		}
 	} else {
-		$content = 'Sorry, your netID ('.$netID.') is not recognized. Please email <a href="mailto:cvadmins@utdallas.edu">cvadmins@utdallas.edu</a> for assistence.';
+		$content = 'Sorry, your netID ('.$netID.') is not recognized. Please email <a href="mailto:cvadmins@utdallas.edu">cvadmins@utdallas.edu</a> for assistance.';
 	}
 } else { //else get the netID
 	$content = 'Enter your netID to reset your password or create an account:
@@ -49,7 +49,7 @@ function isValidNetID($netID) {
 }
 
 function isValidUsername($username) {
-	return preg_match("/[A-Za-z0-9.-_]{1,30}/",$username);
+	return preg_match("/[A-Za-z0-9.-_]{1,30}/", $username);
 }
 
 function isValidKey($netID, $key) {
@@ -62,15 +62,15 @@ function isValidKey($netID, $key) {
 
 function resetUserPassword($ldap, $netID) {
 	$password=makePassword();
-	$ldap->user()->password(getUsernameFromNetID($ldap, $netID),$password);
-	$ldap->user()->modify(getUsernameFromNetID($ldap, $netID),array('change_password'=>1));
-	mail($netID.'@utdallas.edu','CV Password Reset','Your new password is "'.$password.'". This is a temporary password. To set your real password login on a lounge computer with your username ('.getUsernameFromNetID($ldap, $netID).').','From:cthulhu@collegiumv.org');
+	$ldap->user()->password(getUsernameFromNetID($ldap, $netID), $password);
+	$ldap->user()->modify(getUsernameFromNetID($ldap, $netID), array('change_password'=>1));
+	mail($netID.'@utdallas.edu', 'CV Password Reset', 'Your new password is "'.$password.'". This is a temporary password. To set your real password login on a lounge computer with your username ('.getUsernameFromNetID($ldap, $netID).').', 'From:cthulhu@collegiumv.org');
 	CVlog("Reset password for n:$netID");
 	return "Please check your zmail for your new password. Press the \"Get Mail\" icon in the upper left to refresh your inbox.";
 }
 
 function sendResetEmail($netID) {
-	mail($netID.'@utdallas.edu','CV Password Reset','A password reset was requested for your account. If you did not request this, please disregard this email. To complete the password reset click on the following link.'."\n".getLink($netID),'From:cthulhu@collegiumv.org');
+	mail($netID.'@utdallas.edu', 'CV Password Reset', 'A password reset was requested for your account. If you did not request this, please disregard this email. To complete the password reset click on the following link.'."\n".getLink($netID), 'From:cthulhu@collegiumv.org');
 	CVlog("Sent reset email for n:$netID");
 	return "Please check your zmail to finish resetting your password.";
 }
@@ -93,21 +93,21 @@ function createUser($ldap, $netID, $username) {
 		'change_password' => 1,
 	);
 	$ldap->user()->create($user);
-	mail($netID.'@utdallas.edu','CV Account Creation','Your new password is "'.$password.'". This is a temporary password. To set your real password login on a lounge computer.','From:cthulhu@collegiumv.org');
+	mail($netID.'@utdallas.edu', 'CV Account Creation', 'Your new password is "'.$password.'". This is a temporary password. To set your real password login on a lounge computer.', 'From:cthulhu@collegiumv.org');
 	CVlog("Made account for $first $last u:$username n:$netID");
 	return  "Please check your zmail to finish creating your account. Press the \"Get Mail\" icon in the upper left to refresh your inbox.";
 }
 
 function sendCreationEmail($netID, $username) {
-	mail($netID.'@utdallas.edu','CV Account Creation','An account creation was requested for your netID. If you did not request this, please disregard this email. To finish creating the account click on the following link.'."\n".getLink($netID,$username),'From:cthulhu@collegiumv.org');
+	mail($netID.'@utdallas.edu', 'CV Account Creation', 'An account creation was requested for your netID. If you did not request this, please disregard this email. To finish creating the account click on the following link.'."\n".getLink($netID, $username), 'From:cthulhu@collegiumv.org');
 	CVlog("Sent creation email for u:$username n:$netID");
 	return "Please check your zmail to finish creating your account.";
 }
 
 function makePassword() {
 	$word_filename="config/words.txt";
-	$word_handle=fopen($word_filename,"r");
-	$words=explode("\r\n",fread($word_handle,filesize($word_filename)));
+	$word_handle=fopen($word_filename, "r");
+	$words=explode("\r\n", fread($word_handle, filesize($word_filename)));
 	$keys=array_rand($words, 3);
 	fclose($word_handle);
 	$password="";
@@ -118,11 +118,11 @@ function makePassword() {
 }
 
 function hasAccount($ldap, $netID) { // redundant
-	$search=ldap_search($ldap->getLdapConnection(), "ou=Lounge Users,dc=COLLEGIUMV,dc=ORG", "(description=$netID)");
+	$search=ldap_search($ldap->getLdapConnection(), "ou=Lounge Users, dc=COLLEGIUMV, dc=ORG", "(description=$netID)");
 	$search_results=ldap_get_entries($ldap->getLdapConnection(), $search);
-	if ($search_results["count"]===1) {
+	if ($search_results["count"] === 1) {
 		return true;
-	} elseif ($search_results["count"]===0) {
+	} elseif ($search_results["count"] === 0) {
 		CVLog("No matches for ".$netID);
 		return false;
 	} else {
@@ -132,10 +132,10 @@ function hasAccount($ldap, $netID) { // redundant
 }
 
 function getUsernameFromNetID($ldap, $netID) {
-	$search_results=ldap_get_entries($ldap->getLdapConnection(), ldap_search($ldap->getLdapConnection(), "ou=Lounge Users,dc=COLLEGIUMV,dc=ORG", "(description=$netID)"));
-	if ($search_results["count"]===1) {
+	$search_results=ldap_get_entries($ldap->getLdapConnection(), ldap_search($ldap->getLdapConnection(), "ou=Lounge Users, dc=COLLEGIUMV, dc=ORG", "(description=$netID)"));
+	if ($search_results["count"] === 1) {
 		return $search_results[0]['samaccountname'][0];
-	} elseif ($search_results["count"]===0) {
+	} elseif ($search_results["count"] === 0) {
 		CVLog("No matches for ".$netID);
 		return false;
 	} else {
@@ -151,23 +151,22 @@ function getACL() {
 	define("NETID", 2);
 
 	$ACL_handle=fopen($ACL_filename, "r");
-	$lines=explode("\n",fread($ACL_handle,filesize($ACL_filename)));
+	$lines=explode("\n", fread($ACL_handle, filesize($ACL_filename)));
 	foreach ($lines as $line) {
 		if ($line == '' || $line[0] == '#') {
 			continue;
 		}
-		$ACL[]=explode(',',$line);
+		$ACL[]=explode(',', $line);
 	}
 	fclose($ACL_handle);
 	return $ACL;
 }
 
-
 function inACL($netID) {
 	$ACL=getACL();
 
 	foreach ($ACL as $person) {
-		if ($person[NETID]==$netID) {
+		if ($person[NETID] == $netID) {
 			return true;
 		}
 	}
@@ -178,7 +177,7 @@ function getUser($netID) {
 	$ACL=getACL();
 
 	foreach ($ACL as $person) {
-		if ($person[NETID]==$netID) {
+		if ($person[NETID] == $netID) {
 			return $person;
 		}
 	}
@@ -196,12 +195,12 @@ function getKey($netID, $past=0) {
 	global $config_salt;
 	$date = new DateTime();
 	$date->modify($past.' day');
-	return hash("sha256",$config_salt.strtolower($netID).$date->format('Y-m-d'));
+	return hash("sha256", $config_salt.strtolower($netID).$date->format('Y-m-d'));
 }
 
 function CVlog($text) {
 	$logfile="config/account.log";
-	$handle=fopen($logfile,"a");
+	$handle=fopen($logfile, "a");
 	fwrite($handle, date(DateTime::ISO8601).'  '.$text."\n");
 	fclose($handle);
 }
