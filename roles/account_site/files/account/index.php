@@ -13,10 +13,21 @@ try {
 	exit();
 }
 
-if (isValidKey($netID, $key)) { // Recieved confirmation key; reset pass or create account
+if(!empty($key) && isValidNetID($netID)) { // Received confirmation key; reset pass or create account
 	if (hasAccount($ldap, $netID)) {
-		$content = resetUserPassword($ldap, $netID);
-	} elseif (inACL($netID) && isValidUsername($username)) {
+		if (isValidKey($key, $netID)) {
+			$content = resetUserPassword($ldap, $netID);
+		} else {
+			if (!empty($username)) $content = "You've already created your account! (You've probably refreshed the page or clicked the link more than once.)";
+			else $content = 'Invalid Key.';
+		}
+	} elseif (!inACL($netID)) {
+		$content = 'Unknown netID';
+	} elseif (!isValidUsername($username)) {
+		$content = 'Invalid username';
+	} elseif (!isValidKey($key, $netID, $username)) {
+		$content = 'Invalid key.';
+	} else {
 		$content = createUser($ldap, $netID, $username);
 	}
 } elseif (isValidNetID($netID)) { // If we already have a netID, send a confirmation email
