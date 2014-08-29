@@ -45,11 +45,11 @@ if (isValidKey($netID, $key)) { // Recieved confirmation key; reset pass or crea
 }
 
 function isValidNetID($netID) {
-	return preg_match("/[a-z]{3}[0-9]{6}/", $netID);
+	return preg_match("/^[a-z]{3}[0-9]{6}$/", $netID); // This will fail for older netIDs but that shouldn't matter
 }
 
 function isValidUsername($username) {
-	return preg_match("/[A-Za-z0-9.-_]{1,30}/", $username);
+	return preg_match("/^[A-Za-z0-9.-_]{1,30}$/", $username);
 }
 
 function isValidKey($netID, $key) {
