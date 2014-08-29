@@ -117,18 +117,8 @@ function makePassword() {
 	return $password;
 }
 
-function hasAccount($ldap, $netID) { // redundant
-	$search=ldap_search($ldap->getLdapConnection(), "ou=Lounge Users, dc=COLLEGIUMV, dc=ORG", "(description=$netID)");
-	$search_results=ldap_get_entries($ldap->getLdapConnection(), $search);
-	if ($search_results["count"] === 1) {
-		return true;
-	} elseif ($search_results["count"] === 0) {
-		CVLog("No matches for ".$netID);
-		return false;
-	} else {
-		CVLog("Too many matches for ".$netID);
-		return false;
-	}
+function hasAccount($ldap, $netID) {
+	return (getUsernameFromNetID($ldap, $netID) !== false);
 }
 
 function getUsernameFromNetID($ldap, $netID) {
@@ -163,14 +153,7 @@ function getACL() {
 }
 
 function inACL($netID) {
-	$ACL=getACL();
-
-	foreach ($ACL as $person) {
-		if ($person[NETID] == $netID) {
-			return true;
-		}
-	}
-	return false;
+	return (getUser($netID) !== false);
 }
 
 function getUser($netID) {
