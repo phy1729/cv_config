@@ -4,19 +4,24 @@ $netID=@strtolower($_GET['netID']);
 $username=@$_GET["username"];
 
 require_once('config/config.php');
-require_once('adLDAP/src/adLDAP.php');
-try {
-	$ldap = new adLDAP($ldap_config);
-} catch (adLDAPException $e) {
-	CVlog("LDAP error: $e");
+
+$ldap = ldap_connect($ldap_server, $ldap_port);
+if (!$ldap) {
+	CVlog('Could not connect to LDAP server.');
+	echo "The account page is currently unavailable. Please email cvadmins@utdallas.edu for assistance.";
+	exit();
+}
+ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
+if (!ldap_bind($ldap, $ldap_admin_username, $ldap_admin_password)) {
+	CVlog("Could not bind to LDAP server");
 	echo "The account page is currently unavailable. Please email cvadmins@utdallas.edu for assistance.";
 	exit();
 }
 
 if(!empty($key) && isValidNetID($netID)) { // Received confirmation key; reset pass or create account
-	if (hasAccount($ldap, $netID)) {
+	if (hasAccount($netID)) {
 		if (isValidKey($key, $netID)) {
-			$content = resetUserPassword($ldap, $netID);
+			$content = resetUserPassword($netID);
 		} else {
 			if (!empty($username)) $content = "You've already created your account! (You've probably refreshed the page or clicked the link more than once.)";
 			else $content = 'Invalid Key.';
@@ -28,10 +33,10 @@ if(!empty($key) && isValidNetID($netID)) { // Received confirmation key; reset p
 	} elseif (!isValidKey($key, $netID, $username)) {
 		$content = 'Invalid key.';
 	} else {
-		$content = createUser($ldap, $netID, $username);
+		$content = createUser($netID, $username);
 	}
 } elseif (isValidNetID($netID)) { // If we already have a netID, send a confirmation email
-	if (hasAccount($ldap, $netID)) {
+	if (hasAccount($netID)) {
 		$content = sendResetEmail($netID);
 	} elseif (inACL($netID)) {
 		if (isValidUsername($username)) { // Need a username too if it's a new user
@@ -78,10 +83,10 @@ function isValidKey($key, $netID, $username="") {
 	return false;
 }
 
-function resetUserPassword($ldap, $netID) {
+function resetUserPassword($netID) {
+	global $ldap;
 	$password=makePassword();
-	$ldap->user()->password(getUsernameFromNetID($ldap, $netID), $password);
-	$ldap->user()->modify(getUsernameFromNetID($ldap, $netID), array('change_password'=>1));
+	ldap_modify($ldap, getDNFromNetID($netID), array('unicodePwd' => encodePassword($password), 'pwdLastSet' => '0'));
 	sendMail($netID, 'CV Password Reset', 'Your new password is "'.$password.'". This is a temporary password. To set your real password login on a lounge computer with your username ('.getUsernameFromNetID($netID).').');
 	CVlog("Reset password for n:$netID");
 	return "Please check your zmail for your new password. Press the \"Get Mail\" icon in the upper left to refresh your inbox.";
@@ -93,27 +98,29 @@ function sendResetEmail($netID) {
 	return "Please check your zmail to finish resetting your password.";
 }
 
-function createUser($ldap, $netID, $username) {
+function createUser($netID, $username) {
+	global $ldap, $base_dn;
 	$user=getUser($netID);
 	$first=$user[FIRST_NAME];
 	$last=$user[LAST_NAME];
 	$password=makePassword();
-	$user = array(
-		'username' => $username,
-		'logon_name' => $username . '@collegiumv.org',
-		'firstname' => $first,
-		'surname' => $last,
-		'email' => $netID . '@utdallas.edu',
-		'description' => $netID,
-		'container' => array('Lounge Users'),
-		'enabled' => 1,
-		'password' => $password,
-		'change_password' => 1,
-	);
-	$ldap->user()->create($user);
-	sendMail($netID, 'CV Account Creation', 'Your new password is "'.$password.'". This is a temporary password. To set your real password login on a lounge computer.');
-	CVlog("Made account for $first $last u:$username n:$netID");
-	return  "Please check your zmail to finish creating your account. Press the \"Get Mail\" icon in the upper left to refresh your inbox.";
+	$user_attributes['samaccountname'][0] = $username;
+	$user_attributes['userPrincipalName'][0] = $username . '@collegiumv.org';
+	$user_attributes['givenName'][0] = $first;
+	$user_attributes['sn'][0] = $last;
+	$user_attributes['displayname'][0] = $first . ' ' . $last;
+	$user_attributes['name'][0] = $first . ' ' . $last;
+	$user_attributes['cn'][0] = $first . ' ' . $last;
+	$user_attributes['mail'][0] = $netID . '@utdallas.edu';
+	$user_attributes['description'][0] = $netID;
+	$user_attributes['unicodePwd'] = encodePassword($password);
+	$user_attributes['pwdlastset'][0] = 0;
+	$user_attributes['objectclass'][0] = 'top';
+	$user_attributes['objectclass'][1] = 'person';
+	$user_attributes['objectclass'][2] = 'organizationalPerson';
+	$user_attributes['objectclass'][3] = 'user';
+	$user_attributes['userAccountControl'][0] = 512; // NORMAL_ACCOUNT
+	ldap_add($ldap, "CN=" . $first . " " . $last . ", " . $base_dn, $user_attributes);
 }
 
 function sendCreationEmail($netID, $username) {
@@ -139,14 +146,35 @@ function makePassword() {
 	return $password;
 }
 
-function hasAccount($ldap, $netID) {
-	return (getUsernameFromNetID($ldap, $netID) !== false);
+function encodePassword($password) {
+	return mb_convert_encoding('"' . $password . '"', 'UTF-16LE');
 }
 
-function getUsernameFromNetID($ldap, $netID) {
-	$search_results=ldap_get_entries($ldap->getLdapConnection(), ldap_search($ldap->getLdapConnection(), "ou=Lounge Users, dc=COLLEGIUMV, dc=ORG", "(description=$netID)"));
+function hasAccount($netID) {
+	return (getUsernameFromNetID($netID) !== false);
+}
+
+function getUsernameFromNetID($netID) {
+	global $ldap, $base_dn;
+	$search=ldap_search($ldap, $base_dn, "(description=$netID)");
+	$search_results=ldap_get_entries($ldap, $search);
 	if ($search_results["count"] === 1) {
 		return $search_results[0]['samaccountname'][0];
+	} elseif ($search_results["count"] === 0) {
+		return false;
+	} else {
+		CVLog("Too many matches for ".$netID);
+		echo "There has been an error. Please contact cvadmins@utdallas.edu .";
+		exit();
+	}
+}
+
+function getDNFromNetID($netID) {
+	global $ldap, $base_dn;
+	$search=ldap_search($ldap, $base_dn, "(description=$netID)");
+	$search_results=ldap_get_entries($ldap, $search);
+	if ($search_results["count"] === 1) {
+		return $search_results[0]['dn'];
 	} elseif ($search_results["count"] === 0) {
 		CVLog("No matches for ".$netID);
 		return false;

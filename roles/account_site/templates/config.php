@@ -1,14 +1,8 @@
 <?php
-
-$ldap_config = Array(
-	'account_suffix' => '@collegiumv.org',
-	'base_dn' => 'DC=collegiumv,DC=org',
-	'domain_controllers' => array('boron.collegiumv.org'),
-	'admin_username' => '{{ account_admin_username | replace("\\", "\\\\") | replace("'", "\'") }}',
-	'admin_password' => '{{ account_admin_password | replace("\\", "\\\\") | replace("'", "\'") }}',
-	'use_tls' => true
-);
-
-$config_salt='{{ account_salt | replace("\\", "\\\\") | replace("'", "\'") }}';
-
+$ldap_server = 'ldaps://beryllium.collegiumv.org';
+$ldap_port = '636';
+$ldap_admin_username = '{{ account_admin_username | replace("\\", "\\\\") | replace("'", "\'") }}';
+$ldap_admin_password = '{{ account_admin_password | replace("\\", "\\\\") | replace("'", "\'") }}';
+$base_dn = 'OU=Lounge Users, DC=collegiumv, DC=org';
+$config_salt = '{{ account_salt | replace("\\", "\\\\") | replace("'", "\'") }}';
 ?>
