@@ -6,14 +6,14 @@
 		Options FollowSymLinks
 		AllowOverride None
 	</Directory>
+	<Directory /var/www/sites/>
+		Deny from all
+	</Directory>
 	<Directory /var/www/>
 		Options Indexes FollowSymLinks MultiViews
 		AllowOverride None
 		Order allow,deny
 		allow from all
-	</Directory>
-	<Directory /var/www/config/>
-		Deny from all
 	</Directory>
 
 	ErrorLog ${APACHE_LOG_DIR}/error.log
