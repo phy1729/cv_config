@@ -140,9 +140,9 @@ function getUsernameFromNetID($ldap, $netID) {
 
 function getACL() {
 	$ACL_filename="config/access.list";
-	define("FIRST_NAME", 1);
-	define("LAST_NAME", 0);
-	define("NETID", 2);
+	@define("FIRST_NAME", 1);
+	@define("LAST_NAME", 0);
+	@define("NETID", 2);
 
 	$ACL_handle=fopen($ACL_filename, "r");
 	$lines=explode("\n", fread($ACL_handle, filesize($ACL_filename)));
