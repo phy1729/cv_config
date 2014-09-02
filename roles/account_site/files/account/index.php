@@ -90,7 +90,7 @@ function resetUserPassword($netID) {
 	if ($result) {
 		sendMail($netID, 'CV Password Reset', 'Your new password is "'.$password.'". This is a temporary password. To set your real password login on a lounge computer with your username ('.getUsernameFromNetID($netID).').');
 		CVlog("Reset password for n:$netID");
-		return "Please check your zmail for your new password. Press the \"Get Mail\" icon in the upper left to refresh your inbox.";
+		return "Please check your UTD email for your new password. Press the \"Get Mail\" icon in the upper left to refresh your inbox.";
 	} else {
 		CVlog("Error resetting password for n:$netID");
 		return 'There was an error resetting your password. Please email <a href="mailto:cvadmins@utdallas.edu">cvadmins@utdallas.edu</a> for assistance.';
@@ -100,7 +100,7 @@ function resetUserPassword($netID) {
 function sendResetEmail($netID) {
 	sendMail($netID, 'CV Password Reset', 'A password reset was requested for your account. If you did not request this, please disregard this email. To complete the password reset click on the following link.'."\n".getLink($netID));
 	CVlog("Sent reset email for n:$netID");
-	return "Please check your zmail to finish resetting your password.";
+	return "Please check your UTD email to finish resetting your password.";
 }
 
 function createUser($netID, $username) {
@@ -130,7 +130,7 @@ function createUser($netID, $username) {
 	if ($result) {
 		sendMail($netID, 'CV Account Creation', 'Your new password is "'.$password.'". This is a temporary password. To set your real password login on a lounge computer.');
 		CVlog("Made account for $first $last u:$username n:$netID");
-		return  "Please check your zmail to finish creating your account. Press the \"Get Mail\" icon in the upper left to refresh your inbox.";
+		return  "Please check your UTD email to finish creating your account. Press the \"Get Mail\" icon in the upper left to refresh your inbox.";
 	} else {
 		CVlog("Error creating account for n:$netID");
 		return 'There was an error creating your account. Please email <a href="mailto:cvadmins@utdallas.edu">cvadmins@utdallas.edu</a> for assistance.';
@@ -140,7 +140,7 @@ function createUser($netID, $username) {
 function sendCreationEmail($netID, $username) {
 	sendMail($netID, 'CV Account Creation', 'An account creation was requested for your netID. If you did not request this, please disregard this email. To finish creating the account click on the following link.'."\n".getLink($netID, $username));
 	CVlog("Sent creation email for u:$username n:$netID");
-	return "Please check your zmail to finish creating your account.";
+	return "Please check your UTD email to finish creating your account.";
 }
 
 function sendMail($netID, $subject, $body) {
