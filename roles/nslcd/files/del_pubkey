@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+dn="$(ldapsearch -LLL -o ldif-wrap=no -H 'ldaps://beryllium.collegiumv.org' -x -D "$(whoami)@collegiumv.org" -W -b 'DC=collegiumv,DC=org' '(sAMAccountName='"$(whoami)"')' dn | grep '^dn:')"
+echo "$dn
+delete: gecos" | ldapmodify -H 'ldaps://beryllium.collegiumv.org' -x -D "$(whoami)@collegiumv.org" -W

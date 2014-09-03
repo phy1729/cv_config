@@ -46,3 +46,8 @@
   - sshd
 - name: Make intenal need only password
   lineinfile: dest=/etc/ssh/sshd_config state=present insertafter='Match Address 192.168.42.0/24' line='  AuthenticationMethods password'
+- name: Add pubkey commands
+  copy: src={{ item }} dest=/usr/local/bin/{{ item }} owner=root group=root mode=0755
+  with_items:
+  - add_pubkey
+  - del_pubkey
