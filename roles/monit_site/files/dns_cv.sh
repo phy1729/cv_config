@@ -17,5 +17,5 @@ for (( i=0; i<${#names[@]}; i++ )); do
 	done
 done
 
-echo $failed
+echo $failed >&2
 exit $error

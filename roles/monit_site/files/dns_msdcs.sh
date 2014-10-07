@@ -10,12 +10,12 @@ if [ "$result1" = "$correct" ] && [ "$result2" = "$correct" ]; then
 	exit 0
 elif [ "$result1" = "$correct" ] || [ "$result2" = "$correct" ]; then 
 	if [ "$result1" != "$correct" ]; then
-		echo "Hydrogen is not returing the correct results.\n$result1"
+		echo "Hydrogen is not returing the correct results.\n$result1" >&2
 	elif [ "$result2" != "$correct" ]; then
-		echo "Helium is not returing the correct results.\n$result2"
+		echo "Helium is not returing the correct results.\n$result2" >&2
 	fi
 	exit 1
 else
-	echo "Both servers are not returning the correct results.\n$result1\n$result2"
+	echo "Both servers are not returning the correct results.\n$result1\n$result2" >&2
 	exit 2
 fi
