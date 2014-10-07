@@ -22,7 +22,7 @@
 # NTP
 -A OUTPUT -p udp -d 192.168.42.0/30 --dport 123 -j ACCEPT
 # Allow github for dotfiles and vim plugins
--A OUTPUT -p tcp -d 192.30.252.129 --dport 443 -j ACCEPT
+-A OUTPUT -p tcp -d 192.30.252.0/22 --dport 443 -j ACCEPT
 
 # For apt
 -A OUTPUT -p tcp --dport 80 -j ACCEPT
