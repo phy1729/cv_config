@@ -18,3 +18,11 @@
   - libcrypt-openssl-bignum-perl
   # For jabber in weechat
   - python-xmpp
+- name: Add bash Easter egg
+  lineinfile: dest=/etc/bash.bashrc state=present line={{ item }}
+  with_items:
+    - "'function command_not_found_handle { sl -l; }'"
+- name: Add zsh Easter egg
+  lineinfile: dest=/etc/zsh/zshrc state=present line={{ item }}
+  with_items:
+    - "'function command_not_found_handler { sl -l; }'"
