@@ -1,6 +1,6 @@
 #!/bin/bash
 
-names=(ftp.us.debian.org ftp.utexas.edu madhax.net mirror.esc7.net navobs1.wustl.edu ntp.okstate.edu omgpwned.net security.debian.org smtp.utdallas.edu tick.uh.edu timelord.utdallas.edu)
+names=(ftp.us.debian.org ftp.utexas.edu madhax.net mirror.esc7.net navobs1.wustl.edu ntp.okstate.edu omgpwned.net security.debian.org smtp.utdallas.edu tick.uh.edu)
 correct=(
 '64.50.233.100
 64.50.236.52
@@ -21,7 +21,6 @@ correct=(
 10.182.70.205
 10.182.70.208'
 '129.7.1.66'
-'10.110.10.11'
 )
 error=0
 failed=''
