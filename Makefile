@@ -5,7 +5,7 @@ SECRETS_DIR = secret
 DESTDIR = ${CURDIR}/tmp
 SUDO = sudo
 INSTALL = install
-OSrev=55
+OSrev=56
 
 # OpenBSD UID and GID definitions
 ROOT_U = 0

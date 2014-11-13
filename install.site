@@ -4,11 +4,7 @@ if [ -z $PKG_PATH ]; then
 	export PKG_PATH=http://mirror.esc7.net/pub/OpenBSD/$(uname -r)/packages/$(uname -p)/
 fi
 pkg_add isc-dhcp-server
-pkg_add unbound
-# This is here because the rc script in the package doesn't include the full path to unbound-control-setup
-# This can be removed once 5.6 is released because unbound will be in base.
-echo "17s/unbound-control-setup/\\/usr\\/local\\/sbin\\/unbound-control-setup/\nw" | ed /etc/rc.d/unbound
-pkg_add python-2.7.6p0
+pkg_add python-2.7.8
 ln -s /usr/local/bin/python2.7 /usr/bin/python
 
 # The installer overwrite the hostname.if of the if that was used during installation
