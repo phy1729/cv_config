@@ -71,7 +71,3 @@ done
 echo 'Defaults !lecture
 Defaults:%wheel !env_reset
 %wheel ALL=(ALL) SETENV:ALL' >> /etc/sudoers
-
-if [ -f install.site-$name ]; then
-	. install.site-$name
-fi
