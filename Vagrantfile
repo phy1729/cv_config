@@ -59,7 +59,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	end
 
 	config.vm.provision "ansible" do |ansible|
-		ansible.playbook = "site.yml"
+		ansible.playbook = "all.yml"
 		ansible.host_key_checking = false
 
 		ansible.groups = { "vm:children" => ["gateway", "ssh", "utility", "minecraft", "audio", "tv"], "gateway" => ["vm-h", "vm-he"], "ssh" => ["vm-c"], "utility" => ["vm-n"], "minecraft" => ["vm-o"], "audio" => ["vm-f"], "tv" => ["vm-ne"] }
