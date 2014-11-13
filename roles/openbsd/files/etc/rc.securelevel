@@ -1,3 +1,3 @@
-securelevel=1
+securelevel=2
 
 /usr/local/sbin/unbound-anchor
