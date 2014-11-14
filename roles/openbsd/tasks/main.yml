@@ -29,13 +29,8 @@
   template: src=etc/pf.conf dest=/etc/pf.conf owner=root group=wheel mode=0600
   notify:
   - pf
-- name: Install isc-dhcpd and unbound
-  openbsd_pkg: name={{ item }} state=present
-  with_items:
-  - isc-dhcp-server
-  - unbound
-  environment:
-    PKG_PATH: "{{ PKG_PATH }}"
+- name: Install isc-dhcpd
+  openbsd_pkg: name=isc-dhcp-server state=present
 - name: Copy dhcpd config
   template: src=etc/dhcpd.conf dest=/etc/dhcpd.conf owner=root group=wheel mode=0644
   notify:
