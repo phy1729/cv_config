@@ -24,13 +24,10 @@
   template: src=etc/mygate dest=/etc/mygate owner=root group=wheel mode=0640
   notify:
   - netstart
-
 - name: Copy firewall
   template: src=etc/pf.conf dest=/etc/pf.conf owner=root group=wheel mode=0600
   notify:
   - pf
-- name: Install isc-dhcpd
-  openbsd_pkg: name=isc-dhcp-server state=present
 - name: Copy dhcpd config
   template: src=etc/dhcpd.conf dest=/etc/dhcpd.conf owner=root group=wheel mode=0644
   notify:
@@ -51,12 +48,14 @@
   - etc/resolv.conf.boot
   - etc/resolv.conf.final
   - etc/sysctl.conf
-
 - name: Copy rc.d scripts
   copy: src={{ item }} dest=/{{ item }} owner=root group=wheel mode=0555
   with_items:
   - etc/rc.d/dhcpd
-
+- name: Create nsd key
+  command: /usr/sbin/nsd-control-setup creates=/var/nsd/etc/nsd_control.pem
+  notify:
+  - nsd-restart
 - name: Copy nsd config
   template: src=var/nsd/etc/nsd.conf dest=/var/nsd/etc/nsd.conf owner=root group=_nsd mode=0640 validate='nsd-checkconf %s'
   notify:
@@ -69,9 +68,19 @@
   - sunray-servers
   notify:
   - nsd
+- name: Copy root.hint
+  copy: src=var/unbound/etc/root.hint dest=/var/unbound/etc/root.hint owner=root group=wheel mode=0644
+- name: Create root.key
+  shell: /usr/sbin/unbound-anchor || true  creates=/var/unbound/db/root.key
+  notify:
+  - unbound-restart
+- name: Create unbound key
+  command: /usr/sbin/unbound-control-setup creates=/var/unbound/etc/unbound_server.key
+  notify:
+  - unbound-restart
 - name: Copy unbound config
   template: src=var/unbound/etc/unbound.conf dest=/var/unbound/etc/unbound.conf owner=root group=wheel mode=0644 validate='unbound-checkconf /var/unbound/../../%s'
   notify:
   - unbound
-- name: Copy root.hint
-  file: src=var/unbound/etc/root.hint dest=/var/unbound/etc/root.hint owner=root group=wheel mode=0644
+- name: Install isc-dhcpd
+  openbsd_pkg: name=isc-dhcp-server state=present
