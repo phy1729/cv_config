@@ -21,7 +21,7 @@
   notify:
   - inspircd
 - name: Copy SSL key and cert
-  copy: src=secret/{{ item }} dest=/opt/inspircd/conf/{{ item }} owner=root group=irc mode=0640
+  copy: src=secret/inspircd_{{ item }} dest=/opt/inspircd/conf/{{ item }} owner=root group=irc mode=0640
   with_items:
   - cert.pem
   - key.pem

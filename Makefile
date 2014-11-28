@@ -1,4 +1,4 @@
-.PHONY: site clean mkdir_secrets secrets account_admin_password account_salt inspircd_inspircd_power_diepass inspircd_inspircd_power_restartpass inspircd_links_madhax_recvpass inspircd_links_madhax_sendpass inspircd_links_minecraft_recvpass inspircd_links_minecraft_sendpass inspircd_modules_cloak_key inspircd_opers_password monit_passwd nslcd_bind_passwd
+.PHONY: site clean mkdir_secrets secrets account_admin_password account_salt inspircd_cert inspircd_inspircd_power_diepass inspircd_inspircd_power_restartpass inspircd_links_madhax_recvpass inspircd_links_madhax_sendpass inspircd_links_minecraft_recvpass inspircd_links_minecraft_sendpass inspircd_modules_cloak_key inspircd_opers_password monit_passwd nslcd_bind_passwd
 
 SECRETS_DIR = secret
 
@@ -66,14 +66,19 @@ clean:
 	${SUDO} rm -rf ${DESTDIR}
 	${SUDO} rm -f site*.tgz
 
-secrets: mkdir_secrets account_admin_password account_salt inspircd_inspircd_power_diepass inspircd_inspircd_power_restartpass inspircd_links_madhax_recvpass inspircd_links_madhax_sendpass inspircd_links_minecraft_recvpass inspircd_links_minecraft_sendpass inspircd_modules_cloak_key inspircd_opers_password monit_passwd nslcd_bind_passwd
-	$(info Don't forget to get account_access.list and account_words.txt, generate cert.pem and key.pem, and edit account_admin_username and nslcd_bind_user)
+secrets: mkdir_secrets account_admin_password account_salt inspircd_cert inspircd_inspircd_power_diepass inspircd_inspircd_power_restartpass inspircd_links_madhax_recvpass inspircd_links_madhax_sendpass inspircd_links_minecraft_recvpass inspircd_links_minecraft_sendpass inspircd_modules_cloak_key inspircd_opers_password monit_passwd nslcd_bind_passwd
+	@tput setaf 1 && echo "Don't forget to get account_access.list and account_words.txt and edit account_admin_username and nslcd_bind_user" && tput sgr0
 
 mkdir_secrets:
 	mkdir -pm 0700 ${SECRETS_DIR}
 
 account_admin_password account_salt inspircd_links_madhax_recvpass inspircd_links_madhax_sendpass inspircd_links_minecraft_recvpass inspircd_links_minecraft_sendpass inspircd_modules_cloak_key monit_passwd nslcd_bind_passwd:
 	export LC_CTYPE=C; tr -dc '!-~' < /dev/urandom | fold -w 32 | head -n 1 > ${SECRETS_DIR}/$@
+
+inspircd_cert:
+	openssl genrsa -out ${SECRETS_DIR}/inspircd_key.pem 2048
+	openssl req -new -config inspircd_cert.conf -key ${SECRETS_DIR}/inspircd_key.pem -out ${SECRETS_DIR}/inspircd_csr.pem
+	@tput setaf 1 && echo "Follow the steps at https://www.utdallas.edu/infosecurity/DigitalCertificates_SSL.html and put the resulting key at ${SECRETS_DIR}/inspircd_cert.pem" && tput sgr0
 
 inspircd_inspircd_power_diepass:
 	./inspircd_hmac "Password to shutdown the IRC server: " > ${SECRETS_DIR}/inspircd_inspircd_power_diepass
