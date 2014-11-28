@@ -11,6 +11,7 @@
   copy: src=inspircd dest=/opt/ owner=irc group=irc mode=0755
   notify:
   - inspircd
+- include_vars: secret/inspircd_opers.yml
 - name: Configure InspIRCd
   template: src={{ item }} dest=/opt/inspircd/conf/{{ item }} owner=root group=irc mode=0640
   with_items:

@@ -6,5 +6,3 @@ inspircd_links_madhax_sendpass: "{{ lookup('file', 'secret/inspircd_links_madhax
 inspircd_links_minecraft_recvpass: "{{ lookup('file', 'secret/inspircd_links_minecraft_recvpass') }}"
 inspircd_links_minecraft_sendpass: "{{ lookup('file', 'secret/inspircd_links_minecraft_sendpass') }}"
 inspircd_modules_cloak_key: "{{ lookup('file', 'secret/inspircd_modules_cloak_key') }}"
-inspircd_opers_phy1729_password: "{{ lookup('file', 'secret/inspircd_opers_phy1729_password') }}"
-inspircd_opers_maldridge_password: "{{ lookup('file', 'secret/inspircd_opers_maldridge_password') }}"

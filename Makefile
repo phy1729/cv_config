@@ -1,4 +1,4 @@
-.PHONY: site clean mkdir_secrets secrets account_admin_password account_salt inspircd_cert inspircd_inspircd_power_diepass inspircd_inspircd_power_restartpass inspircd_links_madhax_recvpass inspircd_links_madhax_sendpass inspircd_links_minecraft_recvpass inspircd_links_minecraft_sendpass inspircd_modules_cloak_key inspircd_opers_password monit_passwd nslcd_bind_passwd
+.PHONY: site clean mkdir_secrets secrets account_admin_password account_salt inspircd_cert inspircd_inspircd_power_diepass inspircd_inspircd_power_restartpass inspircd_links_madhax_recvpass inspircd_links_madhax_sendpass inspircd_links_minecraft_recvpass inspircd_links_minecraft_sendpass inspircd_modules_cloak_key inspircd_opers monit_passwd nslcd_bind_passwd
 
 SECRETS_DIR = secret
 
@@ -66,7 +66,7 @@ clean:
 	${SUDO} rm -rf ${DESTDIR}
 	${SUDO} rm -f site*.tgz
 
-secrets: mkdir_secrets account_admin_password account_salt inspircd_cert inspircd_inspircd_power_diepass inspircd_inspircd_power_restartpass inspircd_links_madhax_recvpass inspircd_links_madhax_sendpass inspircd_links_minecraft_recvpass inspircd_links_minecraft_sendpass inspircd_modules_cloak_key inspircd_opers_password monit_passwd nslcd_bind_passwd
+secrets: mkdir_secrets account_admin_password account_salt inspircd_cert inspircd_inspircd_power_diepass inspircd_inspircd_power_restartpass inspircd_links_madhax_recvpass inspircd_links_madhax_sendpass inspircd_links_minecraft_recvpass inspircd_links_minecraft_sendpass inspircd_modules_cloak_key inspircd_opers monit_passwd nslcd_bind_passwd
 	@tput setaf 1 && echo "Don't forget to get account_access.list and account_words.txt and edit account_admin_username and nslcd_bind_user" && tput sgr0
 
 mkdir_secrets:
@@ -86,5 +86,5 @@ inspircd_inspircd_power_diepass:
 inspircd_inspircd_power_restartpass:
 	./inspircd_hmac "Password to restart the IRC server: " > ${SECRETS_DIR}/inspircd_inspircd_power_restartpass
 
-inspircd_opers_password:
-	./inspircd_hmac "Password to oper up on IRC: " > ${SECRETS_DIR}/inspircd_opers_phy1729_password
+inspircd_opers:
+	./inspircd_opers > ${SECRETS_DIR}/inspircd_opers.yml

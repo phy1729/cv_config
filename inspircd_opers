@@ -1,0 +1,27 @@
+#!/usr/bin/env python
+
+import subprocess
+
+i=0
+name= []
+password = []
+host = []
+type = []
+
+while(True):
+    name.append(raw_input("What is the oper's username? "))
+    password.append(subprocess.check_output(["./inspircd_hmac", "What is the oper's password? "]).rstrip('\n'))
+    host.append(raw_input("What is the oper's host? (If unsure leave blank) "))
+    type.append(raw_input("What is the oper's type? (If unsure use OVERLORD) "))
+
+    i += 1
+
+    if raw_input("Another oper? [Y/n] ") == 'n':
+        print "---"
+        print "inspircd_opers:"
+        for j in range(0, i):
+            print "  - name: '%s'" % name[j]
+            print "    password: '%s'" % password[j]
+            print "    host: '%s'" % host[j]
+            print "    type: '%s'" % type[j]
+        break
