@@ -8,12 +8,14 @@ require_once('config/config.php');
 $ldap = ldap_connect($ldap_server, $ldap_port);
 if (!$ldap) {
 	CVlog('Could not connect to LDAP server.');
+	http_response_code(502);
 	echo "The account page is currently unavailable. Please email cvadmins@utdallas.edu for assistance.";
 	exit();
 }
 ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
 if (!ldap_bind($ldap, $ldap_admin_username, $ldap_admin_password)) {
 	CVlog("Could not bind to LDAP server");
+	http_response_code(502);
 	echo "The account page is currently unavailable. Please email cvadmins@utdallas.edu for assistance.";
 	exit();
 }
