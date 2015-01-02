@@ -1,4 +1,8 @@
 ---
+- name: Configure firewall for account_site
+  copy: src=account_site.rules dest=/etc/iptables.d/account_site.rules owner=root group=root mode=0644
+  notify:
+  - iptables
 - name: Configure monit for account site
   copy: src=monit dest=/etc/monit/web.d/account owner=root group=root mode=0644
   notify:
