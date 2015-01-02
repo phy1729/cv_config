@@ -5,7 +5,7 @@ $username=@$_GET["username"];
 
 require_once('config/config.php');
 
-$ldap = ldap_connect($ldap_server, $ldap_port);
+$ldap = ldap_connect('ldaps://beryllium.collegiumv.org ldaps://boron.collegiumv.org');
 if (!$ldap) {
 	CVlog('Could not connect to LDAP server.');
 	http_response_code(502);
