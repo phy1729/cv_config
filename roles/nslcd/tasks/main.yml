@@ -18,12 +18,6 @@
   - passwd
   - group
   - shadow
-- name: Install python-pycurl for apt_repository
-  apt: pkg=python-pycurl state=present
-- name: Add backports
-  apt_repository: repo="deb http://ftp.utexas.edu/debian wheezy-backports main" update_cache=yes
-- name: Install openssh-server from backports
-  apt: pkg=openssh-server default_release=wheezy-backports state=latest # Must use latest here to override the server installed in base
 - name: Add authorizedkeyscommand user
   user: name=autorizedkeyscommand createhome=no groups= shell=/bin/false system=yes state=present
 - name: Fix /usr/local permissions
@@ -34,18 +28,6 @@
   file: path=/usr/local/sbin/ state=directory owner=root group=root mode=0755
 - name: Create authorizedkeyscommand user
   user: name=authorizedkeyscommand system=yes createhome=no
-- name: Require pubkey and password
-  lineinfile: dest=/etc/ssh/sshd_config state=present line='{{ item }}'
-  with_items:
-  - 'AuthorizedKeysCommandUser authorizedkeyscommand'
-  - 'AuthorizedKeysCommand /usr/local/sbin/ssh_pubkeys'
-  - 'AuthenticationMethods publickey,password'
-- name: Add Match for internal users
-  lineinfile: dest=/etc/ssh/sshd_config state=present line='Match Address 192.168.42.0/24'
-  notify:
-  - sshd
-- name: Make intenal need only password
-  lineinfile: dest=/etc/ssh/sshd_config state=present insertafter='Match Address 192.168.42.0/24' line='  AuthenticationMethods password'
 - name: Add pubkey commands
   copy: src={{ item }} dest=/usr/local/bin/{{ item }} owner=root group=root mode=0755
   with_items:

@@ -23,6 +23,23 @@
   - iptables
 - name: Remove motd
   file: path=/etc/motd state=absent
+- name: Install python-pycurl for apt_repository
+  apt: pkg=python-pycurl state=present
+- name: Add backports
+  apt_repository: repo="deb http://ftp.utexas.edu/debian wheezy-backports main" update_cache=yes
+- name: Install openssh-server from backports
+  apt: pkg=openssh-server default_release=wheezy-backports state=latest # Must use latest here to override the server installed in base
+- name: Add SSH banner
+  copy: src=ssh_banner dest=/etc/ssh/banner owner=root group=root mode=0644
+- name: Configure sshd
+  template: src=sshd_config dest=/etc/ssh/sshd_config owner=root group=root mode=0644
+  notify:
+  - sshd
+- name: Ensure sshd keys exist
+  shell: ssh-keygen -A creates=/etc/ssh/ssh_host_{{ item }}_key
+  with_items:
+  - rsa
+  - ed25519
 - name: Set apt sources
   copy: src=sources.list dest=/etc/apt/sources.list owner=root group=root mode=0644
 - name: Install common packages

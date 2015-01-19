@@ -1,0 +1,27 @@
+# See the sshd_config(5) manpage for details
+
+AddressFamily inet
+
+HostKey /etc/ssh/ssh_host_ed25519_key
+HostKey /etc/ssh/ssh_host_rsa_key
+
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes256-ctr
+KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
+MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160
+
+UsePrivilegeSeparation sandbox
+Subsystem sftp /usr/lib/openssh/sftp-server
+PermitRootLogin no
+
+Banner /etc/ssh/banner
+{% if hostname == 'carbon' %}
+
+UsePAM yes
+
+AuthorizedKeysCommandUser authorizedkeyscommand
+AuthorizedKeysCommand /usr/local/sbin/ssh_pubkeys
+AuthenticationMethods publickey,password
+
+Match Address 192.168.42.0/24
+  AuthenticationMethods password
+{% endif %}

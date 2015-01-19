@@ -1,7 +1,0 @@
----
-- name: Add SSH banner
-  copy: src=ssh_banner dest=/etc/ssh/banner owner=root group=root mode=0644
-- name: Enable SSH banner
-  lineinfile: dest=/etc/ssh/sshd_config state=present line='Banner /etc/ssh/banner'
-  notify:
-  - sshd

@@ -3,7 +3,6 @@
   sudo: yes
   roles:
   - common
-  - public
   - account_site
   - monit_site
   - newsletter_site
