@@ -2,16 +2,10 @@
 - name: Make CollegiumV cert dir
   file: path=/usr/share/ca-certificates/collegiumv state=directory owner=root group=root mode=0755
 - name: Copy CA cert
-  copy: src={{ item }}.crt dest=/usr/share/ca-certificates/collegiumv/{{ item }}.crt owner=root group=root mode=0644
-  with_items:
-  - beryllium
-  - boron
+  copy: src=CA.crt dest=/usr/share/ca-certificates/collegiumv/collegiumv_CA.crt owner=root group=root mode=0644
   notify:
   - cert-db
 - name: Add certs to conf
-  lineinfile: dest=/etc/ca-certificates.conf line='collegiumv/{{ item }}.crt' state=present
-  with_items:
-  - beryllium
-  - boron
+  lineinfile: dest=/etc/ca-certificates.conf line='collegiumv/collegiumv_CA.crt' state=present
   notify:
   - cert-db
