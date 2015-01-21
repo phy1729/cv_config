@@ -3,11 +3,10 @@
   copy: src=nslcd.rules dest=/etc/iptables.d/nslcd.rules owner=root group=root mode=0644
   notify:
   - iptables
-- name: Install libpam-ldapd and zsh
-  apt: name={{ item }} state=present
-  with_items:
-  - libpam-ldapd
-  - zsh
+- name: Install libpam-ldapd
+  apt: name=libpam-ldapd default_release=wheezy-backports state=present
+- name: Install zsh
+  apt: name=zsh state=present
 - name: Stop nscd
   service: name=nscd state=stopped enabled=no
 - name: Configure libpam-ldapd
