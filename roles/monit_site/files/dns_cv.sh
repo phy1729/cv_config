@@ -15,7 +15,7 @@ for ns in $nameservers; do
 			failed=$failed"${names[$i]} "
 		fi
 	done
-	if [ "$(dig +short @${ns} SOA collegiumv.org)" != "hydrogen.collegiumv.org. cvadmins.utdallas.edu. 2014051701 3600 180 1209600 3600" ]; then
+	if [ "$(dig +short @${ns} SOA collegiumv.org)" != "hydrogen.collegiumv.org. cvadmins.utdallas.edu. 2015013101 3600 180 1209600 3600" ]; then
 		((error = error+2))
 		failed=$failed" SOA"
 	fi

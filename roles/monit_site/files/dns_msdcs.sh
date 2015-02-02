@@ -1,10 +1,10 @@
 #!/bin/sh
 
-result1=$(dig +short @192.168.42.1 _ldap._tcp.dc._msdcs.collegiumv.org srv | sort)
-result2=$(dig +short @192.168.42.2 _ldap._tcp.dc._msdcs.collegiumv.org srv | sort)
+result1=$(dig +short @192.168.42.1 _ldap._tcp.dc._msdcs.ad.collegiumv.org srv | sort)
+result2=$(dig +short @192.168.42.2 _ldap._tcp.dc._msdcs.ad.collegiumv.org srv | sort)
 
-correct='0 100 389 beryllium.collegiumv.org.
-0 100 389 boron.collegiumv.org.'
+correct='0 100 389 beryllium.ad.collegiumv.org.
+0 100 389 boron.ad.collegiumv.org.'
 
 if [ "$result1" = "$correct" ] && [ "$result2" = "$correct" ]; then
 	exit 0

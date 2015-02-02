@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-dn="$(ldapsearch -LLL -o ldif-wrap=no -H 'ldaps://beryllium.collegiumv.org' -x -D "$(whoami)@collegiumv.org" -W -b 'DC=collegiumv,DC=org' '(sAMAccountName='"$(whoami)"')' dn | grep '^dn:')"
+dn="$(ldapsearch -LLL -o ldif-wrap=no -H 'ldaps://beryllium.ad.collegiumv.org' -x -D "$(whoami)@ad.collegiumv.org" -W -b 'DC=ad,DC=collegiumv,DC=org' '(sAMAccountName='"$(whoami)"')' dn | grep '^dn:')"
 echo "$dn
 changetype: modify
 replace: gecos
-gecos:< file://$(readlink -f -- "$1")" | ldapmodify -H 'ldaps://beryllium.collegiumv.org' -x -D "$(whoami)@collegiumv.org" -W
+gecos:< file://$(readlink -f -- "$1")" | ldapmodify -H 'ldaps://beryllium.ad.collegiumv.org' -x -D "$(whoami)@ad.collegiumv.org" -W

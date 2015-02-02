@@ -1,7 +1,7 @@
 $TTL 10m
 
 @ IN SOA hydrogen.collegiumv.org. cvadmins.utdallas.edu. (
-	2014051701
+	2015013101
 	1h	;refresh
 	3m	;retry
 	2w	;expire
@@ -13,18 +13,8 @@ $TTL 10m
 	IN A	192.168.42.7
 
 
-_msdcs.collegiumv.org.	IN NS	beryllium.collegiumv.org.
-_msdcs.collegiumv.org.	IN NS	boron.collegiumv.org.
-_sites.collegiumv.org.	IN NS	beryllium.collegiumv.org.
-_sites.collegiumv.org.	IN NS	boron.collegiumv.org.
-_tcp.collegiumv.org.	IN NS	beryllium.collegiumv.org.
-_tcp.collegiumv.org.	IN NS	boron.collegiumv.org.
-_udp.collegiumv.org.	IN NS	beryllium.collegiumv.org.
-_udp.collegiumv.org.	IN NS	boron.collegiumv.org.
-DomainDnsZones.collegiumv.org.	IN NS	beryllium.collegiumv.org.
-DomainDnsZones.collegiumv.org.	IN NS	boron.collegiumv.org.
-ForestDnsZones.collegiumv.org.	IN NS	beryllium.collegiumv.org.
-ForestDnsZones.collegiumv.org.	IN NS	boron.collegiumv.org.
+ad.collegiumv.org.	IN NS	beryllium.collegiumv.org.
+ad.collegiumv.org.	IN NS	boron.collegiumv.org.
 
 
 hydrogen	IN A	192.168.42.1
