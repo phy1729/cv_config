@@ -48,10 +48,6 @@
   - etc/resolv.conf.boot
   - etc/resolv.conf.final
   - etc/sysctl.conf
-- name: Copy rc.d scripts
-  copy: src={{ item }} dest=/{{ item }} owner=root group=wheel mode=0555
-  with_items:
-  - etc/rc.d/dhcpd
 - name: Create nsd key
   command: /usr/sbin/nsd-control-setup creates=/var/nsd/etc/nsd_control.pem
   notify:
@@ -82,5 +78,3 @@
   template: src=var/unbound/etc/unbound.conf dest=/var/unbound/etc/unbound.conf owner=root group=wheel mode=0644 validate='unbound-checkconf /var/unbound/../../%s'
   notify:
   - unbound
-- name: Install isc-dhcpd
-  openbsd_pkg: name=isc-dhcp-server state=present

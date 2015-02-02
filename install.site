@@ -3,7 +3,6 @@
 if [ -z $PKG_PATH ]; then
 	export PKG_PATH=http://mirror.esc7.net/pub/OpenBSD/$(uname -r)/packages/$(uname -p)/
 fi
-pkg_add isc-dhcp-server
 pkg_add python-2.7.8
 ln -s /usr/local/bin/python2.7 /usr/bin/python
 
@@ -27,7 +26,7 @@ if [ $(hostname -s) = "hydrogen" ]; then
 	other_int_ip="192.168.42.2"
 	other_ext_ip="129.110.157.12"
 	advskew="10"
-	dhcpd_type="primary"
+	dhcpd_range="192.168.42.128 192.168.42.191"
 
 elif [ $(hostname -s) = "helium" ]; then
 	name="helium"
@@ -38,7 +37,7 @@ elif [ $(hostname -s) = "helium" ]; then
 	other_int_ip="192.168.42.1"
 	other_ext_ip="129.110.116.11"
 	advskew="20"
-	dhcpd_type="secondary"
+	dhcpd_range="192.168.42.192 192.168.42.254"
 else
 	exit
 fi
@@ -56,10 +55,7 @@ for file in $files; do
 	temp=$( echo "$temp" | sed "s/{{ gateway }}/129.110.157.1/" )
 	temp=$( echo "$temp" | sed "s/{{ peer_internal_ip }}/$other_int_ip/" )
 	temp=$( echo "$temp" | sed "s/{{ advskew }}/$advskew/" )
-	temp=$( echo "$temp" | sed "s/{{ dhcpd_type }}/$dhcpd_type/" )
-	temp=$( echo "$temp" | perl -0pe 's/\{% if name == '"'$other_name'"' %\}.+?\{% endif %\}\n//sg' )
-	temp=$( echo "$temp" | sed "/{% if name == '$name' %}/d" )
-	temp=$( echo "$temp" | sed "/{% endif %}/d" )
+	temp=$( echo "$temp" | sed "s/{{ dhcpd_range }}/$dhcpd_type/" )
 	echo "$temp" > $file
 done
 
