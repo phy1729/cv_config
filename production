@@ -14,13 +14,9 @@ o
 [audio]
 f
 
-[tv]
-ne
-
 [production:children]
 gateway
 ssh
 utility
 minecraft
 audio
-tv

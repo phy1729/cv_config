@@ -1,6 +1,0 @@
----
-- hosts: tv
-  sudo: yes
-  roles:
-  - common
-  - xbmc
