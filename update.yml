@@ -1,0 +1,5 @@
+---
+- hosts: ssh:utility:minecraft:audio
+  sudo: yes
+  tasks:
+  - apt: update_cache=yes upgrade=safe purge=yes
