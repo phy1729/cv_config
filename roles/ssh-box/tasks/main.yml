@@ -8,7 +8,6 @@
   with_items:
   - zsh
   - irssi
-  - weechat
   - mosh
   - screen
   - tmux
@@ -18,6 +17,15 @@
   - libcrypt-openssl-bignum-perl
   # For jabber in weechat
   - python-xmpp
+  # For weechat repo
+  - apt-transport-https
+- name: Add weechat repository
+  apt_repository: repo="deb https://weechat.org/debian wheezy main" update_cache=yes
+- name: Install weechat-dev
+  apt: pkg={{ item }} state=present force=yes # Must use force as the packages are not signed
+  with_items:
+  - weechat-devel-curses
+  - weechat-devel-plugins
 - name: Add pubkey help in zprofile
   file: src=zprofile dest=/etc/zsh/zprofile owner=root group=root mode=0644
 - name: Add bash Easter egg
