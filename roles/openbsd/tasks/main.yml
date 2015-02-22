@@ -61,7 +61,6 @@
   with_items:
   - collegiumv.org
   - 42.168.192.in-addr.arpa
-  - sunray-servers
   notify:
   - nsd
 - name: Copy root.hint
