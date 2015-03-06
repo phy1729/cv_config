@@ -1,4 +1,0 @@
-<VirtualHost *:80>
-	ServerName newsletters.collegiumv.org
-	Redirect / http://newsletter.collegiumv.org
-</VirtualHost>

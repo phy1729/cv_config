@@ -58,8 +58,6 @@ dns	IN CNAME	lithium
 irc	IN CNAME	nitrogen
 minecraft	IN CNAME	oxygen
 monit	IN CNAME	nitrogen
-newsletter	IN CNAME	nitrogen
-newsletters	IN CNAME	newsletter
 ntp	IN CNAME	lithium
 pasta	IN CNAME	nitrogen
 wiki	IN CNAME	nitrogen

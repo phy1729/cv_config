@@ -1,1 +1,0 @@
-if failed host newsletter.collegiumv.org port 80 protocol http then alert
