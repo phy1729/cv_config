@@ -23,8 +23,10 @@
   - iptables
 - name: Remove motd
   file: path=/etc/motd state=absent
+- name: Set apt sources
+  copy: src=sources.list dest=/etc/apt/sources.list owner=root group=root mode=0644
 - name: Install python-pycurl for apt_repository
-  apt: pkg=python-pycurl state=present
+  apt: pkg=python-pycurl state=present update_cache=yes
 - name: Add backports
   apt_repository: repo="deb http://ftp.utexas.edu/debian wheezy-backports main" update_cache=yes
 - name: Install openssh-server from backports
@@ -40,10 +42,8 @@
   with_items:
   - rsa
   - ed25519
-- name: Set apt sources
-  copy: src=sources.list dest=/etc/apt/sources.list owner=root group=root mode=0644
 - name: Install common packages
-  apt: pkg={{ item }} state=present update_cache=yes
+  apt: pkg={{ item }} state=present
   with_items:
   - ethtool
   - ntp
