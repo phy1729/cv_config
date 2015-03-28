@@ -8,7 +8,11 @@
   notify:
   - monit
 - name: Copy InspIRCd build artifacts
-  copy: src=inspircd dest=/opt/ owner=irc group=irc mode=0755
+  copy: src=inspircd-bin/{{ item }} dest=/opt/inspircd owner=irc group=irc mode=0755
+  with_items:
+  - bin
+  - inspircd
+  - modules
   notify:
   - inspircd
 - include_vars: secret/inspircd_opers.yml
@@ -19,6 +23,8 @@
   - links.conf
   - modules.conf
   - opers.conf
+  - motd.txt
+  - rules.txt
   notify:
   - inspircd
 - name: Copy SSL key and cert
