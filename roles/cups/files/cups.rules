@@ -1,0 +1,7 @@
+*filter
+-A INPUT -p tcp -s 192.168.42.0/24 --dport 631 -j ACCEPT
+-A INPUT -p udp -s 192.168.42.0/24 --dport 631 -j ACCEPT
+
+-A OUTPUT -p udp -d 192.168.42.0/24 --dport 631 -j ACCEPT
+-A OUTPUT -p tcp -d 192.168.42.0/24 --dport 631 -j ACCEPT
+COMMIT

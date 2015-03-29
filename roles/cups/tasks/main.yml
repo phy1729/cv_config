@@ -1,0 +1,13 @@
+---
+- name: Add Printing Packages
+  apt: pkg=cups state=present
+
+- name: Copy CUPS configuration data
+  copy: src=cups dest=/etc owner=root group=lp mode=0644
+  notify:
+  - cups
+
+- name: Copy CUPS Firewall rules
+  copy: src=cups.rules dest=/etc/iptables.d owner=root group=root mode=0644
+  notify:
+  - iptables
