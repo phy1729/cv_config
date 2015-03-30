@@ -1,11 +1,6 @@
 auto lo {{ interface }}
 iface lo inet loopback
 
-{% if ansible_ssh_user == "vagrant" %}
-auto eth0
-iface eth0 inet dhcp
-
-{% endif %}
 allow-hotplug {{ interface }}
 iface {{ interface }} inet static
         address {{ ip_address }}

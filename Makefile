@@ -17,7 +17,7 @@ BIN1=	templates/etc/dhcpd.conf \
 	files/etc/hosts \
 	templates/etc/ntpd.conf \
 	files/etc/pkg.conf \
-	templates/etc/rc.conf.local \
+	files/etc/rc.conf.local \
 	files/etc/rc.local \
 	files/etc/rc.securelevel \
 	files/etc/resolv.conf.boot \
@@ -46,15 +46,14 @@ site:
 	cd roles/openbsd; \
 		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 644 ${BIN1} ${DESTDIR}/etc; \
 		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 640 ${HOSTNAMES} ${DESTDIR}/etc; \
-		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 640 templates/etc/mygate ${DESTDIR}/etc; \
-		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 600 templates/etc/pf.conf ${DESTDIR}/etc; \
-		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 600 files/etc/pf.games ${DESTDIR}/etc; \
-		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${NSD_G} -m 640 templates/var/nsd/etc/nsd.conf ${DESTDIR}/var/nsd/etc; \
+		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 640 files/etc/mygate ${DESTDIR}/etc; \
+		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 600 files/etc/pf.conf ${DESTDIR}/etc; \
+		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${NSD_G} -m 640 files/var/nsd/etc/nsd.conf ${DESTDIR}/var/nsd/etc; \
 		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 644 files/var/nsd/zones/collegiumv.org ${DESTDIR}/var/nsd/zones; \
 		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 644 files/var/nsd/zones/42.168.192.in-addr.arpa ${DESTDIR}/var/nsd/zones; \
 		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 644 templates/var/unbound/etc/unbound.conf ${DESTDIR}/var/unbound/etc; \
 		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 644 files/var/unbound/etc/root.hint ${DESTDIR}/var/unbound/etc;
-	${SUDO} tar czf site${OSrev}.tgz -C${DESTDIR} .
+	${SUDO} tar czf site${OSrev}.tgz -C ${DESTDIR} .
 
 clean:
 	${SUDO} rm -rf ${DESTDIR}

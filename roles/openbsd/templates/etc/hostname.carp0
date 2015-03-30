@@ -1,1 +1,1 @@
-inet 192.168.42.3 255.255.255.0 NONE vhid 1 carpdev {{ internal_if }} advskew {{ advskew }}
+inet 192.168.42.3 255.255.255.0 NONE vhid 1 carpdev bge1 advskew {{ advskew }}

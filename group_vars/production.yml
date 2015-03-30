@@ -1,7 +1,0 @@
----
-# For openbsd
-vm_if: ""
-internal_if: bge1
-external_if: bge0
-pf_if: em0
-gateway: 129.110.157.1

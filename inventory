@@ -13,10 +13,3 @@ o
 
 [audio]
 f
-
-[production:children]
-gateway
-ssh
-utility
-minecraft
-audio

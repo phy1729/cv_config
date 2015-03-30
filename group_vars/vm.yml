@@ -1,7 +1,0 @@
----
-# For openbsd
-vm_if: em0
-internal_if: em1
-external_if: em2
-pf_if: em3
-gateway: 10.0.0.1

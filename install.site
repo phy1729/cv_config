@@ -8,34 +8,25 @@ ln -s /usr/local/bin/python2.7 /usr/bin/python
 
 # The installer overwrite the hostname.if of the if that was used during installation
 echo 'inet {{ internal_ip }} 255.255.255.0 NONE' > /etc/hostname.bge1
-echo '{{ gateway }}' > /etc/mygate
+echo '129.110.157.1' > /etc/mygate
 
-files="/etc/dhcpd.conf /etc/hostname.* /etc/mygate /etc/ntpd.conf /etc/pf.conf /etc/rc.conf.local /var/unbound/etc/unbound.conf"
-
-int_if="bge1"
-ext_if="bge0"
-pf_if="em0"
-gateway="129.110.157.1"
+files="/etc/dhcpd.conf /etc/hostname.* /etc/ntpd.conf /var/unbound/etc/unbound.conf"
 
 if [ $(hostname -s) = "hydrogen" ]; then
 	name="hydrogen"
-	other_name="helium"
 	int_ip="192.168.42.1"
 	ext_ip="129.110.157.11"
 	pf_ip="172.16.0.1"
 	other_int_ip="192.168.42.2"
-	other_ext_ip="129.110.157.12"
 	advskew="10"
 	dhcpd_range="192.168.42.128 192.168.42.191"
 
 elif [ $(hostname -s) = "helium" ]; then
 	name="helium"
-	other_name="hydrogen"
 	int_ip="192.168.42.2"
 	ext_ip="129.110.157.12"
 	pf_ip="172.16.0.2"
 	other_int_ip="192.168.42.1"
-	other_ext_ip="129.110.116.11"
 	advskew="20"
 	dhcpd_range="192.168.42.192 192.168.42.254"
 else
@@ -45,17 +36,12 @@ fi
 for file in $files; do
 	temp=$(<$file)
 	temp=$( echo "$temp" | sed "s/{{ name }}/$name/" )
-	temp=$( echo "$temp" | sed "s/{{ internal_if }}/$int_if/" )
-	temp=$( echo "$temp" | sed "s/{{ external_if }}/$ext_if/" )
-	temp=$( echo "$temp" | sed "s/{{ pf_if }}/$pf_if/" )
-	temp=$( echo "$temp" | sed "s/{{ vm_if }}//" )
 	temp=$( echo "$temp" | sed "s/{{ internal_ip }}/$int_ip/" )
 	temp=$( echo "$temp" | sed "s/{{ external_ip }}/$ext_ip/" )
 	temp=$( echo "$temp" | sed "s/{{ pf_ip }}/$pf_ip/" )
-	temp=$( echo "$temp" | sed "s/{{ gateway }}/129.110.157.1/" )
 	temp=$( echo "$temp" | sed "s/{{ peer_internal_ip }}/$other_int_ip/" )
 	temp=$( echo "$temp" | sed "s/{{ advskew }}/$advskew/" )
-	temp=$( echo "$temp" | sed "s/{{ dhcpd_range }}/$dhcpd_type/" )
+	temp=$( echo "$temp" | sed "s/{{ dhcpd_range }}/$dhcpd_range/" )
 	echo "$temp" > $file
 done
 

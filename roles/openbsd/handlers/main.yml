@@ -1,6 +1,6 @@
 ---
 - name: netstart
-  command: sh /etc/netstart {{ internal_if }} {{ external_if }} {{ pf_if }} carp0 carp1 carp2
+  command: sh /etc/netstart
 - name: dhcpd
   command: /etc/rc.d/dhcpd restart
 - name: ntpd

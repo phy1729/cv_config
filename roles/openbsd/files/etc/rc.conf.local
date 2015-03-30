@@ -1,4 +1,4 @@
-dhcpd_flags="{{ internal_if }}"
+dhcpd_flags="bge1"
 nsd_flags=""
 ntpd_flags=""
 unbound_flags=""

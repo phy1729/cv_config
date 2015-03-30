@@ -2,30 +2,21 @@
 - name: Copy hostname files
   template: src={{ item }} dest=/etc/ owner=root group=wheel mode=0640
   with_items:
+  - etc/hostname.bge0
+  - etc/hostname.bge1
   - etc/hostname.carp0
   - etc/hostname.carp1
   - etc/hostname.carp2
+  - etc/hostname.em0
   - etc/hostname.pfsync0
   notify:
   - netstart
-- name: Copy internal hostname file
-  template: src=etc/hostname.bge1 dest=/etc/hostname.{{ internal_if }} owner=root group=wheel mode=0640
-  notify:
-  - netstart
-- name: Copy external hostname file
-  template: src=etc/hostname.bge0 dest=/etc/hostname.{{ external_if }} owner=root group=wheel mode=0640
-  notify:
-  - netstart
-- name: Copy pfsync hostname file
-  template: src=etc/hostname.em0 dest=/etc/hostname.{{ pf_if }} owner=root group=wheel mode=0640
-  notify:
-  - netstart
 - name: Copy mygate file
-  template: src=etc/mygate dest=/etc/mygate owner=root group=wheel mode=0640
+  copy: src=etc/mygate dest=/etc/mygate owner=root group=wheel mode=0640
   notify:
   - netstart
 - name: Copy firewall
-  template: src=etc/pf.conf dest=/etc/pf.conf owner=root group=wheel mode=0600
+  copy: src=etc/pf.conf dest=/etc/pf.conf owner=root group=wheel mode=0600
   notify:
   - pf
 - name: Copy dhcpd config
@@ -36,13 +27,12 @@
   template: src=etc/ntpd.conf dest=/etc/ntpd.conf owner=root group=wheel mode=0644
   notify:
   - ntpd
-- name: Copy rc.conf.local
-  template: src=etc/rc.conf.local dest=/etc/rc.conf.local owner=root group=wheel mode=0644
 - name: Copy common config
   copy: src={{ item }} dest=/{{ item }} owner=root group=wheel mode=0644
   with_items:
   - etc/hosts
   - etc/pkg.conf
+  - etc/rc.conf.local
   - etc/rc.local
   - etc/rc.securelevel
   - etc/resolv.conf.boot
@@ -53,7 +43,7 @@
   notify:
   - nsd-restart
 - name: Copy nsd config
-  template: src=var/nsd/etc/nsd.conf dest=/var/nsd/etc/nsd.conf owner=root group=_nsd mode=0640 validate='nsd-checkconf %s'
+  copy: src=var/nsd/etc/nsd.conf dest=/var/nsd/etc/nsd.conf owner=root group=_nsd mode=0640 validate='nsd-checkconf %s'
   notify:
   - nsd
 - name: Add master zones
