@@ -1,0 +1,8 @@
+---
+- name: Add the PaperCut User
+  user: name=papercut state=present comment="PaperCut service user" home=/home/papercut
+
+- name: Copy the PaperCut firewall rules
+  copy: src=papercut.rules dest=/etc/iptables.d owner=root group=root mode=0644
+  notify:
+  - iptables

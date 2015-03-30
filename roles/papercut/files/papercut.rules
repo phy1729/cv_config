@@ -1,0 +1,8 @@
+*filter
+-A INPUT -p tcp -s 192.168.42.0/24 --dport 9191 -j ACCEPT
+-A INPUT -p tcp -s 10.0.0.0/8 --dport 9191 -j ACCEPT
+
+-A OUTPUT -p tcp -d 192.168.42.4/31 --dport 445 -j ACCEPT
+-A OUTPUT -p tcp -d 192.168.42.4/31 --dport 636 -j ACCEPT
+-A OUTPUT -p tcp -d 192.168.42.4/31 --dport 389 -j ACCEPT
+COMMIT
