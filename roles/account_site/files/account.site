@@ -1,10 +1,7 @@
 <VirtualHost *:80>
 	ServerName account.collegiumv.org
-	DocumentRoot /var/www/sites/account
-	<Directory /var/www/sites/account/config/>
-		Deny from all
-	</Directory>
-	<Directory /var/www/sites/account/adLDAP/>
+	DocumentRoot /var/www/account/
+	<Directory /var/www/account/config/>
 		Deny from all
 	</Directory>
 </VirtualHost>

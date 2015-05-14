@@ -1,0 +1,11 @@
+<VirtualHost *:80>
+	ServerAdmin cvadmins@utdallas.edu
+
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+
+	# Possible values include: debug, info, notice, warn, error, crit,
+	# alert, emerg.
+	LogLevel warn
+
+	CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>

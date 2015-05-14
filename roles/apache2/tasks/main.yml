@@ -20,17 +20,10 @@
   copy: src=sites-available dest=/etc/apache2/ owner=root group=root mode=0755
   notify:
   - apache2
-- name: Enable default site
-  file: src=../sites-available/default dest=/etc/apache2/sites-enabled/0-default state=link owner=root group=root
-  notify:
-  - apache2
 - name: Enable sites
   file: src=../sites-available/{{ item }} dest=/etc/apache2/sites-enabled/{{ item }} state=link owner=root group=root
   with_items:
-  - irc
+  - default.site
+  - irc.site
   notify:
   - apache2
-- name: Copy www files
-  copy: src=www dest=/var/ owner=root group=root mode=0755
-- name: Make the sites folder
-  file: path=/var/www/sites state=directory owner=root group=root mode=0755

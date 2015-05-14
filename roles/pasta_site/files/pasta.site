@@ -1,5 +1,5 @@
 <VirtualHost *:80>
 	ServerName pasta.collegiumv.org
-	DocumentRoot /var/www/sites/pasta
+	DocumentRoot /var/www/pasta/
 	DirectoryIndex index.swf
 </VirtualHost>

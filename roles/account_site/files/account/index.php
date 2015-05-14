@@ -279,7 +279,7 @@ function CVlog($text) {
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet" type="text/css" href="http://collegiumv.org/style.css" />
+<link rel="stylesheet" type="text/css" href="style.css" />
 <title>CV Accounts Webpage</title>
 </head>
 <body>

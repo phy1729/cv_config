@@ -1,7 +1,7 @@
 $TTL 10m
 
 @ IN SOA hydrogen.collegiumv.org. cvadmins.utdallas.edu. (
-	2015013101
+	2015051600
 	1h	;refresh
 	3m	;retry
 	2w	;expire
@@ -60,6 +60,7 @@ minecraft	IN CNAME	oxygen
 monit	IN CNAME	nitrogen
 ntp	IN CNAME	lithium
 pasta	IN CNAME	nitrogen
+preseed	IN CNAME	nitrogen
 wiki	IN CNAME	nitrogen
 www	IN CNAME	collegiumv.org.
 

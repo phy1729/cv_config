@@ -8,13 +8,13 @@
   notify:
   - monit
 - name: Copy account files
-  copy: src=account dest=/var/www/sites/ owner=root group=root mode=0755
+  copy: src=account dest=/var/www/ owner=root group=root mode=0755
 - name: Create config directory
-  file: path=/var/www/sites/account/config state=directory owner=root group=www-data mode=0750
+  file: path=/var/www/account/config state=directory owner=root group=www-data mode=0750
 - name: Copy config file
-  template: src=config.php dest=/var/www/sites/account/config/config.php owner=root group=www-data mode=0640
+  template: src=config.php dest=/var/www/account/config/config.php owner=root group=www-data mode=0640
 - name: Copy config files
-  copy: src=secret/account_{{ item }} dest=/var/www/sites/account/config/{{ item }} owner=root group=www-data mode=0640
+  copy: src=secret/account_{{ item }} dest=/var/www/account/config/{{ item }} owner=root group=www-data mode=0640
   with_items:
   - access.list
   - words.txt
