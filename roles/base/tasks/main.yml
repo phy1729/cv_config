@@ -10,15 +10,15 @@
 - name: Configure resolv.conf
   copy: src=resolv.conf dest=/etc/resolv.conf owner=root group=root mode=0644
 - name: Add iptables script
-  copy: src=iptables dest=/etc/network/if-up.d/iptables owner=root group=root mode=0755
+  copy: src=iptables dest=/etc/network/if-up.d/iptables owner=root group=root mode=0740
 - name: Make iptables.d
-  file: path=/etc/iptables.d state=directory owner=root group=root mode=0755
+  file: path=/etc/iptables.d state=directory owner=root group=root mode=0740
 - name: Configure IPv4 firewall
-  copy: src=0common.rules dest=/etc/iptables.d/0common.rules owner=root group=root mode=0644
+  copy: src=0common.rules dest=/etc/iptables.d/0common.rules owner=root group=root mode=0640
   notify:
   - iptables
 - name: Configure IPv6 firewall
-  copy: src=ip6tables.conf dest=/etc/ip6tables.conf owner=root group=root mode=0644
+  copy: src=ip6tables.conf dest=/etc/ip6tables.conf owner=root group=root mode=0640
   notify:
   - iptables
 - name: Remove motd

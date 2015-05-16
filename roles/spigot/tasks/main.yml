@@ -8,7 +8,7 @@
   - tmux
 
 - name: Copy over iptables rules
-  copy: src=spigot.rules dest=/etc/iptables.d/spigot.rules owner=root group=root mode=0644
+  copy: src=spigot.rules dest=/etc/iptables.d/spigot.rules owner=root group=root mode=0640
   notify: iptables
 
 - name: Create the minecraft user

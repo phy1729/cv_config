@@ -1,6 +1,6 @@
 ---
 - name: Configure firewall for apache2
-  copy: src=apache2.rules dest=/etc/iptables.d/apache2.rules owner=root group=root mode=0644
+  copy: src=apache2.rules dest=/etc/iptables.d/apache2.rules owner=root group=root mode=0640
   notify:
   - iptables
 - name: Make web.d to monitor websites

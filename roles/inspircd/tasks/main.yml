@@ -1,6 +1,6 @@
 ---
 - name: Configure firewall for InspIRCd
-  copy: src=inspircd.rules dest=/etc/iptables.d/inspircd.rules owner=root group=root mode=0644
+  copy: src=inspircd.rules dest=/etc/iptables.d/inspircd.rules owner=root group=root mode=0640
   notify:
   - iptables
 - name: Configure monit for InspIRCd

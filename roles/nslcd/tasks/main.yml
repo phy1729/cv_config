@@ -1,6 +1,6 @@
 ---
 - name: Configure firewall
-  copy: src=nslcd.rules dest=/etc/iptables.d/nslcd.rules owner=root group=root mode=0644
+  copy: src=nslcd.rules dest=/etc/iptables.d/nslcd.rules owner=root group=root mode=0640
   notify:
   - iptables
 - name: Install libpam-ldapd

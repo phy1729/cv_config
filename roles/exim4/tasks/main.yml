@@ -6,7 +6,7 @@
   - mailutils
   - exim4
 - name: Configure firewall
-  copy: src=exim4.rules dest=/etc/iptables.d/exim4.rules owner=root group=root mode=0644
+  copy: src=exim4.rules dest=/etc/iptables.d/exim4.rules owner=root group=root mode=0640
   notify:
   - iptables
 - name: Configure monit

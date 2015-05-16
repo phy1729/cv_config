@@ -1,6 +1,6 @@
 ---
 - name: Configure firewall for monit_site
-  copy: src=monit_site.rules dest=/etc/iptables.d/monit_site.rules owner=root group=root mode=0644
+  copy: src=monit_site.rules dest=/etc/iptables.d/monit_site.rules owner=root group=root mode=0640
   notify:
   - iptables
 - name: Add monit scripts

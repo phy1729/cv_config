@@ -8,6 +8,6 @@
   - cups
 
 - name: Copy CUPS Firewall rules
-  copy: src=cups.rules dest=/etc/iptables.d owner=root group=root mode=0644
+  copy: src=cups.rules dest=/etc/iptables.d owner=root group=root mode=0640
   notify:
   - iptables

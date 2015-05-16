@@ -2,7 +2,7 @@
 - name: Install wakeonlan
   apt: pkg=wakeonlan state=present
 - name: Configure firewall for wakeonlan
-  copy: src=wakeonlan.rules dest=/etc/iptables.d/wakeonlan.rules owner=root group=root mode=0644
+  copy: src=wakeonlan.rules dest=/etc/iptables.d/wakeonlan.rules owner=root group=root mode=0640
   notify:
   - iptables
 - name: Add MAC address list
