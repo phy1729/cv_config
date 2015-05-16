@@ -1,6 +1,6 @@
 ---
 - name: Copy pasta files
-  copy: src=pasta dest=/var/www/ owner=root group=root mode=0755
+  copy: src=pasta dest=/var/www/ owner=root group=root mode=0644 directory_mode=0755
 - name: Add pasta site
   copy: src=pasta.site dest=/etc/apache2/sites-available/pasta.site owner=root group=root mode=0644
   notify:

@@ -8,7 +8,7 @@
   notify:
   - monit
 - name: Copy account files
-  copy: src=account dest=/var/www/ owner=root group=root mode=0755
+  copy: src=account dest=/var/www/ owner=root group=root mode=0644 directory_mode=0755
 - name: Create config directory
   file: path=/var/www/account/config state=directory owner=root group=www-data mode=0750
 - name: Copy config file

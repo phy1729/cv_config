@@ -3,7 +3,7 @@
   apt: pkg=cups state=present
 
 - name: Copy CUPS configuration data
-  copy: src=cups dest=/etc owner=root group=lp mode=0644
+  copy: src=cups dest=/etc owner=root group=lp mode=0644 directory_mode=0755
   notify:
   - cups
 

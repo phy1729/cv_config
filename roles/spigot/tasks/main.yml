@@ -42,7 +42,7 @@
   with_dict: servers
 
 - name: Copy hub world
-  copy: src=hub/ dest=/srv/minecraft/backend/lobby/hub/ owner=minecraft group=minecraft mode=0644
+  copy: src=hub/ dest=/srv/minecraft/backend/lobby/hub/ owner=minecraft group=minecraft mode=0644 directory_mode=0755
 
 - name: Link spigot binaries
   file: src=/srv/minecraft/bin/spigot.jar dest=/srv/minecraft/backend/{{ item.value.instanceDir  }}/spigot.jar state=link owner=minecraft group=minecraft

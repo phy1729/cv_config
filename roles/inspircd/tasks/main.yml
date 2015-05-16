@@ -8,11 +8,14 @@
   notify:
   - monit
 - name: Copy InspIRCd build artifacts
-  copy: src=inspircd-bin/{{ item }} dest=/opt/inspircd owner=irc group=irc mode=0755
+  copy: src=inspircd-bin/{{ item }} dest=/opt/inspircd owner=irc group=irc mode=0755 directory_mode=0755
   with_items:
   - bin
   - inspircd
-  - modules
+  notify:
+  - inspircd
+- name: Copy InspIRCd modules
+  copy: src=inspircd-bin/modules dest=/opt/inspircd owner=irc group=irc mode=0644 directory_mode=0755
   notify:
   - inspircd
 - include_vars: secret/inspircd_opers.yml
