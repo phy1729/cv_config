@@ -1,0 +1,18 @@
+---
+- name: Add TFTP-Server Package
+  apt: pkg={{ item }} state=present
+  with_items:
+  - tftp-hpa
+  - tftpd-hpa
+
+- name: Create Ubuntu TFTP Root
+  file: path=/srv/tftp/ubuntu state=directory mode=0755 owner=root group=root
+
+- name: Download the Ubuntu Installer
+  get_url: url=http://archive.ubuntu.com/ubuntu/dists/trusty-updates/main/installer-amd64/current/images/netboot/netboot.tar.gz dest=/tmp/netboot.tar.gz
+
+- name: Expand the Ubuntu Installer
+  unarchive: src=/tmp/netboot.tar.gz dest=/srv/tftp/ubuntu/ copy=no creates=/srv/tftp/ubuntu/ubuntu-installer
+
+- name: Install the CV Boot Menu Patch
+  copy: src=ubuntu-bootmenu.cfg dest=/srv/tftp/ubuntu/ubuntu-installer/amd64/boot-screens/txt.cfg owner=root group=root mode=0664
