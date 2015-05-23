@@ -7,6 +7,8 @@
   template: src=interfaces.j2 dest=/etc/network/interfaces owner=root group=root mode=0644
   notify:
   - networking
+- name: Configure hosts
+  template: src=hosts.j2 dest=/etc/hosts owner=root group=root mode=0640
 - name: Configure resolv.conf
   copy: src=resolv.conf dest=/etc/resolv.conf owner=root group=root mode=0644
 - name: Add iptables script
