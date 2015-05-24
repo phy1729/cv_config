@@ -7,7 +7,7 @@ apt-get install -y ubuntu-drivers-common
 ubuntu-drivers autoinstall
 
 # Be absolutely sure ansible is installed
-apt-get install -y python-dev python-pip
+apt-get install -y python-dev python-pip git
 pip install ansible
 
 # Attempt to run the main ansible installer
