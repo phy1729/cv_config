@@ -18,6 +18,8 @@
   with_items:
   - access.list
   - words.txt
+- name: Make log file
+  file: path=/var/www/account/config/account.log state=file owner=root group=www-data mode=0660
 - name: Add account sites
   copy: src={{ item }}.site dest=/etc/apache2/sites-available/{{ item }} owner=root group=root mode=0644
   with_items:
