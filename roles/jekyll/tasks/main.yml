@@ -9,10 +9,13 @@
   - git
 
 - name: Install Jekyll
-  gem: name=jekyll state=present
+  gem: name=jekyll state=present user_install=no
 
 - name: Get Site Files
   git: clone=yes depth=1 force=yes dest=/tmp/cv_jekyll repo=https://github.com/collegiumv/cv_jekyll.git
+
+- name: Create Jekyll site folder
+  file: path=/var/www/home state=directory owner=root group=root mode=0755
 
 - name: Build CV Site
   command: jekyll build --destination=/var/www/home/ chdir=/tmp/cv_jekyll
