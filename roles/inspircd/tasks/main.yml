@@ -19,6 +19,8 @@
   notify:
   - inspircd
 - include_vars: secret/inspircd_opers.yml
+- name: Create configuration directory
+  file: path=/opt/inspircd/conf state=directory owner=root group=irc mode=0750
 - name: Configure InspIRCd
   template: src={{ item }} dest=/opt/inspircd/conf/{{ item }} owner=root group=irc mode=0640
   with_items:
@@ -38,7 +40,10 @@
   notify:
   - inspircd
 - name: Make data directory
-  file: path=/opt/inspircd/data state=directory owner=irc group=irc mode=0750
+  file: path=/opt/inspircd/{{ item }} state=directory owner=irc group=irc mode=0700
+  with_items:
+  - data
+  - logs
 - name: Add InspIRCd init script
   copy: src=service dest=/etc/init.d/inspircd owner=root group=root mode=0755
 - name: Start InspIRCd
