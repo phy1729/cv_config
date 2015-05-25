@@ -1,10 +1,12 @@
 ---
-- name: Install Ruby
+- name: Install dependencies
   apt: name={{ item }} state=present
   with_items:
   - ruby-full
   - ruby-dev
   - nodejs
+  - build-essential
+  - git
 
 - name: Install Jekyll
   gem: name=jekyll state=present
