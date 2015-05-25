@@ -1,8 +1,8 @@
 check file inspircd_bin with path /opt/inspircd/bin/inspircd
 	if failed checksum expect 34a43408641d29b4f782ef8297431c581bdaa800 then alert
 	if failed permission 755 then alert
-	if failed uid irc then alert
-	if failed gid irc then alert
+	if failed uid root then alert
+	if failed gid root then alert
 	group irc
 
 check process inspIRCd with pidfile /var/run/inspircd.pid
