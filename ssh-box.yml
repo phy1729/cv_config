@@ -2,7 +2,7 @@
 - hosts: ssh
   sudo: yes
   roles:
-  - common
+  - base
   - nslcd
   - pam_mount
   - ssh-box

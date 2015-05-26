@@ -32,16 +32,8 @@ check system {{ hostname }}.collegiumv.org
 	if cpu usage (system) > 30% then alert
 	if cpu usage (wait) > 20% then alert
 
-check filesystem {{ hostname }}-root with path /dev/mapper/{{ hostname }}-root
-	if failed permission 1660 then alert
-	if failed uid root then alert
-	if failed gid disk then alert
-	if space usage > 80% for 5 times within 15 cycles then alert
-	if inode usage > 80% then alert
-	group server
-
-check filesystem {{ hostname }}-boot with path /dev/sda1
-	if failed permission 1660 then alert
+check filesystem {{ hostname }}-root with path /dev/sda1
+	if failed permission 0660 then alert
 	if failed uid root then alert
 	if failed gid disk then alert
 	if space usage > 80% for 5 times within 15 cycles then alert

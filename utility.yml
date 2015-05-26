@@ -2,7 +2,9 @@
 - hosts: utility
   sudo: yes
   roles:
-  - common
+  - base
+  - monit
+  - exim4
   - account_site
   - monit_site
   - pasta_site

@@ -8,10 +8,7 @@
   notify:
   - monit
 - name: Copy InspIRCd build artifacts
-  copy: src=inspircd-bin/{{ item }} dest=/opt/inspircd owner=root group=root mode=0755 directory_mode=0755
-  with_items:
-  - bin
-  - inspircd
+  copy: src=inspircd-bin/bin dest=/opt/inspircd owner=root group=root mode=0755 directory_mode=0755
   notify:
   - inspircd
 - name: Copy InspIRCd modules
