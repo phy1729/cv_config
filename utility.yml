@@ -5,6 +5,7 @@
   - base
   - monit
   - exim4
+  - apt_mirror
   - account_site
   - monit_site
   - pasta_site

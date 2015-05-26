@@ -1,0 +1,8 @@
+---
+- name: Add Mirror Package
+  apt: pkg=apt-cacher-ng state=present
+
+- name: Copy Mirror Firewall rules
+  copy: src=mirror.rules dest=/etc/iptables.d owner=root group=root mode=0640
+  notify:
+  - iptables
