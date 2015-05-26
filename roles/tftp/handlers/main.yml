@@ -1,0 +1,6 @@
+---
+- name: tftpd-hpa
+  service: name=tftpd-hpa state=restarted
+
+- name: kmod
+  service: name=kmod state=started

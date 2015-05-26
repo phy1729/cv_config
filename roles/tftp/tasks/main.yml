@@ -1,9 +1,24 @@
 ---
-- name: Add TFTP-Server Package
+- name: Add tftp-hpa Package
   apt: pkg={{ item }} state=present
   with_items:
   - tftp-hpa
   - tftpd-hpa
+
+- name: Configure tftp-hpa
+  copy: src=tftpd-hpa dest=/etc/default/ owner=root group=root mode=0644
+  notify:
+  - tftpd-hpa
+
+- name: Install TFTP Rules
+  copy: src=tftp.rules dest=/etc/iptables.d owner=root group=root mode=0640
+  notify:
+  - iptables
+
+- name: Add conntrack_tftp module
+  lineinfile: dest=/etc/modules line=ip_conntrack_tftp
+  notify:
+  - kmod
 
 - name: Create Ubuntu TFTP Root
   file: path=/srv/tftp/ubuntu state=directory mode=0755 owner=root group=root
