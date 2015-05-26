@@ -2,5 +2,5 @@
 - hosts: audio
   sudo: yes
   roles:
-  - common
+  - base
   - audio

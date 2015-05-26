@@ -13,7 +13,7 @@
 # GPL Licensed
 
 NAME="inspircd"
-IRCD="/opt/inspircd/inspircd"
+IRCD="/opt/inspircd/bin/inspircd"
 IRCDPID="/var/run/inspircd.pid"
 IRCDLOG="/var/log/inspircd.log"
 IRCDCONF="/opt/inspircd/conf/inspircd.conf"
@@ -57,19 +57,16 @@ reload_ircd()
 
 case "$1" in
   start)
-        echo -n "Starting Inspircd... "
-        start_ircd && echo "done."
+        start_ircd
         ;;
   stop)
-        echo -n "Stopping Inspircd... "
-        stop_ircd && echo "done."
+        stop_ircd
         ;;
   status)
 	status_of_proc "$IRCD" "$NAME" && exit 0 || exit $?
 	;;
   force-reload|reload)
-        echo -n "Reloading Inspircd... "
-        reload_ircd && echo "done."
+        reload_ircd
         ;;
   restart)
         $0 stop

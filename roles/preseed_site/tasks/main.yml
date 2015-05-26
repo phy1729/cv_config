@@ -1,11 +1,11 @@
 ---
 - name: Copy Site descriptor
-  copy: src=preseed.site dest=/etc/apache2/sites-available/ owner=root group=root mode=0644
+  copy: src=preseed.conf dest=/etc/apache2/sites-available/preseed.conf owner=root group=root mode=0644
   notify:
   - apache2
 
 - name: Enable Site
-  file: src=../sites-available/preseed.site dest=/etc/apache2/sites-enabled/preseed.site state=link owner=root group=root
+  file: src=../sites-available/preseed.conf dest=/etc/apache2/sites-enabled/preseed.conf state=link owner=root group=root
   notify:
   - apache2
 

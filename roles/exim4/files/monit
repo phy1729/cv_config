@@ -1,5 +1,5 @@
 check file exim4_bin with path /usr/sbin/exim4
-	if failed checksum expect d97cd5794e391128693d246697f3678d249282b8 then alert
+	if failed checksum expect b34e66a22a48dd199ccac719c037320085eb41bb then alert
 	if failed permission 4755 then alert
 	if failed uid root then alert
 	if failed gid root then alert

@@ -11,6 +11,8 @@
   copy: src=account dest=/var/www/ owner=root group=root mode=0644 directory_mode=0755
 - name: Create config directory
   file: path=/var/www/account/config state=directory owner=root group=www-data mode=0750
+- name: Secure config directory
+  copy: src=config.htaccess dest=/var/www/account/config/.htaccess owner=root group=root mode=0640
 - name: Copy config file
   template: src=config.php dest=/var/www/account/config/config.php owner=root group=www-data mode=0640
 - name: Copy config files
@@ -19,16 +21,16 @@
   - access.list
   - words.txt
 - name: Make log file
-  file: path=/var/www/account/config/account.log state=file owner=root group=www-data mode=0660
+  file: path=/var/www/account/config/account.log state=touch owner=root group=www-data mode=0660
 - name: Add account sites
-  copy: src={{ item }}.site dest=/etc/apache2/sites-available/{{ item }} owner=root group=root mode=0644
+  copy: src={{ item }}.conf dest=/etc/apache2/sites-available/{{ item }}.conf owner=root group=root mode=0644
   with_items:
   - account
   - accounts
   notify:
   - apache2
 - name: Enable account sites
-  file: src=../sites-available/{{ item }} dest=/etc/apache2/sites-enabled/{{ item }} state=link owner=root group=root
+  file: src=../sites-available/{{ item }}.conf dest=/etc/apache2/sites-enabled/{{ item }}.conf state=link owner=root group=root
   with_items:
   - account
   - accounts

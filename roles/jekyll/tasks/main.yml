@@ -21,11 +21,11 @@
   command: jekyll build --destination=/var/www/home/ chdir=/tmp/cv_jekyll
 
 - name: Copy CV Site descriptor
-  copy: src=jekyll.site dest=/etc/apache2/sites-available/ owner=root group=root mode=0644
+  copy: src=jekyll.conf dest=/etc/apache2/sites-available/ owner=root group=root mode=0644
   notify:
   - apache2
 
 - name: Enable CV Site
-  file: src=../sites-available/jekyll.site dest=/etc/apache2/sites-enabled/jekyll.site state=link owner=root group=root
+  file: src=../sites-available/jekyll.conf dest=/etc/apache2/sites-enabled/jekyll.conf state=link owner=root group=root
   notify:
   - apache2
