@@ -1,3 +1,6 @@
 [submodule "roles/inspircd/files/inspircd-bin"]
 	path = roles/inspircd/files/inspircd-bin
 	url = https://github.com/collegiumv/inspircd-bin.git
+[submodule "roles/spigot"]
+	path = roles/spigot
+	url = https://github.com/the-maldridge/ansible-minecraft
