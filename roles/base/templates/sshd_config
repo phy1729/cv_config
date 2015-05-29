@@ -14,7 +14,7 @@ Subsystem sftp /usr/lib/openssh/sftp-server
 PermitRootLogin no
 
 Banner /etc/ssh/banner
-{% if hostname == 'carbon' %}
+{% if ansible_hostname == 'carbon' %}
 
 UsePAM yes
 

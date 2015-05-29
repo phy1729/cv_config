@@ -1,8 +1,4 @@
 ---
-- name: Set hostname
-  template: src=hostname.j2 dest=/etc/hostname owner=root group=root mode=0644
-  notify:
-  - hostname
 - name: Configure networking
   template: src=interfaces.j2 dest=/etc/network/interfaces owner=root group=root mode=0644
   notify:

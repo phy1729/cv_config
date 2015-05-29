@@ -23,7 +23,7 @@ set httpd port 2812
 ## Services
 ###############################################################################
 
-check system {{ hostname }}.collegiumv.org
+check system {{ hostname_fqdn }}
 	if loadavg (1min) > 4 then alert
 	if loadavg (5min) > 2 then alert
 	if memory usage > 75% then alert
@@ -32,7 +32,7 @@ check system {{ hostname }}.collegiumv.org
 	if cpu usage (system) > 30% then alert
 	if cpu usage (wait) > 20% then alert
 
-check filesystem {{ hostname }}-root with path /dev/sda1
+check filesystem {{ ansible_hostname }}-root with path /dev/sda1
 	if failed permission 0660 then alert
 	if failed uid root then alert
 	if failed gid disk then alert
