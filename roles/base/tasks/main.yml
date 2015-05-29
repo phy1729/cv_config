@@ -24,7 +24,10 @@
   notify:
   - iptables
 - name: Set apt sources
-  copy: src=sources.list dest=/etc/apt/sources.list owner=root group=root mode=0644
+  copy: src={{ item }} dest=/etc/apt/{{ item }} owner=root group=root mode=0644
+  with_items:
+  - sources.list
+  - apt.conf
 - name: Install common packages
   apt: pkg={{ item }} state=present update_cache=yes
   with_items:
