@@ -5,7 +5,6 @@ SECRETS_DIR = secret
 DESTDIR = ${CURDIR}/tmp
 SUDO = sudo
 INSTALL = install
-OSrev=57
 
 # OpenBSD UID and GID definitions
 ROOT_U = 0
@@ -53,11 +52,10 @@ site:
 		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 644 files/var/nsd/zones/42.168.192.in-addr.arpa ${DESTDIR}/var/nsd/zones; \
 		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 644 templates/var/unbound/etc/unbound.conf ${DESTDIR}/var/unbound/etc; \
 		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 644 files/var/unbound/etc/root.hint ${DESTDIR}/var/unbound/etc;
-	${SUDO} tar czf site${OSrev}.tgz -C ${DESTDIR} .
+	${SUDO} tar czf roles/preseed_site/files/site.tgz -C ${DESTDIR} .
 
 clean:
 	${SUDO} rm -rf ${DESTDIR}
-	${SUDO} rm -f site*.tgz
 
 secrets: mkdir_secrets account_admin_password account_salt inspircd_cert inspircd_inspircd_power_diepass inspircd_inspircd_power_restartpass inspircd_links_madhax_recvpass inspircd_links_madhax_sendpass inspircd_links_minecraft_recvpass inspircd_links_minecraft_sendpass inspircd_modules_cloak_key inspircd_opers monit_passwd nslcd_bind_passwd
 	@tput setaf 1 && echo "Don't forget to get account_access.list and account_words.txt and edit account_admin_username and nslcd_bind_user" && tput sgr0

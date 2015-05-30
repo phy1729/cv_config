@@ -1,4 +1,4 @@
 .DS_Store
-/site*.tgz
+/roles/preseed_site/files/site.tgz
 /tmp*/
 /secret/

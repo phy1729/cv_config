@@ -11,3 +11,9 @@
 
 - name: Copy Install Configs
   copy: src=preseed/ dest=/var/www/preseed owner=root group=root mode=0644 directory_mode=0755
+
+- name: Copy OpenBSD site tarball
+  copy: src=site.tgz dest=/var/www/preseed/site{{ OpenBSD_OSrev }}.tgz owner=root group=root mode=0644
+
+- name: Copy index.txt for OpenBSD
+  template: src=index.txt dest=/var/www/preseed/index.txt owner=root group=root mode=0644
