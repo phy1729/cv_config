@@ -1,7 +1,7 @@
 $TTL 3h
 
 @ IN SOA hydrogen.collegiumv.org. cvadmins.utdallas.edu. (
-	2014051701
+	2015053001
 	3h	;refresh
 	1h	;retry
 	1w	;expire
@@ -31,6 +31,12 @@ $TTL 3h
 16	IN PTR	franklin.collegiumv.org.
 17	IN PTR	gutenburg.collegiumv.org.
 18	IN PTR	koster.collegiumv.org.
+
+;media boxen
+20	IN PTR	rivest.collegiumv.org.
+21	IN PTR	shamir.collegiumv.org.
+22	IN PTR	adleman.collegiumv.org.
+23	IN PTR	cocks.collegiumv.org.
 
 ;clients
 32	IN PTR	argus.ad.collegiumv.org.

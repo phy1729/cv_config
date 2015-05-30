@@ -1,7 +1,7 @@
 $TTL 10m
 
 @ IN SOA hydrogen.collegiumv.org. cvadmins.utdallas.edu. (
-	2015051600
+	2015053001
 	1h	;refresh
 	3m	;retry
 	2w	;expire
@@ -68,6 +68,11 @@ www	IN CNAME	collegiumv.org.
 franklin	IN A	192.168.42.16
 gutenburg	IN A	192.168.42.17
 koster	IN A	192.168.42.18
+
+rivest	IN A	192.168.42.20
+shamir	IN A	192.168.42.21
+adleman	IN A	192.168.42.22
+cocks	IN A	192.168.42.23
 
 argus	IN A	192.168.42.32
 busterjangle	IN A	192.168.42.33
