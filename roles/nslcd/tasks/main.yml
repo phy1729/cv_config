@@ -4,7 +4,7 @@
   notify:
   - iptables
 - name: Install libpam-ldapd
-  apt: name=libpam-ldapd default_release=wheezy-backports state=present
+  apt: name=libpam-ldapd state=present
 - name: Install zsh
   apt: name=zsh state=present
 - name: Stop nscd
