@@ -1,0 +1,3 @@
+[nutnet]
+password={{ nut_monitor_passwd }}
+upsmon master

@@ -1,0 +1,1 @@
+nut_monitor_passwd: "{{ lookup('file', 'secret/nut_monitor_passwd') }}"
