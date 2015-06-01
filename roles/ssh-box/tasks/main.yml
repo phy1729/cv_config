@@ -17,15 +17,13 @@
   - libcrypt-openssl-bignum-perl
   # For jabber in weechat
   - python-xmpp
-  # For weechat repo
-  - apt-transport-https
 - name: Add weechat repository
-  apt_repository: repo="deb https://weechat.org/ubuntu trusty main" update_cache=yes
+  apt_repository: repo=ppa:nesthib/weechat-stable update_cache=yes
 - name: Install weechat-dev
-  apt: pkg={{ item }} state=present force=yes # Must use force as the packages are not signed
+  apt: pkg={{ item }} state=present
   with_items:
-  - weechat-devel-curses
-  - weechat-devel-plugins
+  - weechat-curses
+  - weechat-plugins
 - name: Add pubkey help in zprofile
   file: src=zprofile dest=/etc/zsh/zprofile owner=root group=root mode=0644
 - name: Add bash Easter egg
