@@ -1,0 +1,27 @@
+---
+- name: Install Dependencies
+  apt: pkg=nut-cgi state=present
+
+- name: Create nut DocumentRoot
+  file: path=/var/www/nut state=directory owner=root group=root mode=0755
+
+- name: Install nut site
+  copy: src=index.html dest=/var/www/nut/index.html owner=root group=root mode=0644
+
+- name: Configure apache for nut-cgi
+  copy: src=nut.conf dest=/etc/apache2/sites-available/nut.conf owner=root group=root mode=0644
+  notify:
+  - apache2
+
+- name: Enable nut site
+  file: src=../sites-available/nut.conf dest=/etc/apache2/sites-enabled/nut.conf state=link
+  notify:
+  - apache2
+
+- name: Configure nut-cgi
+  copy: src=hosts.conf dest=/etc/nut/hosts.conf owner=root group=root mode=0644
+
+- name: Install Firewall rules
+  copy: src=nut.rules dest=/etc/iptables.d/nut.rules owner=root group=root mode=0640
+  notify:
+  - iptables

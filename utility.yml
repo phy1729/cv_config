@@ -8,6 +8,7 @@
   - apt_mirror
   - account_site
   - monit_site
+  - nut_site
   - pasta_site
   - inspircd
   - papercut
