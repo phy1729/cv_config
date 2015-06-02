@@ -8,6 +8,11 @@
   - build-essential
   - git
 
+- name: Install firewall rules
+  copy: src=jekyll.rules dest=/etc/iptables.d/jekyll.rules owner=root group=root mode=0640
+  notify:
+  - iptables
+
 - name: Install Jekyll
   gem: name=jekyll state=present user_install=no
 
