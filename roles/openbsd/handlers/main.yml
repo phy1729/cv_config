@@ -5,12 +5,8 @@
   command: /etc/rc.d/dhcpd restart
 - name: ntpd
   command: /etc/rc.d/ntpd restart
-- name: nsd-restart
-  command: /etc/rc.d/nsd restart
 - name: nsd
   command: /etc/rc.d/nsd reload
-- name: unbound-restart
-  command: /etc/rc.d/unbound restart
 - name: unbound
   command: /etc/rc.d/unbound reload
 - name: pf

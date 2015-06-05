@@ -38,10 +38,6 @@
   - etc/resolv.conf.boot
   - etc/resolv.conf.final
   - etc/sysctl.conf
-- name: Create nsd key
-  command: /usr/sbin/nsd-control-setup creates=/var/nsd/etc/nsd_control.pem
-  notify:
-  - nsd-restart
 - name: Copy nsd config
   copy: src=var/nsd/etc/nsd.conf dest=/var/nsd/etc/nsd.conf owner=root group=_nsd mode=0640 validate='nsd-checkconf %s'
   notify:
@@ -53,14 +49,6 @@
   - 42.168.192.in-addr.arpa
   notify:
   - nsd
-- name: Create root.key
-  shell: /usr/sbin/unbound-anchor || true  creates=/var/unbound/db/root.key
-  notify:
-  - unbound-restart
-- name: Create unbound key
-  command: /usr/sbin/unbound-control-setup creates=/var/unbound/etc/unbound_server.key
-  notify:
-  - unbound-restart
 - name: Copy unbound config
   template: src=var/unbound/etc/unbound.conf dest=/var/unbound/etc/unbound.conf owner=root group=wheel mode=0644 validate='unbound-checkconf /var/unbound/../../%s'
   notify:
