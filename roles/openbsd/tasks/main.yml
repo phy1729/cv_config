@@ -53,8 +53,6 @@
   - 42.168.192.in-addr.arpa
   notify:
   - nsd
-- name: Copy root.hint
-  copy: src=var/unbound/etc/root.hint dest=/var/unbound/etc/root.hint owner=root group=wheel mode=0644
 - name: Create root.key
   shell: /usr/sbin/unbound-anchor || true  creates=/var/unbound/db/root.key
   notify:

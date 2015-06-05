@@ -50,8 +50,7 @@ site:
 		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${NSD_G} -m 640 files/var/nsd/etc/nsd.conf ${DESTDIR}/var/nsd/etc; \
 		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 644 files/var/nsd/zones/collegiumv.org ${DESTDIR}/var/nsd/zones; \
 		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 644 files/var/nsd/zones/42.168.192.in-addr.arpa ${DESTDIR}/var/nsd/zones; \
-		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 644 templates/var/unbound/etc/unbound.conf ${DESTDIR}/var/unbound/etc; \
-		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 644 files/var/unbound/etc/root.hint ${DESTDIR}/var/unbound/etc;
+		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 644 templates/var/unbound/etc/unbound.conf ${DESTDIR}/var/unbound/etc;
 	${SUDO} tar czf roles/preseed_site/files/site.tgz -C ${DESTDIR} .
 
 clean:
