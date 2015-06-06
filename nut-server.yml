@@ -1,0 +1,5 @@
+---
+- hosts: nut
+  sudo: yes
+  roles:
+  - nut-server

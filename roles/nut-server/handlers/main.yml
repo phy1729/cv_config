@@ -1,0 +1,3 @@
+---
+- name: nut
+  service: name=nut-server state=restarted
