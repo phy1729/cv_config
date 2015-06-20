@@ -1,5 +1,5 @@
 - name: networking
-  service: name=networking state=reloaded
+  shell: (ifdown --exclude=lo -a && ifup --exclude=lo -a)&
 - name: iptables
   command: /etc/network/if-up.d/iptables
 - name: ntp
