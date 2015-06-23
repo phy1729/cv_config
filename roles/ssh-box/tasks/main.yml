@@ -6,11 +6,13 @@
 - name: Install ssh-box packages
   apt: pkg={{ item }} state=present
   with_items:
-  - zsh
+  - bc
+  - git
   - irssi
   - mosh
   - screen
   - tmux
+  - zsh
   # For SASL in irssi
   - libcrypt-blowfish-perl
   - libcrypt-dh-perl
