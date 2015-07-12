@@ -1,8 +1,74 @@
 ---
 - name: Add the PaperCut User
   user: name=papercut state=present comment="PaperCut service user" home=/home/papercut
+  register: install
 
 - name: Copy the PaperCut firewall rules
   copy: src=papercut.rules dest=/etc/iptables.d owner=root group=root mode=0640
   notify:
   - iptables
+
+- name: Retrieve the PaperCut archive
+  get_url: url=http://cdn.papercut.com/files/pcng/14.x/pcng-setup-14.3.30457-linux-x64.sh dest=/home/papercut/papercut.sh owner=papercut group=papercut mode=0755
+  when: install.changed
+
+- name: Expand the PaperCut archive
+  command: ./papercut.sh -e chdir=/home/papercut creates=/home/papercut/papercut
+  sudo: yes
+  sudo_user: papercut
+  when: install.changed
+
+- name: Copy patch file to get around ansible bug
+  copy: src=install.patch dest=/tmp/install.patch
+  when: install.changed
+
+- name: Apply autoinstall patch
+  patch: dest=/home/papercut/papercut/install src=/tmp/install.patch remote_src=yes
+  when: install.changed
+
+- name: Remove patch file
+  file: path=/tmp/install.patch state=absent
+  when: install.changed
+
+- name: Install PaperCut
+  command: ./install chdir=/home/papercut/papercut
+  sudo: yes
+  sudo_user: papercut
+  when: install.changed
+
+- name: Manual Action Required
+  pause: prompt="{{ item }}"
+  with_items:
+  - "Please complete the following actions in a web browser before continuing, press [ENTER] to advance"
+  - "Please navigate to to the papercut admin page(<server>:9191/admin) and user these prompts to complete the wizard"
+  - "Input a secure admin password, note it somewhere if necessary"
+  - "Select 'Education' as organization type"
+  - "Change default print cost to $1"
+  - "Set initial user credit to a reasonable amount (15 is a good choice)"
+  - "Select 'Unix Standard' for User/Group Sync, specifying the 'Select Groups' option"
+  - "Select the 'Lounge Users' and 'Paper Creditors' groups"
+  - "Confirm information appears correct, $'s will be removed later"
+  - "Continue and PaperCut will do an initial User/Group Sync"
+  - "Login to PaperCut using the provided button"
+  - "Select Printers, then [Template Printer]"
+  - "In the default tab, check 'Enable Web Print' in the Advanced Options section"
+  - "Select the 'Charging' tab"
+  - "Select 'by paper size category'"
+  - "Set a duplex discount of 50 percent less using the dropdown"
+  - "Apply changes"
+  - "Hide dollar signs according to http://www.papercut.com/kb/Main/RemovingCurrencySigns"
+  - "Select the 'About' tab and scroll to the bottom"
+  - "Install the papercut.license file from the secret directory"
+  - "Press [ENTER] to proceed *AFTER* you have completed the above actions"
+  when: install.changed
+
+- name: Run PaperCut root actions
+  command: ./MUST-RUN-AS-ROOT chdir=/home/papercut
+  when: install.changed
+
+- name: Enable PaperCut job intercept
+  shell: yes "e" | ./providers/print/linux-x64/configure-cups chdir=/home/papercut
+  when: install.changed
+
+- name: Install PaperCut PAM rules
+  copy: src=papercut.pamstack dest=/etc/pam.d/papercut owner=root group=root mode=0644

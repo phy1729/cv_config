@@ -1,0 +1,69 @@
+--- install	2014-12-05 00:12:15.000000000 -0600
++++ install2	2015-07-11 22:02:01.169734665 -0500
+@@ -185,24 +185,7 @@
+ #
+ # Show LICENSE file and request accept
+ #
+-if [ -f LICENCE.TXT ] ; then
+-	more LICENCE.TXT
+-	agreed=
+-	while [ -z "${agreed}" ]; do
+-		echo
+-		echo "Do you agree to the above license terms? [yes or no] "
+-		read reply leftover
+-		case $reply in
+-			[yY] | [yY][eE][sS])
+-				agreed=1
+-				;;
+-			[nN] | [nN][oO])
+-				echo "License not accepted. Install aborted!"
+-				exit 1
+-				;;
+-		esac
+-	done
+-fi
++# READ AND UNDERSTAND THE LICENSE
+ 	
+ installovertop=
+ #
+@@ -533,25 +516,8 @@
+ echo "	* Configure the server's boot scripts"
+ 
+ agreed=
+-answered=
+-manual=
+-while [ -z "${answered}" ]; do
+-	echo
+-	echo "Would you like to perform these tasks now?  [yes or no] "
+-	read reply leftover
+-	case $reply in
+-		[yY] | [yY][eE][sS])
+-			agreed=1
+-			answered=1
+-			;;
+-		[nN] | [nN][oO])
+-			answered=1
+-            manual=1
+-			echo
+-			echo "Skipping root level tasks!"
+-			;;
+-	esac
+-done
++answered=1
++manual=1
+ if [ ! -z "${agreed}" ]; then
+ 	continue=
+ 	while [ -z "${continue}" ]; do
+@@ -616,12 +582,6 @@
+ ${HOME}/providers/web-print/linux-${install_arch}/roottasks
+ EOF
+     chmod 755 "${HOME}/MUST-RUN-AS-ROOT"
+-    echo
+-    echo "Root tasks can be applied with the script:"
+-    echo "  ${HOME}/MUST-RUN-AS-ROOT"
+-    echo "Please run this script as root after install."
+-    echo "Press Enter to confirm..."
+-    read reply leftover
+ fi
+ 
+ #

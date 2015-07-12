@@ -1,0 +1,1 @@
+auth [success=done default=die] pam_krb5.so minimum_uid=1729
