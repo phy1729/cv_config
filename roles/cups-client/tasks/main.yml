@@ -1,0 +1,17 @@
+---
+- name: Install Printing Packages
+  apt: pkg={{ item }} state=present
+  with_items:
+  - cups
+  - cups-client
+
+- name: Configure Cups as a Client
+  copy: src=cups dest=/etc owner=root group=lp mode=0644 directory_mode=0755
+
+- name: Disable local cups interface
+  template: src=cupsd.conf dest=/etc/cups/cupsd.conf owner=root group=lp mode=0644
+
+- name: Install firewall rules
+  copy: src=printers.rules dest=/etc/iptables.d/ owner=root group=root mode=0640
+  notify:
+  - iptables
