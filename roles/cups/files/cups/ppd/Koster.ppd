@@ -15,15 +15,15 @@
 *% Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 *%
 *FormatVersion:	"4.3"
-*FileVersion:	"5.2.9"
+*FileVersion:	"5.2.10-pre2"
 *LanguageVersion: English
 *LanguageEncoding: ISOLatin1
-*PCFileName:	"STP01132.PPD"
+*PCFileName:	"STP01730.PPD"
 *Manufacturer:	"HP"
 *Product:	"(HP LaserJet 4200)"
 *ModelName:     "HP LaserJet 4200"
 *ShortNickName: "HP LaserJet 4200"
-*NickName:      "HP LaserJet 4200 - CUPS+Gutenprint v5.2.9"
+*NickName:      "HP LaserJet 4200 - CUPS+Gutenprint v5.2.10-pre2"
 *PSVersion:	"(3010.000) 0"
 *LanguageLevel:	"3"
 *ColorDevice:	False
@@ -35,7 +35,7 @@
 *cupsManualCopies: True
 *cupsFilter:	"application/vnd.cups-raster 100 rastertogutenprint.5.2"
 *1284DeviceID: "MFG:Hewlett-Packard;MDL:hp LaserJet 4200;DES:Hewlett-Packard LaserJet 4200;CMD:PJL,MLC,POSTSCRIPT,PJL,PCLXL,PCL;"
-*cupsLanguages: "cs da de el en_GB es fi fr gl hu it ja nb nl pl pt ru sk sl sv uk zh_CN zh_TW"
+*cupsLanguages: "ca cs da de el en_GB es fi fr gl hu it ja nb nl pl pt ru sk sl sv tr uk vi zh_CN zh_TW"
 
 *StpDriverName:	"hp-lj_4200"
 *StpDriverModelFamily:	"6_pcl"
