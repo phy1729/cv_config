@@ -7,6 +7,11 @@
   notify:
   - cups
 
+- name: Copy cupsd.conf
+  template: src=cupsd.conf dest=/etc/cups/cupsd.conf owner=root group=lp mode0644
+  notify:
+  - cups
+
 - name: Copy CUPS Firewall rules
   copy: src=cups.rules dest=/etc/iptables.d owner=root group=root mode=0640
   notify:
