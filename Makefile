@@ -1,6 +1,18 @@
-.PHONY: site clean mkdir_secrets secrets account_admin_password account_salt inspircd_cert inspircd_inspircd_power_diepass inspircd_inspircd_power_restartpass inspircd_links_madhax_recvpass inspircd_links_madhax_sendpass inspircd_links_minecraft_recvpass inspircd_links_minecraft_sendpass inspircd_modules_cloak_key inspircd_opers monit_passwd nslcd_bind_passwd nut_monitor_passwd
+.PHONY: site clean secrets mkdir_secrets ${SECRET_TARGETS} certreq
 
 SECRETS_DIR = secret
+
+SECRET_TARGETS = ${PLAIN_SECRETS} \
+	inspircd_cert \
+	inspircd_inspircd_power_diepass inspircd_inspircd_power_restartpass inspircd_opers
+
+PLAIN_SECRETS = account_admin_password account_salt \
+	inspircd_links_madhax_recvpass inspircd_links_madhax_sendpass \
+	inspircd_links_minecraft_recvpass inspircd_links_minecraft_sendpass \
+	inspircd_modules_cloak_key \
+	monit_passwd \
+	nslcd_bind_passwd \
+	nut_monitor_passwd
 
 DESTDIR = ${CURDIR}/tmp
 SUDO = sudo
@@ -56,19 +68,25 @@ site:
 clean:
 	${SUDO} rm -rf ${DESTDIR}
 
-secrets: mkdir_secrets account_admin_password account_salt inspircd_cert inspircd_inspircd_power_diepass inspircd_inspircd_power_restartpass inspircd_links_madhax_recvpass inspircd_links_madhax_sendpass inspircd_links_minecraft_recvpass inspircd_links_minecraft_sendpass inspircd_modules_cloak_key inspircd_opers monit_passwd nslcd_bind_passwd nut_monitor_passwd
+secrets: mkdir_secrets ${SECRET_TARGETS}
 	@tput setaf 1 && echo "Don't forget to get account_access.list and account_words.txt and edit account_admin_username and nslcd_bind_user" && tput sgr0
 
 mkdir_secrets:
 	mkdir -pm 0700 ${SECRETS_DIR}
 
-account_admin_password account_salt inspircd_links_madhax_recvpass inspircd_links_madhax_sendpass inspircd_links_minecraft_recvpass inspircd_links_minecraft_sendpass inspircd_modules_cloak_key monit_passwd nslcd_bind_passwd nut_monitor_passwd:
+${PLAIN_SECRETS}:
 	export LC_CTYPE=C; tr -dc '!-~' < /dev/urandom | fold -w 32 | head -n 1 > ${SECRETS_DIR}/$@
 
+certreq:
+	openssl genrsa -out ${SECRETS_DIR}/${role}_key.pem 4096
+	cp cert.conf ${role}_cert.conf
+	echo "CN = ${fqdn}" >> ${role}_cert.conf
+	openssl req -new -config ${role}_cert.conf -key ${SECRETS_DIR}/${role}_key.pem -out ${SECRETS_DIR}/${role}_csr.pem
+	rm ${role}_cert.conf
+	@tput setaf 1 0 0 && echo "Follow the steps at https://www.utdallas.edu/infosecurity/DigitalCertificates_SSL.html and put the resulting key at ${SECRETS_DIR}/${role}_cert.pem" && tput sgr0
+
 inspircd_cert:
-	openssl genrsa -out ${SECRETS_DIR}/inspircd_key.pem 2048
-	openssl req -new -config inspircd_cert.conf -key ${SECRETS_DIR}/inspircd_key.pem -out ${SECRETS_DIR}/inspircd_csr.pem
-	@tput setaf 1 && echo "Follow the steps at https://www.utdallas.edu/infosecurity/DigitalCertificates_SSL.html and put the resulting key at ${SECRETS_DIR}/inspircd_cert.pem" && tput sgr0
+	${MAKE} role=inspircd fqdn=irc.collegiumv.org certreq
 
 inspircd_inspircd_power_diepass:
 	./inspircd_hmac "Password to shutdown the IRC server: " > ${SECRETS_DIR}/inspircd_inspircd_power_diepass
