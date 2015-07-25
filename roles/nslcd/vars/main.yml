@@ -1,3 +1,0 @@
----
-nslcd_bind_user: "{{ lookup('file', 'secret/nslcd_bind_user') }}"
-nslcd_bind_passwd: "{{ lookup('file', 'secret/nslcd_bind_passwd') }}"

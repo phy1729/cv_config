@@ -5,12 +5,10 @@
   - iptables
 - name: Install libpam-ldapd
   apt: name=libpam-ldapd state=present
-- name: Install zsh
-  apt: name=zsh state=present
 - name: Stop nscd
   service: name=nscd state=stopped enabled=no
 - name: Configure libpam-ldapd
-  template: src=nslcd.conf dest=/etc/nslcd.conf owner=root group=nslcd mode=0640
+  copy: src=nslcd.conf dest=/etc/nslcd.conf owner=root group=nslcd mode=0640
   notify:
   - nslcd
 - name: Add ldap to nsswitch
@@ -19,18 +17,3 @@
   - passwd
   - group
   - shadow
-- name: Add authorizedkeyscommand user
-  user: name=autorizedkeyscommand createhome=no groups= shell=/bin/false system=yes state=present
-- name: Fix /usr/local permissions
-  file: path=/usr/local state=directory owner=root group=staff mode=0555
-- name: Add AuthorizedKeysCommand script
-  copy: src=ssh_pubkeys dest=/usr/local/sbin/ssh_pubkeys owner=root group=root mode=0755
-- name: Make /usr/local/sbin safe
-  file: path=/usr/local/sbin/ state=directory owner=root group=root mode=0755
-- name: Create authorizedkeyscommand user
-  user: name=authorizedkeyscommand system=yes createhome=no
-- name: Add pubkey commands
-  copy: src={{ item }} dest=/usr/local/bin/{{ item }} owner=root group=root mode=0755
-  with_items:
-  - add_pubkey
-  - del_pubkey

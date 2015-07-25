@@ -1,0 +1,90 @@
+dn: cn=config
+objectClass: olcGlobal
+cn: config
+olcRootDSE: /etc/ldap/slapd.d/rootDSE.ldif
+olcGentleHUP: TRUE
+olcIdleTimeout: 60
+olcAuthzRegexp: {0}uid=([^,]*)(/[^,]*)?(,cn=collegiumv.org)?,cn=gssapi,cn=auth uid=$1,ou=People,dc=collegiumv,dc=org
+{% for dc in groups['dc'] %}
+olcServerID: {{ loop.index-1 }} ldap://{{ hostvars[dc]['ansible_fqdn'] }}
+{% endfor %}
+
+dn: cn=module{0},cn=config
+objectClass: olcModuleList
+cn: module{0}
+olcModulePath: /usr/lib/ldap
+# You can't change these with Ansible
+olcModuleLoad: {0}back_mdb
+olcModuleLoad: {1}syncprov
+olcModuleLoad: {2}unique
+
+dn: olcDatabase={-1}frontend,cn=config
+objectClass: olcDatabaseConfig
+objectClass: olcFrontendConfig
+olcDatabase: {-1}frontend
+olcDefaultSearchBase: dc=collegiumv,dc=org
+olcSizeLimit: unlimited
+
+dn: olcDatabase={0}config,cn=config
+objectClass: olcDatabaseConfig
+olcDatabase: {0}config
+olcRootPW:: {{ slapd_olcRootPW | b64encode }}
+# olcSyncRepl is configured in sync.ldif
+olcAccess: {0}to * by * none
+
+dn: olcOverlay={0}syncprov,olcDatabase={0}config,cn=config
+objectClass: olcSyncProvConfig
+olcOverlay: {0}syncprov
+olcSpCheckpoint: 10 5
+
+dn: olcDatabase={1}mdb,cn=config
+objectClass: olcDatabaseConfig
+objectClass: olcMdbConfig
+olcDatabase: {1}mdb
+olcDbDirectory: /var/lib/ldap
+olcSuffix: dc=collegiumv,dc=org
+olcRootDN: cn=config
+olcDbIndex: uid,uidNumber eq
+# For Kerberos
+olcDbIndex: krbPrincipalName eq,sub
+# For syncprov
+olcDbIndex: objectclass,entryCSN,entryUUID eq
+olcMirrorMode: TRUE
+{% for dc in groups['dc'] %}
+olcSyncRepl: {{ '{' }}{{ loop.index-1 }}{{ '}' }}rid=01{{ loop.index-1 }} provider="ldap://{{ hostvars[dc]['ansible_fqdn'] }}" binddn="cn=config" bindmethod=simple credentials="{{ slapd_olcRootPW }}" searchbase="dc=collegiumv,dc=org" type=refreshAndPersist retry="5 5 120 +" timeout=3
+{% endfor %}
+# A few entries use userPassword
+olcAccess: {0}to attrs=userPassword
+  by * auth
+olcAccess: {1}to dn.subtree="cn=krbContainer,dc=collegiumv,dc=org"
+  by dn.exact=cn=krbAdmService,dc=collegiumv,dc=org write
+  by * none
+olcAccess: {2}to dn.exact="ou=People,dc=collegiumv,dc=org" attrs=children
+  by dn.exact="cn=acctService,dc=collegiumv,dc=org" =a
+  by * break
+olcAccess: {3}to dn.one="ou=People,dc=collegiumv,dc=org" attrs=entry
+  by dn.exact="cn=acctService,dc=collegiumv,dc=org" =a break
+  by * break
+olcAccess: {4}to dn.children="ou=people,dc=collegiumv,dc=org" attrs=cn,displayName,gidNumber,givenName,homeDirectory,netID,o,objectClass,sn,uid,uidNumber
+  by * read
+olcAccess: {5}to dn.children="ou=people,dc=collegiumv,dc=org" attrs=ou,title
+  by group.exact="cn=Realm Admins,ou=Group,dc=collegiumv,dc=org" write
+  by * read
+olcAccess: {6}to dn.children="ou=people,dc=collegiumv,dc=org" attrs=description
+  by group.exact="cn=Realm Admins,ou=Group,dc=collegiumv,dc=org" write
+  by * none
+olcAccess: {7}to *
+  by self write
+  by group.exact="cn=Realm Admins,ou=Group,dc=collegiumv,dc=org" write
+  by * +rscxd
+
+dn: olcOverlay={0}syncprov,olcDatabase={1}mdb,cn=config
+objectClass: olcSyncProvConfig
+olcOverlay: {0}syncprov
+olcSpCheckpoint: 10 5
+
+dn: olcOverlay={1}unique,olcDatabase={1}mdb,cn=config
+objectClass: olcUniqueConfig
+olcOverlay: {1}unique
+olcUniqueURI: ldap:///ou=People,dc=collegiumv,dc=org?netID?sub?
+olcUniqueURI: ldap:///ou=People,dc=collegiumv,dc=org?uidNumber?sub?

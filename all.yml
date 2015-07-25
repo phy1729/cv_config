@@ -1,5 +1,6 @@
 ---
 - include: gateway.yml
+- include: dc.yml
 - include: ssh-box.yml
 - include: utility.yml
 - include: minecraft.yml

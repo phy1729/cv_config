@@ -1,3 +1,0 @@
----
-- name: cert-db
-  command: update-ca-certificates

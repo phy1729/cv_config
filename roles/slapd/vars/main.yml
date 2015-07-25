@@ -1,0 +1,16 @@
+---
+slapd_acctService_password: "{{ lookup('file', 'secret/slapd_acctService_password') }}"
+slapd_krbAdmService_password: "{{ lookup('file', 'secret/slapd_krbAdmService_password') }}"
+slapd_olcRootPW: "{{ lookup('file', 'secret/slapd_olcRootPW') }}"
+# THE BELOW ORDER IS _VERY_ IMPORTANT. DO NOT CHANGE!
+LDIFfiles:
+- config
+- sync
+- collegiumv
+schemata:
+- cn={0}core.ldif
+- cn={1}cosine.ldif
+- cn={2}rfc2307bis02.ldif
+- cn={3}inetorgperson.ldif
+- cn={4}kerberos.ldif
+- cn={5}collegiumv.ldif

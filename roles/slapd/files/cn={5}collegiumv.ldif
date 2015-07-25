@@ -1,0 +1,15 @@
+dn: cn={5}collegiumv,cn=schema,cn=config
+objectClass: olcSchemaConfig
+cn: {5}collegiumv
+# This OID is owned by Matthew Martin. You MUST NOT assign any OIDs without permission.
+olcObjectIdentifier: {0}phy 1.3.6.1.4.1.46200
+olcObjectIdentifier: {1}CVLDAP phy:5
+olcObjectIdentifier: {2}CVLDAPObjectClass CVLDAP:1
+olcObjectIdentifier: {3}CVLDAPAttributeType CVLDAP:2
+olcObjectIdentifier: {4}CVLDAPSyntax CVLDAP:3
+olcObjectIdentifier: {5}CVLDAPUser CVLDAP:4
+olcAttributeTypes: {0}( CVLDAPAttributeType:0 NAME 'netID' EQUALITY caseIgnoreIA5Match SUBSTR caseIgnoreIA5SubstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+olcAttributeTypes: {1}( CVLDAPAttributeType:1 NAME 'authorizedKeys' EQUALITY caseExactIA5Match SUBSTR caseExactSubstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+olcAttributeTypes: {2}( CVLDAPAttributeType:2 NAME 'desktopEnvironment' EQUALITY caseExactIA5Match SUBSTR caseExactSubstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+olcObjectClasses: {0}( CVLDAPObjectClass:0 NAME 'cvPerson' SUP top AUXILIARY MUST netID MAY ( authorizedKeys $ desktopEnvironment ) )
+olcObjectClasses: {1}( CVLDAPObjectClass:1 NAME 'sshUser' SUP top AUXILIARY MAY authorizedKeys )

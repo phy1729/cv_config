@@ -11,7 +11,8 @@ PLAIN_SECRETS = account_admin_password account_salt \
 	inspircd_links_minecraft_recvpass inspircd_links_minecraft_sendpass \
 	inspircd_modules_cloak_key \
 	nslcd_bind_passwd \
-	nut_monitor_passwd
+	nut_monitor_passwd \
+	slapd_acctService_password slapd_krbAdmService_password slapd_olcRootPW
 
 DESTDIR = ${CURDIR}/tmp
 SUDO = sudo

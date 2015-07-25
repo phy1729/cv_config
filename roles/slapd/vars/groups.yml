@@ -1,0 +1,30 @@
+---
+slapd_groups:
+- name: Pantheon
+  gidNumber: 31337
+  members:
+  - ahalbert
+  - ahmedusthefirst
+  - Bardiya
+  - cliffhanger
+  - ErikLee
+  - kjh061000
+  - MatchesMalone
+  - phy1729
+  - revertTS
+  - thechairman
+  - vanquish
+
+- name: Paper Creditors
+  gidNumber: 1455
+  members:
+  - sheila.kelly
+  - vbrunell
+
+- name: Realm Admins
+  gidNumber: 1337
+  members:
+  - harpham
+  - maldridge
+  - phy1729
+  - Siosilvar

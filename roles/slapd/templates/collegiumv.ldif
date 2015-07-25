@@ -1,0 +1,48 @@
+dn: dc=collegiumv,dc=org
+objectClass: organization
+objectClass: dcObject
+o: Collegium V
+dc: collegiumv
+description: We're smarter than you think you are
+
+dn: cn=krbAdmService,dc=collegiumv,dc=org
+objectClass: krbAdmService
+objectClass: simpleSecurityObject
+cn: krbAdmService
+userPassword:: {{ slapd_krbAdmService_password | b64encode }}
+
+dn: cn=acctService,dc=collegiumv,dc=org
+objectClass: applicationProcess
+objectClass: simpleSecurityObject
+cn: acctService
+userPassword:: {{ slapd_acctService_password | b64encode }}
+
+dn: cn=krbContainer,dc=collegiumv,dc=org
+objectClass: krbContainer
+cn: krbContainer
+
+dn: ou=People,dc=collegiumv,dc=org
+objectClass: organizationalUnit
+ou: People
+
+dn: ou=Group,dc=collegiumv,dc=org
+objectClass: organizationalUnit
+ou: Group
+
+dn: cn=Lounge Users,ou=Group,dc=collegiumv,dc=org
+objectClass: groupOfMembers
+objectClass: posixGroup
+cn: Lounge Users
+gidNumber: 1729
+
+{% for group in slapd_groups %}
+dn: cn={{ group.name }},ou=Group,dc=collegiumv,dc=org
+objectClass: groupOfNames
+objectClass: posixGroup
+cn: {{ group.name }}
+gidNumber: {{ group.gidNumber }}
+{% for member in group.members %}
+member: uid={{ member }},ou=People,dc=collegiumv,dc=org
+{% endfor %}
+
+{% endfor %}

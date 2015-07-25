@@ -1,2 +1,0 @@
-#!/bin/sh
-getent passwd -- "$1" | awk -F: -v RS="\000" '{print $5}'

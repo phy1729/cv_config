@@ -1,12 +1,11 @@
 $TTL 3h
 
 @ IN SOA hydrogen.collegiumv.org. cvadmins.utdallas.edu. (
-	2015053001
+	2015072201
 	3h	;refresh
 	1h	;retry
 	1w	;expire
 	1h )	;negative cache
-
 
 	IN NS	hydrogen.collegiumv.org.
 	IN NS	helium.collegiumv.org.
@@ -14,8 +13,8 @@ $TTL 3h
 1	IN PTR	hydrogen.collegiumv.org.
 2	IN PTR	helium.collegiumv.org.
 3	IN PTR	lithium.collegiumv.org.
-4	IN PTR	beryllium.ad.collegiumv.org.
-5	IN PTR	boron.ad.collegiumv.org.
+4	IN PTR	beryllium.collegiumv.org.
+5	IN PTR	boron.collegiumv.org.
 6	IN PTR	carbon.collegiumv.org.
 7	IN PTR	nitrogen.collegiumv.org.
 8	IN PTR	oxygen.collegiumv.org.
@@ -39,29 +38,29 @@ $TTL 3h
 23	IN PTR	cocks.collegiumv.org.
 
 ;clients
-32	IN PTR	argus.ad.collegiumv.org.
-33	IN PTR	busterjangle.ad.collegiumv.org.
-34	IN PTR	crossroads.ad.collegiumv.org.
-35	IN PTR	dominic.ad.collegiumv.org.
-36	IN PTR	emery.ad.collegiumv.org.
-37	IN PTR	flintlock.ad.collegiumv.org.
-38	IN PTR	greenhouse.ad.collegiumv.org.
-39	IN PTR	hardtack.ad.collegiumv.org.
-40	IN PTR	ivy.ad.collegiumv.org.
-41	IN PTR	julin.ad.collegiumv.org.
-42	IN PTR	kittens.ad.collegiumv.org.
-43	IN PTR	latchkey.ad.collegiumv.org.
-44	IN PTR	mandrel.ad.collegiumv.org.
-45	IN PTR	niblick.ad.collegiumv.org.
-46	IN PTR	oberon.ad.collegiumv.org.
-47	IN PTR	phalanx.ad.collegiumv.org.
-48	IN PTR	quicksilver.ad.collegiumv.org.
-49	IN PTR	redwing.ad.collegiumv.org.
-50	IN PTR	sunbeam.ad.collegiumv.org.
-51	IN PTR	touchstone.ad.collegiumv.org.
-52	IN PTR	unicorn.ad.collegiumv.org.
-53	IN PTR	vixen.ad.collegiumv.org.
-54	IN PTR	wigwam.ad.collegiumv.org.
-55	IN PTR	xray.ad.collegiumv.org.
-56	IN PTR	yuma.ad.collegiumv.org.
-57	IN PTR	zinnia.ad.collegiumv.org.
+32	IN PTR	argus.collegiumv.org.
+33	IN PTR	busterjangle.collegiumv.org.
+34	IN PTR	crossroads.collegiumv.org.
+35	IN PTR	dominic.collegiumv.org.
+36	IN PTR	emery.collegiumv.org.
+37	IN PTR	flintlock.collegiumv.org.
+38	IN PTR	greenhouse.collegiumv.org.
+39	IN PTR	hardtack.collegiumv.org.
+40	IN PTR	ivy.collegiumv.org.
+41	IN PTR	julin.collegiumv.org.
+42	IN PTR	kittens.collegiumv.org.
+43	IN PTR	latchkey.collegiumv.org.
+44	IN PTR	mandrel.collegiumv.org.
+45	IN PTR	niblick.collegiumv.org.
+46	IN PTR	oberon.collegiumv.org.
+47	IN PTR	phalanx.collegiumv.org.
+48	IN PTR	quicksilver.collegiumv.org.
+49	IN PTR	redwing.collegiumv.org.
+50	IN PTR	sunbeam.collegiumv.org.
+51	IN PTR	touchstone.collegiumv.org.
+52	IN PTR	unicorn.collegiumv.org.
+53	IN PTR	vixen.collegiumv.org.
+54	IN PTR	wigwam.collegiumv.org.
+55	IN PTR	xray.collegiumv.org.
+56	IN PTR	yuma.collegiumv.org.
+57	IN PTR	zinnia.collegiumv.org.

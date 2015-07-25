@@ -1,0 +1,8 @@
+---
+- hosts: dc
+  sudo: yes
+  vars:
+    init: false
+  roles:
+  - base
+  - slapd

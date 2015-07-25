@@ -1,0 +1,3 @@
+#!/bin/sh
+
+ldapsearch -LLL -o ldif-wrap=no -H -l 3 'ldap://ldap.collegiumv.org' -x -b "uid=$1,ou=People,dc=collegiumv,dc=org" -s base '(objectClass=*)' authorizedKeys | sed '/^authorizedKeys: /!d;s///'

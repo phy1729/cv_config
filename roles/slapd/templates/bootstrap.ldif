@@ -1,0 +1,15 @@
+# You shouldn't be here. This file is the bare minimum to get slapd up and
+  running. You really should edit the other ldif files instead. If this comment
+  continuing even without a # in front freaks you out, run far away from this
+  dark magic. No one hears your screams here.
+    -- phy1729
+
+dn: cn=config
+objectClass: olcGlobal
+cn: config
+olcPidFile: /var/run/slapd/slapd.pid
+
+dn: olcDatabase={0}config,cn=config
+objectClass: olcDatabaseConfig
+olcDatabase: {0}config
+olcRootPW:: {{ slapd_olcRootPW | b64encode }}

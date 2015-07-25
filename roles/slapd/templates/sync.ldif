@@ -1,0 +1,11 @@
+# You shouldn't be here. This file is the bare minimum to bring up a new
+  directory server while the DIT still exists on other servers. You should edit
+  config.ldif instead.
+    -- phy1729
+dn: olcDatabase={0}config,cn=config
+objectClass: olcDatabaseConfig
+olcDatabase: {0}config
+{% for dc in groups['dc'] %}
+olcSyncRepl: {{ '{' }}{{ loop.index-1 }}{{ '}' }}rid=00{{ loop.index-1 }} provider="ldap://{{ hostvars[dc]['ansible_fqdn'] }}" binddn="cn=config" bindmethod=simple credentials="{{ slapd_olcRootPW }}" searchbase="cn=config" type=refreshAndPersist retry="5 5 120 +" timeout=3
+{% endfor %}
+olcMirrorMode: TRUE

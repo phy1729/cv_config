@@ -1,21 +1,15 @@
 $TTL 10m
 
 @ IN SOA hydrogen.collegiumv.org. cvadmins.utdallas.edu. (
-	2015060101
+	2015072401
 	1h	;refresh
 	3m	;retry
 	2w	;expire
 	1h )	;negative cache
 
-
 	IN NS	hydrogen.collegiumv.org.
 	IN NS	helium.collegiumv.org.
 	IN A	192.168.42.7
-
-
-ad.collegiumv.org.	IN NS	beryllium.collegiumv.org.
-ad.collegiumv.org.	IN NS	boron.collegiumv.org.
-
 
 hydrogen	IN A	192.168.42.1
 helium		IN A	192.168.42.2
@@ -33,7 +27,6 @@ aluminium	IN A	192.168.42.13
 silicon		IN A	192.168.42.14
 phosphorus	IN A	192.168.42.15
 
-
 h	IN CNAME	hydrogen
 he	IN CNAME	helium
 li	IN CNAME	lithium
@@ -50,12 +43,12 @@ al	IN CNAME	aluminium
 si	IN CNAME	silicon
 p	IN CNAME	phosphorus
 
-
-
 account	IN CNAME	nitrogen
 accounts	IN CNAME	account
 dns	IN CNAME	lithium
 irc	IN CNAME	nitrogen
+ldap	IN A	192.168.42.4
+ldap	IN A	192.168.42.5
 minecraft	IN CNAME	oxygen
 ntp	IN CNAME	lithium
 nut	IN CNAME	nitrogen
@@ -63,7 +56,6 @@ pasta	IN CNAME	nitrogen
 preseed	IN CNAME	nitrogen
 wiki	IN CNAME	nitrogen
 www	IN CNAME	collegiumv.org.
-
 
 franklin	IN A	192.168.42.16
 gutenburg	IN A	192.168.42.17
@@ -103,4 +95,3 @@ zinnia	IN A	192.168.42.57
 
 ; must keep this cname for matlab license
 flex	IN CNAME	flex.utdallas.edu.
-

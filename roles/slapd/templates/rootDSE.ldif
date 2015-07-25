@@ -1,0 +1,10 @@
+# You probably shouldn't be here. Unless you've read RFC 4512 and can explain
+  why the dn is blank, don't touch this file.
+    -- phy1729
+dn:
+objectClass: OpenLDAProotDSE
+{% for dc in groups['dc'] %}
+altServer: ldap://{{ hostvars[dc]['ansible_fqdn'] }}
+{% endfor %}
+namingContexts: dc=collegiumv,dc=org
+supportedSASLMechanisms: GSSAPI
