@@ -1,0 +1,48 @@
+---
+- name: Copy configuration
+  copy: src={{ item }} dest=/etc/{{ item }} owner=root group=wheel mode=0644
+  with_items:
+  - crontab
+  - nsswitch.conf
+  - rc.conf
+  - resolv.conf
+  - pf.conf
+- name: Install packages
+  pkgng: name={{ item }} state=present
+  with_items:
+  - sudo
+  - nss-pam-ldapd
+- name: Copy nslcd config
+  copy: src=nslcd.conf dest=/usr/local/etc/nslcd.conf owner=root group=wheel mode=0400
+- name: Copy znapdragon script
+  copy: src=znapdragon/znapdragon dest=/usr/local/sbin/znapdragon owner=root group=wheel mode=0500
+- name: Copy mkhomes and listener
+  copy: src={{ item }} dest=/usr/local/sbin/{{ item }} owner=root group=wheel mode=0500
+  with_items:
+  - mkhomes
+  - mkhomes_listener
+- name: Copy mkhomes_listener rc.d script
+  copy: src=mkhomes_listener.rc dest=/etc/rc.d/mkhomes_listener owner=root group=wheel mode=0555
+
+- zfs: name=zroot state=present checksum=sha256 compression=lz4 atime=off
+- zfs: name=zroot/ROOT state=present mountpoint=none
+- zfs: name=zroot/ROOT/default state=present mountpoint=/
+- zfs: name=zroot/srv state=present mountpoint=/srv canmount=off exec=off setuid=off casesensitivity=mixed sharenfs='-sec=sys -network 192.168.42.0/26'
+- zfs: name=zroot/tmp state=present mountpoint=/tmp exec=on setuid=off
+- zfs: name=zroot/usr state=present mountpoint=/usr canmount=off
+- zfs: name=zroot/usr/ports state=present setuid=off
+- zfs: name=zroot/var state=present mountpoint=/var canmount=off
+- zfs: name=zroot/var/archives state=present canmount=off exec=off setuid=off casesensitivity=mixed
+- zfs: name=zroot/var/crash state=present exec=off setuid=off
+- zfs: name=zroot/var/log state=present exec=off setuid=off
+- zfs: name=zroot/var/mail state=present atime=on
+- zfs: name=zroot/var/tmp state=present setuid=off
+
+- name: Make propertyless children
+  zfs: name=zroot/{{ item }} state=present
+  with_items:
+  - srv/homes
+  - srv/warpdrive
+  - srv/ydrive
+  - usr/home
+  - usr/src

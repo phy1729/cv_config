@@ -1,3 +1,4 @@
 *filter
 -A OUTPUT -p tcp -d 192.168.42.4/31 --dport 636 -j ACCEPT
+-A OUTPUT -p tcp -d 192.168.42.12 --dport 1729 -j ACCEPT
 COMMIT

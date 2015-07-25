@@ -3,7 +3,7 @@
 <pam_mount>
 	<debug enable="0" />
 
-	<volume fstype="cifs" server="192.168.42.4" path="Users/%(USER)" mountpoint="~" />
+	<volume fstype="nfs" server="192.168.42.13" path="/srv/homes/%(USER)" mountpoint="~" options="sec=sys" />
 	<mntoptions allow="nosuid,nodev,loop,encryption,fsck,nonempty,allow_root,allow_other" />
 	<mntoptions require="nosuid,nodev" />
 	<logout wait="0" hup="0" term="0" kill="0" />

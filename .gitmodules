@@ -7,3 +7,6 @@
 [submodule "library/ansible_ldap"]
 	path = library/ansible_ldap
 	url = https://github.com/dinoocch/ansible_ldap.git
+[submodule "roles/nas/files/znapdragon"]
+	path = roles/nas/files/znapdragon
+	url = https://github.com/phy1729/znapdragon.git

@@ -69,7 +69,7 @@ function isValidNetID($netID) {
 }
 
 function isValidUsername($username) {
-	return preg_match("/^[A-Za-z0-9.-_]{1,30}$/", $username);
+	return preg_match("/^[A-Za-z0-9][A-Za-z0-9.-_]{0,29}$/", $username);
 }
 
 function isValidKey($key, $netID, $username="") {
@@ -128,8 +128,15 @@ function createUser($netID, $username) {
 	$user_attributes['objectclass'][3] = 'user';
 	$user_attributes['userAccountControl'][0] = 512; // NORMAL_ACCOUNT
 	$user_attributes['uidNumber'][0] = getnextUID();
+	$user_attributes['gidNumber'][0] = 10000;
 	$result = ldap_add($ldap, "CN=" . $first . " " . $last . ", " . $base_dn, $user_attributes);
 	if ($result) {
+		# Poke fileserver to create home folder
+		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+		socket_bind($socket, '192.168.42.7');
+		socket_connect($socket, '192.168.42.12', 1729);
+		socket_close($socket);
+
 		sendMail($netID, 'CV Account Creation', 'Your new password is "'.$password.'". This is a temporary password. To set your real password login on a lounge computer.');
 		CVlog("Made account for $first $last u:$username n:$netID");
 		return  "Please check your UTD email to finish creating your account. Press the \"Get Mail\" icon in the upper left to refresh your inbox.";

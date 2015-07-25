@@ -20,3 +20,6 @@ f
 
 [nut]
 ne
+
+[nas]
+al ansible_python_interpreter=/usr/local/bin/python2

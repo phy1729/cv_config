@@ -1,0 +1,41 @@
+#!/bin/sh
+
+# Get usernames, but ignore system users and "nobody".
+users="$(getent passwd | awk -F: '$3>=1729 && $3!=65534 {print $1}')"
+
+# Sanity check that we have over 500 users.
+num="$(echo "$users" | wc -l)"
+if [ "$num" -lt 500 ]; then
+	echo >&2 "Less than 500 users present; will not proceed."
+	exit 1
+fi
+
+# Create homes for users that have no home.
+for user in $users; do
+	home="/srv/homes/$user"
+
+	if [ ! -d "$home" ]; then
+		zfs create -o refquota=10G "zroot$home"
+		chown "$user:1729" "$home"
+		chmod 700 "$home"
+	fi
+done
+
+
+# Archive the home of dead users.
+for home in /srv/homes/*; do
+	if [ ! -d "$home" ]; then
+		continue
+	fi
+
+	home="${home##*/}"
+
+	for user in $users; do
+		if [ "$home" = "$user" ]; then
+			continue 2;
+		fi
+	done
+
+	# If we've gotten here, the user is no longer in the directory.
+	zfs rename "zroot/srv/homes/$home" "zroot/var/archives/$home"
+done

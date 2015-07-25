@@ -1,0 +1,5 @@
+---
+- hosts: nas
+  sudo: yes
+  roles:
+  - nas
