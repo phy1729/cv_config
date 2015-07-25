@@ -1,0 +1,13 @@
+*filter
+# base krb5
+-A INPUT -p tcp --dport 88 -j ACCEPT
+-A INPUT -p udp --dport 88 -j ACCEPT
+
+# kpasswd
+-A INPUT -p tcp --dport 464 -j ACCEPT
+-A INPUT -p udp --dport 464 -j ACCEPT
+
+# kadmin
+-A INPUT -p tcp --dport 749 -j ACCEPT
+-A INPUT -p udp --dport 749 -j ACCEPT
+COMMIT

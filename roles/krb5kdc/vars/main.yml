@@ -1,0 +1,5 @@
+krbAdmin_bindDN: cn=krbAdmService,dc=collegiumv,dc=org
+slapd_krbAdmService_password: "{{ lookup('file','secret/slapd_krbAdmService_password') }}"
+krb_db_enc_pass: "{{ lookup('file','secret/krb_db_enc_pass') }}"
+kdcAdmin_user: krb5root
+kdcAdmin_pass: "{{ lookup('file','secret/kdcAdmin_pass') }}"

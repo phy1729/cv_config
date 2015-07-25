@@ -10,6 +10,7 @@ PLAIN_SECRETS = account_admin_password account_salt \
 	inspircd_links_madhax_recvpass inspircd_links_madhax_sendpass \
 	inspircd_links_minecraft_recvpass inspircd_links_minecraft_sendpass \
 	inspircd_modules_cloak_key \
+	krb_db_enc_pass kdcAdmin_pass \
 	nslcd_bind_passwd \
 	nut_monitor_passwd \
 	slapd_acctService_password slapd_krbAdmService_password slapd_olcRootPW

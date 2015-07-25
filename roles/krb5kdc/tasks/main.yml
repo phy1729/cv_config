@@ -1,0 +1,52 @@
+---
+- name: Install kerberos rules
+  copy: src=kdc.rules dest=/etc/iptables.d/ owner=root group=root mode=0640
+  notify:
+  - iptables
+
+- name: Install the kerberos packages
+  apt: name={{ item }} state=present
+  register: install
+  with_items:
+  - krb5-kdc
+  - krb5-admin-server
+  - krb5-kdc-ldap
+
+- name: Create the kdc configuration
+  template: src=kdc.conf dest=/etc/krb5kdc/kdc.conf owner=root group=root mode=0644
+  notify: krb5kdc
+
+- name: Copy the kdc acl
+  copy: src=kadm5.acl dest=/etc/krb5kdc/kadm5.acl owner=root group=root mode=0644
+  notify: krb5kdc
+
+- name: Copy the client configuration
+  template: src=krb5.conf dest=/etc/krb5.conf owner=root group=root mode=0644
+
+- name: Initial KDC script copy
+  template: src=kdc_bootstrap.sh dest=/tmp/kdc.sh owner=root group=root mode=0700
+  when: init and install.changed and (inventory_hostname == groups['dc'][0])
+
+- name: Initial KDC script run
+  shell: /tmp/kdc.sh
+  when: init and install.changed and (inventory_hostname == groups['dc'][0])
+
+- name: Initial KDC script remove
+  file: path=/tmp/kdc.sh state=absent
+
+- name: Start the kerberos services
+  service: name={{ item }} state=started
+  with_items:
+  - krb5-kdc
+  - krb5-admin-server
+
+- name: KAdmin script copy
+  template: src=kadmin.sh dest=/tmp/kadmin.sh owner=root group=root mode=0700
+  when: init and install.changed and (inventory_hostname == groups['dc'][0])
+
+- name: KAdmin script run
+  shell: /tmp/kadmin.sh
+  when: init and install.changed and (inventory_hostname == groups['dc'][0])
+
+- name: KAdmin script remove
+  file: path=/tmp/kdc.sh state=absent
