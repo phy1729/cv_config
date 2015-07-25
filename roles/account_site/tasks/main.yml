@@ -1,23 +1,31 @@
 ---
+- name: Install dependencies
+  apt: pkg={{ item }} state=present
+  with_items:
+  - python-dev
+  - python-ldap
+  - python-flask
+
 - name: Configure firewall for account_site
   copy: src=account_site.rules dest=/etc/iptables.d/account_site.rules owner=root group=root mode=0640
   notify:
   - iptables
-- name: Copy account files
-  copy: src=account dest=/var/www/ owner=root group=root mode=0644 directory_mode=0755
+
+- name: Create the accountServices user
+  user: name=cv_account group=cv_account state=present system=yes
+
 - name: Create config directory
-  file: path=/var/www/account/config state=directory owner=root group=www-data mode=0750
-- name: Secure config directory
-  copy: src=config.htaccess dest=/var/www/account/config/.htaccess owner=root group=root mode=0640
-- name: Copy config file
-  template: src=config.php dest=/var/www/account/config/config.php owner=root group=www-data mode=0640
-- name: Copy config files
-  copy: src=secret/account_{{ item }} dest=/var/www/account/config/{{ item }} owner=root group=www-data mode=0640
+  file: path=/opt/accountService/config state=directory owner=root group=cv_account mode=0750
+
+- name: Create the log directory
+  file: path=/opt/accountService/log state=directory owner=cv_account group=root mode=0700
+
+- name: Copy secrets
+  copy: src=secret/account_{{ item }} dest=/opt/accountService/config/{{ item }} owner=root group=cv_account mode=0640
   with_items:
   - access.list
   - words.txt
-- name: Make log file
-  file: path=/var/www/account/config/account.log state=touch owner=root group=www-data mode=0660
+
 - name: Add account sites
   copy: src={{ item }}.conf dest=/etc/apache2/sites-available/{{ item }}.conf owner=root group=root mode=0644
   with_items:
@@ -25,6 +33,7 @@
   - accounts
   notify:
   - apache2
+
 - name: Enable account sites
   file: src=../sites-available/{{ item }}.conf dest=/etc/apache2/sites-enabled/{{ item }}.conf state=link owner=root group=root
   with_items:

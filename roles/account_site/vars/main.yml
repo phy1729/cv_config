@@ -1,4 +1,4 @@
 ---
-account_admin_username: "{{ lookup('file', 'secret/account_admin_username') }}"
-account_admin_password: "{{ lookup('file', 'secret/account_admin_password') }}"
+slapd_acctService_password: "{{ lookup('file', 'secret/slapd_acctService_password') }}"
+kdcAdmin_pass: "{{ lookup('file', 'secret/kdcAdmin_pass') }}"
 account_salt: "{{ lookup('file', 'secret/account_salt') }}"

@@ -1,0 +1,22 @@
+{
+    "SETTINGS":{
+        "pretzel":"{{ account_salt | replace("\\", "\\\\") | replace("\"", "\\\"") }}",
+        "serverAddr":"localhost:5000",
+        "serverLink":"account.collegiumv.org",
+        "HMACWindow":3600,
+        "replyTo":"cthulu@collegiumv.org",
+        "smptServer":"smtp.utdallas.edu",
+        "mailDomain":"utdallas.edu",
+        "subject":"CV Account Management",
+        "userGID":1729
+    },
+    "LDAP":{
+        "ldapAddr":"ldap://beryllium.collegiumv.org",
+        "bindDN":"cn=acctService,dc=collegiumv,dc=org",
+        "bindPW":"{{ slapd_acctService_password | replace("\\", "\\\\") | replace("\"", "\\\"") }}"
+    },
+    "krb5":{
+        "aprinc":"krb5root/admin",
+        "apass":"{{ kdcAdmin_pass | replace("\\", "\\\\") | replace("\"", "\\\"") }}"
+    }
+}
