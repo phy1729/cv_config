@@ -1,9 +1,4 @@
 *filter
 # LDAP
 -A OUTPUT -p tcp -d 192.168.42.4/31 --dport 389 -j ACCEPT
-
-# Kerberos
--A OUTPUT -p tcp -d 192.168.42.4/31 --dport 88 -j ACCEPT
--A OUTPUT -p tcp -d 192.168.42.4/31 --dport 464 -j ACCEPT
--A OUTPUT -p tcp -d 192.168.42.4/31 --dport 749 -j ACCEPT
 COMMIT

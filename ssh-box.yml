@@ -6,3 +6,4 @@
   - nslcd
   - pam_mount
   - ssh-box
+  - krb5-tools
