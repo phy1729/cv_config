@@ -4,3 +4,6 @@
 [submodule "roles/spigot"]
 	path = roles/spigot
 	url = https://github.com/collegiumv/ansible-minecraft
+[submodule "library/ansible_ldap"]
+	path = library/ansible_ldap
+	url = https://github.com/dinoocch/ansible_ldap.git
