@@ -23,3 +23,37 @@ ne
 
 [nas]
 al ansible_python_interpreter=/usr/local/bin/python2
+
+[mediaboxen]
+rivest.collegiumv.org
+shamir.collegiumv.org
+adleman.collegiumv.org
+cocks.collegiumv.org
+
+[clients]
+argus.collegiumv.org
+busterjangle.collegiumv.org
+crossroads.collegiumv.org
+dominic.collegiumv.org
+emery.collegiumv.org
+flintlock.collegiumv.org
+greenhouse.collegiumv.org
+hardtack.collegiumv.org
+ivy.collegiumv.org
+julin.collegiumv.org
+kittens.collegiumv.org
+latchkey.collegiumv.org
+mandrel.collegiumv.org
+niblick.collegiumv.org
+oberon.collegiumv.org
+phalanx.collegiumv.org
+quicksilver.collegiumv.org
+redwing.collegiumv.org
+sunbeam.collegiumv.org
+touchstone.collegiumv.org
+unicorn.collegiumv.org
+vixen.collegiumv.org
+wigwam.collegiumv.org
+xray.collegiumv.org
+yuma.collegiumv.org
+zinnia.collegiumv.org

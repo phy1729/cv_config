@@ -11,7 +11,7 @@ apt-get install -y python-dev python-pip git
 pip install ansible
 
 # Attempt to run the main ansible installer
-ansible-pull -U https://github.com/phy1729/cv_config_bleeding.git
+ansible-pull -U https://github.com/collegiumv/cv_config.git
 
 # Reboot so that everything starts up cleanly
 shutdown -r now

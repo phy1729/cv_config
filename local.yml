@@ -1,0 +1,9 @@
+---
+- hosts: clients:mediaboxen
+  roles:
+  - base
+  - pull
+  - client
+  - nslcd
+  - pam_mount
+  - krb5_client

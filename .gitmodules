@@ -10,3 +10,6 @@
 [submodule "roles/nas/files/znapdragon"]
 	path = roles/nas/files/znapdragon
 	url = https://github.com/phy1729/znapdragon.git
+[submodule "client"]
+	path = roles/client
+	url = https://github.com/collegiumv/cv_client.git

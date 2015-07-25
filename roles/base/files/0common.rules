@@ -11,11 +11,8 @@
 -A OUTPUT -o lo -j ACCEPT
 -A OUTPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 -A OUTPUT -p icmp -j ACCEPT
-# ssh to other servers
--A OUTPUT -p tcp -d 192.168.42.0/28 --dport 22 -j ACCEPT
-# ssh to macs
--A OUTPUT -p tcp -d 192.168.42.39 --dport 22 -j ACCEPT
--A OUTPUT -p tcp -d 192.168.42.47 --dport 22 -j ACCEPT
+# ssh to servers and clients
+-A OUTPUT -p tcp -d 192.168.42.0/26 --dport 22 -j ACCEPT
 # DNS
 -A OUTPUT -p udp -d 192.168.42.0/30 --dport 53 -j ACCEPT
 -A OUTPUT -p tcp -d 192.168.42.0/30 --dport 53 -j ACCEPT
