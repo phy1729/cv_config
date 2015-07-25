@@ -3,10 +3,6 @@
   copy: src=account_site.rules dest=/etc/iptables.d/account_site.rules owner=root group=root mode=0640
   notify:
   - iptables
-- name: Configure monit for account site
-  copy: src=monit dest=/etc/monit/web.d/account owner=root group=root mode=0644
-  notify:
-  - monit
 - name: Copy account files
   copy: src=account dest=/var/www/ owner=root group=root mode=0644 directory_mode=0755
 - name: Create config directory

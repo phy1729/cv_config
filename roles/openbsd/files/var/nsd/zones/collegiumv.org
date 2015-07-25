@@ -57,7 +57,6 @@ accounts	IN CNAME	account
 dns	IN CNAME	lithium
 irc	IN CNAME	nitrogen
 minecraft	IN CNAME	oxygen
-monit	IN CNAME	nitrogen
 ntp	IN CNAME	lithium
 nut	IN CNAME	nitrogen
 pasta	IN CNAME	nitrogen

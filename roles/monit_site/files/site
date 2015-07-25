@@ -1,4 +1,0 @@
-<VirtualHost *:80>
-	ServerName monit.collegiumv.org
-	ProxyPass / http://127.0.0.1:2812/
-</VirtualHost>

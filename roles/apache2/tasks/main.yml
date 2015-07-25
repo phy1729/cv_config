@@ -3,12 +3,6 @@
   copy: src=apache2.rules dest=/etc/iptables.d/apache2.rules owner=root group=root mode=0640
   notify:
   - iptables
-- name: Make web.d to monitor websites
-  file: path=/etc/monit/web.d state=directory owner=root group=root mode=0755
-- name: Configure monit for apache2
-  copy: src=monit dest=/etc/monit/conf.d/apache2 owner=root group=root mode=0644
-  notify:
-  - monit
 - name: Install packages for webserver
   apt: pkg={{ item }} state=present
   with_items:

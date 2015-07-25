@@ -10,7 +10,6 @@ PLAIN_SECRETS = account_admin_password account_salt \
 	inspircd_links_madhax_recvpass inspircd_links_madhax_sendpass \
 	inspircd_links_minecraft_recvpass inspircd_links_minecraft_sendpass \
 	inspircd_modules_cloak_key \
-	monit_passwd \
 	nslcd_bind_passwd \
 	nut_monitor_passwd
 

@@ -1,4 +1,0 @@
----
-dependencies:
-  - role: wakeonlan
-  - role: apache2
