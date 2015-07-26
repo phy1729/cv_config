@@ -1,1 +1,1 @@
-inet 129.110.157.14 255.255.255.0 NONE vhid 3 carpdev bge0 advskew {{ advskew }}
+inet 129.110.157.14 255.255.255.0 NONE vhid 3 carpdev em0 advskew {{ advskew }}

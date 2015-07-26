@@ -2,12 +2,12 @@
 - name: Copy hostname files
   template: src={{ item }} dest=/etc/ owner=root group=wheel mode=0640
   with_items:
-  - etc/hostname.bge0
-  - etc/hostname.bge1
+  - etc/hostname.em0
+  - etc/hostname.em1
   - etc/hostname.carp0
   - etc/hostname.carp1
   - etc/hostname.carp2
-  - etc/hostname.em0
+  - etc/hostname.em4
   - etc/hostname.pfsync0
   notify:
   - netstart

@@ -1,1 +1,2 @@
-inet {{ pf_ip }} 255.255.255.0 NONE
+!cp /etc/resolv.conf.boot /etc/resolv.conf
+inet {{ external_ip }} 255.255.255.0 NONE

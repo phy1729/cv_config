@@ -37,12 +37,12 @@ BIN1=	templates/etc/dhcpd.conf \
 	files/etc/sysctl.conf
 
 # -rw-r-----
-HOSTNAMES=	templates/etc/hostname.bge0 \
-		templates/etc/hostname.bge1 \
+HOSTNAMES=	templates/etc/hostname.em0 \
+		templates/etc/hostname.em1 \
 		templates/etc/hostname.carp0 \
 		templates/etc/hostname.carp1 \
 		templates/etc/hostname.carp2 \
-		templates/etc/hostname.em0 \
+		templates/etc/hostname.em4 \
 		templates/etc/hostname.pfsync0
 
 site:

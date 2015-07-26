@@ -6,7 +6,7 @@ pkg_add "$( pkg_info -v 'python-<3' | awk '/^@name /{print $2}' )"
 ln -s /usr/local/bin/python2.7 /usr/bin/python
 
 # The installer overwrite the hostname.if of the if that was used during installation
-echo 'inet {{ internal_ip }} 255.255.255.0 NONE' > /etc/hostname.bge1
+echo 'inet {{ internal_ip }} 255.255.255.0 NONE' > /etc/hostname.em1
 echo '129.110.157.1' > /etc/mygate
 
 files="/etc/dhcpd.conf /etc/hostname.* /etc/ntpd.conf /var/unbound/etc/unbound.conf"

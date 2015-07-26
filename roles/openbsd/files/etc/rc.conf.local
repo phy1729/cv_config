@@ -1,4 +1,4 @@
-dhcpd_flags="bge1"
+dhcpd_flags="em1"
 nsd_flags=""
 ntpd_flags=""
 unbound_flags=""
