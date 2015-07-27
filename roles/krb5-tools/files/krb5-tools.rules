@@ -1,3 +1,4 @@
+*filter
 # Kerberos
 -A OUTPUT -p tcp -d 192.168.42.4/31 --dport 88 -j ACCEPT
 -A OUTPUT -p udp -d 192.168.42.4/31 --dport 88 -j ACCEPT
