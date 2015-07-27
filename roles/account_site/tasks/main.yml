@@ -14,6 +14,9 @@
 - name: Create the accountServices user
   user: name=cv_account group=cv_account state=present system=yes
 
+- name: Install the account service
+  copy: src=accountService dest=/opt owner=root group=root mode=0644 directory_mode=0755
+
 - name: Create config directory
   file: path=/opt/accountService/config state=directory owner=root group=cv_account mode=0750
 
