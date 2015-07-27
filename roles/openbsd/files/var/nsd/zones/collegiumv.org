@@ -52,6 +52,7 @@ ldap	IN A	192.168.42.5
 minecraft	IN CNAME	oxygen
 ntp	IN CNAME	lithium
 nut	IN CNAME	nitrogen
+paper   IN CNAME        nitrogen
 pasta	IN CNAME	nitrogen
 preseed	IN CNAME	nitrogen
 wiki	IN CNAME	nitrogen
