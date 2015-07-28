@@ -7,3 +7,4 @@
   - pam_mount
   - ssh-box
   - krb5-tools
+  - krb5_client
