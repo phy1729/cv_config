@@ -4,5 +4,11 @@
   with_items:
   - libpam-mount
   - nfs-common
+
 - name: Configure pam_mount
   copy: src=pam_mount.conf.xml dest=/etc/security/pam_mount.conf.xml owner=root group=root mode=0644
+
+- name: Copy firewall rules
+  copy: src=pam_mount.rules dest=/etc/iptables.d/pam_mount.rules owner=root group=root mode=0640
+  notify:
+  - iptables

@@ -1,0 +1,13 @@
+*filter
+# NFS
+-A OUTPUT -p tcp -d 192.168.42.13 --dport 2049 -j ACCEPT
+-A OUTPUT -p udp -d 192.168.42.13 --dport 2049 -j ACCEPT
+
+# Portmapper
+-A OUTPUT -p tcp -d 192.168.42.13 --dport 111 -j ACCEPT
+-A OUTPUT -p udp -d 192.168.42.13 --dport 111 -j ACCEPT
+
+# mountd
+-A OUTPUT -p tcp -d 192.168.42.13 --dport 729 -j ACCEPT
+-A OUTPUT -p udp -d 192.168.42.13 --dport 729 -j ACCEPT
+COMMIT
