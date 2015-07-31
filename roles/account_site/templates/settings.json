@@ -8,7 +8,9 @@
         "smptServer":"smtp.utdallas.edu",
         "mailDomain":"utdallas.edu",
         "subject":"CV Account Management",
-        "userGID":1729
+        "userGID":1729,
+	"fileServerAddress":"aluminium.collegiumv.org",
+	"fileServerPort":1729
     },
     "LDAP":{
         "ldapAddr":"ldap://beryllium.collegiumv.org",

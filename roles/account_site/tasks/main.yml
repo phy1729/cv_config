@@ -29,6 +29,9 @@
   - access.list
   - words.txt
 
+- name: Copy Configuration
+  template: src=settings.json dest=/opt/accountService/config/settings.json owner=root group=cv_account mode=0640
+
 - name: Add account sites
   copy: src={{ item }}.conf dest=/etc/apache2/sites-available/{{ item }}.conf owner=root group=root mode=0644
   with_items:
