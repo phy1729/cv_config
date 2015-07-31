@@ -1,0 +1,18 @@
+---
+- name: Install GSSAPI
+  apt: name="libsasl2-modules-gssapi-mit" state=present
+
+- name: Check for a keyfile
+  stat: path=/etc/krb5.keytab
+  register: keytab
+
+- name: Provision principle
+  command: kadmin.local -q "addprinc -randkey ldap/{{ ansible_fqdn }}"
+  when: keytab.stat.exists == False
+
+- name: Generate KeyTab
+  command: kadmin.local -q "ktadd -k /etc/krb5.keytab ldap/{{ ansible_fqdn }}"
+  when: keytab.stat.exists == False
+
+- name: Change ownership of keytab
+  file: path=/etc/krb5.keytab owner=openldap group=openldap mode=0400 state=file

@@ -47,3 +47,6 @@
 
 - name: KAdmin script remove
   file: path=/tmp/kdc.sh state=absent
+
+- name: Kerberize LDAP
+  include: ldap_krb5.yml
