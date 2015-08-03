@@ -6,3 +6,5 @@
   service: name=ntp state=restarted
 - name: sshd
   service: name=ssh state=restarted
+- name: nrpe-server
+  service: name=nagios-nrpe-server state=restarted

@@ -4,7 +4,8 @@ SECRETS_DIR = secret
 
 SECRET_TARGETS = ${PLAIN_SECRETS} \
 	inspircd_cert \
-	inspircd_inspircd_power_diepass inspircd_inspircd_power_restartpass inspircd_opers
+	inspircd_inspircd_power_diepass inspircd_inspircd_power_restartpass inspircd_opers \
+	icinga_cvadmin_password
 
 PLAIN_SECRETS = account_admin_password account_salt \
 	inspircd_links_madhax_recvpass inspircd_links_madhax_sendpass \
@@ -13,7 +14,8 @@ PLAIN_SECRETS = account_admin_password account_salt \
 	krb_db_enc_pass kdcAdmin_pass \
 	nslcd_bind_passwd \
 	nut_monitor_passwd \
-	slapd_acctService_password slapd_krbAdmService_password slapd_olcRootPW
+	slapd_acctService_password slapd_krbAdmService_password slapd_olcRootPW \
+	mysql_root_password mysql_icinga_password
 
 DESTDIR = ${CURDIR}/tmp
 SUDO = sudo
@@ -97,3 +99,7 @@ inspircd_inspircd_power_restartpass:
 
 inspircd_opers:
 	./inspircd_opers > ${SECRETS_DIR}/inspircd_opers.yml
+
+icinga_cvadmin_password:
+	@echo "Icinga admin password"
+	@openssl passwd -1 > ${SECRETS_DIR}/icinga_cvadmin_password

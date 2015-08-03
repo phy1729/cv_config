@@ -1,4 +1,7 @@
 ---
+- hosts: all
+  gather_facts: true
+
 - hosts: utility
   sudo: yes
   roles:
@@ -16,3 +19,4 @@
   - preseed_site
   - tftp
   - jekyll
+  - icinga

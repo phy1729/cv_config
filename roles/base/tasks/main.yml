@@ -12,7 +12,10 @@
 - name: Make iptables.d
   file: path=/etc/iptables.d state=directory owner=root group=root mode=0740
 - name: Configure IPv4 firewall
-  copy: src=0common.rules dest=/etc/iptables.d/0common.rules owner=root group=root mode=0640
+  copy: src={{ item }} dest=/etc/iptables.d/{{ item }} owner=root group=root mode=0640
+  with_items:
+    - 0common.rules
+    - nrpe.rules
   notify:
   - iptables
 - name: Configure IPv6 firewall
@@ -42,3 +45,11 @@
   copy: src=ntp.conf dest=/etc/ntp.conf owner=root group=root mode=0644
   notify:
   -  ntp
+- name: Install NRPE and Nagios-Plugins
+  apt: pkg={{ item }} state=present
+  with_items:
+    - nagios-nrpe-server
+    - nagios-plugins
+- name: Copy nrpe config
+  copy: src=nrpe.cfg dest=/etc/nagios/nrpe.cfg owner=root group=root mode=0644
+  notify: nrpe-server

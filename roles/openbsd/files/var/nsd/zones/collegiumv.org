@@ -47,6 +47,7 @@ account	IN CNAME	nitrogen
 accounts	IN CNAME	account
 cvos		IN CNAME	nitrogen
 dns	IN CNAME	lithium
+icinga  IN CNAME        nitrogen
 irc	IN CNAME	nitrogen
 ldap	IN A	192.168.42.4
 ldap	IN A	192.168.42.5

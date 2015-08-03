@@ -1,0 +1,4 @@
+*filter
+-A INPUT -p tcp --dport 5666 -j ACCEPT
+-A OUTPUT -p tcp --dport 5666 -j ACCEPT
+COMMIT

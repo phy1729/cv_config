@@ -1,0 +1,136 @@
+---
+- name: Apply firewall rules for icinga
+  copy: src={{ item }} dest=/etc/iptables.d/{{ item }} owner=root group=root mode=0640
+  with_items:
+    - icinga.rules
+    - snmp.rules
+  register: icinga_firewall
+
+- name: Restart firewall
+  command: /etc/network/if-up.d/iptables
+  when: icinga_firewall.changed
+
+- name: Add Icinga PPA
+  apt_repository: repo='ppa:formorer/icinga' state=present
+
+- name: Install Icinga Packages
+  apt: name={{ item }} state=present
+  with_items:
+    - icinga2
+    - nagios-plugins
+    - nagios-nrpe-plugin
+    - icinga2-ido-mysql
+
+- name: Create Icinga Databases
+  mysql_db:
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - icinga
+    - icingaweb2
+  notify:
+    - set-up-icinga-database
+    - copy-icinga-files1
+    - copy-icinga-files2
+    - delete-icinga-files
+
+- name: Create Icinga User and add access
+  mysql_user:
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    name: icinga
+    password: "{{ mysql_icinga_password }}"
+    priv: icinga.*:SELECT,INSERT,UPDATE,DELETE,DROP,CREATE VIEW,INDEX,EXECUTE/icingaweb2.*:ALL
+    state: present
+
+- name: Copy Ido Mysql Configuration file
+  template: src=icingaweb2/ido-mysql.conf dest=/etc/icinga2/features-available/ido-mysql.conf owner=nagios group=nagios mode=0660
+
+- name: Enable ido-mysql feature
+  command: "{{ item }}"
+  with_items:
+    - "icinga2 feature enable ido-mysql"
+    - "icinga2 feature enable command"
+  notify:
+    - icinga
+
+- name: Allow www-data to use icinga2 command
+  user:
+    name: www-data
+    groups: nagios
+    append: yes
+
+- name: Add Icinga Apt-Key
+  apt_key: url='http://packages.icinga.org/icinga.key' state=present
+
+- name: Add Icinga Repository
+  apt_repository: repo='deb http://packages.icinga.org/ubuntu icinga-trusty main' state=present
+
+- name: Set the PHP Timezone
+  lineinfile: dest=/etc/php5/apache2/php.ini insertafter=';?date.timezone\s?=\s?$' line="date.timezone = \"America/Chicago\"" state=present
+  notify:
+    - apache2
+
+- name: Install Web 2 interface
+  apt: name=icingaweb2 state=present
+
+- name: Copy icingaweb2 folder over initial configuration
+  copy: src=icingaweb2 dest=/etc/ owner=www-data group=icingaweb2 mode=0660 directory_mode=0770
+
+- name: Copy resources template
+  template: src=icingaweb2/resources.ini dest=/etc/icingaweb2/resources.ini owner=www-data group=icingaweb2 mode=0660
+
+- name: Reset owner of icingaweb2 folder to root
+  file: path=/etc/icingaweb2 owner=root
+
+- name: Create enabledModules directory
+  file: path=/etc/icingaweb2/enabledModules state=directory owner=www-data group=icingaweb2 mode=0770
+
+- name: Delete included conf
+  file: path=/etc/apache2/{{ item }}/icingaweb2.conf state=absent
+  with_items:
+    - conf-available
+    - conf-enabled
+
+- name: Add subdirectory conf
+  copy: src=icingaweb2.conf dest=/etc/apache2/sites-available/icingaweb2.conf owner=root group=root mode=0644
+  notify:
+    - apache2
+
+- name: Enable icingaweb2
+  file: src=../sites-available/icingaweb2.conf dest=/etc/apache2/sites-enabled/icingaweb2.conf state=link
+  notify:
+    - apache2
+
+- name: Copy Icinga Configuration
+  copy: src=icinga2 dest=/etc/ owner=nagios group=nagios mode=0660 directory_mode=0770
+  notify:
+    - icinga
+
+- name: Template Hosts
+  template: src=hosts/{{ item }} dest=/etc/icinga2/conf.d/hosts/hosts/{{ item }} owner=nagios group=nagios mode=0660
+  with_items:
+    - dc.conf
+    - ssh.conf
+    - utility.conf
+    - minecraft.conf
+    - audio.conf
+    - nut.conf
+    - mediaboxen.conf
+    - clients.conf
+
+- name: Remove initial config
+  file: path=/etc/icinga2/conf.d/{{ item }} state=absent
+  with_items:
+    - apt.conf
+    - commands.conf
+    - services.conf
+    - hosts.conf
+    - templates.conf
+    - users.conf
+    - timeperiods.conf
+    - downtimes.conf
+    - groups.conf
+    - notifications.conf
