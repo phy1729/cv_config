@@ -1,0 +1,2 @@
+---
+mysql_root_password: "{{ lookup('file', 'secret/mysql_root_password') }}"
