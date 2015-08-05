@@ -7,4 +7,5 @@
   - nslcd
   - pam_mount
   - krb5_client
+  - modpubkey
   - cups-client
