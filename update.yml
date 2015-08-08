@@ -1,5 +1,5 @@
 ---
-- hosts: ssh:utility:minecraft:audio
+- hosts: dc:ssh:utility:minecraft:audio:nut:mediaboxen:clients
   sudo: yes
   tasks:
   - apt: update_cache=yes upgrade=safe purge=yes
