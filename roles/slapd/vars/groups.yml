@@ -20,6 +20,7 @@ slapd_groups:
   members:
   - sheila.kelly
   - vbrunell
+  - Wendik
 
 - name: Realm Admins
   gidNumber: 1337
@@ -27,4 +28,10 @@ slapd_groups:
   - harpham
   - maldridge
   - phy1729
+  - dinoocch
+  - m_wynn
+
+- name: Local Admins
+  gidNumber: 9271
+  members:
   - Siosilvar
