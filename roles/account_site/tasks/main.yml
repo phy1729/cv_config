@@ -11,8 +11,19 @@
   notify:
   - iptables
 
+- name: Create the accountServices group
+  group: name=cv_account state=present system=yes
+
 - name: Create the accountServices user
   user: name=cv_account group=cv_account state=present system=yes
+
+- name: Enable the proxy module
+  apache2_module: name={{ item }} state=present
+  with_items:
+  - proxy
+  - proxy_http
+  notify:
+  - apache2
 
 - name: Install the account service
   copy: src=accountService dest=/opt owner=root group=root mode=0644 directory_mode=0755
