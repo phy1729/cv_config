@@ -4,4 +4,4 @@
 - name: Install ansible
   pip: name=ansible state=present
 - name: Add ansible-pull cron job
-  copy: src=crontab dest=/etc/crontab owner=root group=root mode=064
+  copy: src=crontab dest=/etc/crontab owner=root group=root mode=0644

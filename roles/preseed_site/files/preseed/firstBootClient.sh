@@ -3,7 +3,19 @@
 # This script runs the first boot install tasks on the hardware
 
 # Install the proprietary gfx installers
-apt-get install -y fglrx nvidia-340
+apt-get install ubuntu-drivers-common
+
+UBUNTUDRIVERS=`ubuntu-drivers list`
+
+if [[ $UBUNTUDRIVERS == *"fglrx"* ]]
+then
+    apt-get install -y fglrx
+fi
+
+if [[ $UBUNTUDRIVERS == *"nvidia"* ]]
+then
+    apt-get install -y nvidia-340 nvidia-331
+fi
 
 # Be absolutely sure deployment software is installed
 apt-get install -y python-dev python-pip git fbi
