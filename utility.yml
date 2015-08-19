@@ -6,8 +6,11 @@
   - exim4
   - apt_mirror
   - account_site
+  - doc_site
+  - nslcd
   - nut_site
   - pasta_site
+  - icinga
   - inspircd
   - papercut
   - preseed_site
