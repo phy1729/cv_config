@@ -13,4 +13,4 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 47  6   *   *   7 root  test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )
 52  6   1   *   * root  test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )
 
-@reboot           root  ansible-pull -U https://github.com/collegiumv/cv_config.git -o
+@reboot           root  ansible-pull -U https://github.com/collegiumv/cv_config.git -o > /var/log/ansible-pull.log 2&>1
