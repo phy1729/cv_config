@@ -4,7 +4,7 @@
         "serverAddr":"localhost:5000",
         "serverLink":"account.collegiumv.org",
         "HMACWindow":3600,
-        "replyTo":"cthulu@collegiumv.org",
+        "replyTo":"cthulhu@collegiumv.org",
         "smptServer":"smtp.utdallas.edu",
         "mailDomain":"utdallas.edu",
         "subject":"CV Account Management",
