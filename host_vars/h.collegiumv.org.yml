@@ -1,5 +1,5 @@
 ---
-name: hydrogen
+name: hydrogen.collegiumv.org
 external_ip: 129.110.157.11
 internal_ip: 192.168.42.1
 peer_internal_ip: 192.168.42.2

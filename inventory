@@ -1,28 +1,28 @@
 [gateway]
-h
-he
+h.collegiumv.org
+he.collegiumv.org
 
 [dc]
-be
-b
+be.collegiumv.org
+b.collegiumv.org
 
 [ssh]
-c
+c.collegiumv.org
 
 [utility]
-n
+n.collegiumv.org
 
 [minecraft]
-o
+o.collegiumv.org
 
 [audio]
-f
+f.collegiumv.org
 
 [nut]
-ne
+ne.collegiumv.org
 
 [nas]
-al ansible_python_interpreter=/usr/local/bin/python2
+al.collegiumv.org ansible_python_interpreter=/usr/local/bin/python2
 
 [mediaboxen]
 rivest.collegiumv.org
