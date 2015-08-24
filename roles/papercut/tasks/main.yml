@@ -68,7 +68,6 @@
 
 - name: Enable PaperCut job intercept
   shell: yes "e" | ./providers/print/linux-x64/configure-cups chdir=/home/papercut
-  when: install.changed
 
 - name: Install PaperCut PAM rules
   copy: src=papercut.pamstack dest=/etc/pam.d/papercut owner=root group=root mode=0644
