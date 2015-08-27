@@ -17,3 +17,5 @@
   - passwd
   - group
   - shadow
+- name: Add default ldap.conf
+  copy: src=ldap.conf dest=/etc/ldap/ldap.conf owner=root group=root mode=0644
