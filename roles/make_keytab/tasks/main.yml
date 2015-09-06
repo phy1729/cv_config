@@ -1,0 +1,25 @@
+---
+- name: Fail if no service
+  fail: msg="No service defined. Requires 'service'"
+  when: service is undefined
+
+- name: Check if keytab already exists
+  sudo: no
+  local_action: stat path="secret/krb5_{{ service | regex_replace('/', '-') }}.keytab"
+  register: keytab_stat
+
+- name: Provision principal
+  command: kadmin.local -q "addprinc -randkey {{ service }}@COLLEGIUMV.ORG"
+  when: keytab_stat.stat.exists == False
+
+- name: Generate keytab
+  command: kadmin.local -q "ktadd -k /tmp/krb5_{{ service | regex_replace('/', '-') }}.keytab {{ service }}@COLLEGIUMV.ORG"
+  when: keytab_stat.stat.exists == False
+
+- name: Fetch keytab to secrets
+  fetch: src=/tmp/krb5_{{ service | regex_replace('/', '-') }}.keytab dest=secret/krb5_{{ service | regex_replace('/', '-') }}.keytab flat=yes
+  when: keytab_stat.stat.exists == False
+
+- name: Remove remote keytab
+  file: path=/tmp/krb5_{{ service | regex_replace('/', '-') }}.keytab state=absent
+  when: keytab_stat.stat.exists == False

@@ -1,0 +1,9 @@
+---
+- hosts: dc[0]
+  sudo: yes
+  vars_prompt:
+    - name: "service"
+      prompt: "Keytab Service"
+      private: no
+  roles:
+    - make_keytab
