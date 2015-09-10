@@ -1,0 +1,12 @@
+---
+- name: Install etherwake
+  apt: pkg=etherwake state=present
+
+- name: Install wakeAll
+  copy: src=wakeAll dest=/usr/local/sbin/wakeAll owner=root group=root mode=0700
+
+- name: Configure wakeAll
+  copy: src=macs.list dest=/etc/macs.list owner=root group=root mode=0400
+
+- name: Copy crontab
+  copy: src=crontab dest=/etc/cron.d/wakeAll owner=root group=root mode=0644

@@ -7,6 +7,7 @@
   roles:
   - base
   - exim4
+  - etherwake
   - apt_mirror
   - account_site
   - doc_site
@@ -19,3 +20,4 @@
   - preseed_site
   - tftp
   - jekyll
+  - etherwake
