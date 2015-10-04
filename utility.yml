@@ -14,10 +14,10 @@
   - nslcd
   - nut_site
   - pasta_site
+  - papercut_site
   - icinga
   - inspircd
-  - papercut
+  - iperf
   - preseed_site
   - tftp
   - jekyll
-  - etherwake

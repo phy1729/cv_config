@@ -1,0 +1,6 @@
+---
+- hosts: print
+  sudo: yes
+  roles:
+  - base
+  - papercut

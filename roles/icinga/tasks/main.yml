@@ -120,6 +120,7 @@
     - nut.conf
     - mediaboxen.conf
     - clients.conf
+    - printservers.conf
 
 - name: Remove initial config
   file: path=/etc/icinga2/conf.d/{{ item }} state=absent

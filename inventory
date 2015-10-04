@@ -21,6 +21,9 @@ f.collegiumv.org
 [nut]
 ne.collegiumv.org
 
+[print]
+na.collegiumv.org
+
 [nas]
 al.collegiumv.org ansible_python_interpreter=/usr/local/bin/python2
 

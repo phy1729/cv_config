@@ -2,3 +2,4 @@
 dependencies:
   - role: cups
   - role: krb5-tools
+  - role: nslcd
