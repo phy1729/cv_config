@@ -2,5 +2,5 @@
 # Allow mosh in
 -A INPUT -p udp --dport 60001:60999 -j ACCEPT
 # Allow IRC, IRC SSL, jabber, HTTP, and HTTPS
--A OUTPUT -p tcp -m multiport --destination-port 6667,6697,5222,80,443 -j ACCEPT
+-A OUTPUT -p tcp -m multiport --destination-port 6667,6697,9003,16667,5222,80,443 -j ACCEPT
 COMMIT
