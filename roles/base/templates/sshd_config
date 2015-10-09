@@ -20,13 +20,10 @@ UsePAM yes
 
 AuthorizedKeysCommandUser authorizedkeyscommand
 AuthorizedKeysCommand /usr/local/sbin/ssh_pubkeys
-AuthenticationMethods publickey
+AuthenticationMethods publickey,password
 
 Match User cv
-  PubkeyAuthentication yes
   AuthenticationMethods publickey
-  PasswordAuthentication no
-  AuthorizedKeysFile /home/cv/.ssh/authorized_keys
 
 Match Address 192.168.42.0/24
   AuthenticationMethods password
