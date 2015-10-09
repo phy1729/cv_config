@@ -3,19 +3,19 @@
 SECRETS_DIR = secret
 
 SECRET_TARGETS = ${PLAIN_SECRETS} \
+	icinga_cvadmin_password \
 	inspircd_cert \
-	inspircd_inspircd_power_diepass inspircd_inspircd_power_restartpass inspircd_opers \
-	icinga_cvadmin_password
+	inspircd_inspircd_power_diepass inspircd_inspircd_power_restartpass inspircd_opers
 
 PLAIN_SECRETS = account_admin_password account_salt \
 	inspircd_links_madhax_recvpass inspircd_links_madhax_sendpass \
 	inspircd_links_minecraft_recvpass inspircd_links_minecraft_sendpass \
 	inspircd_modules_cloak_key \
 	krb_db_enc_pass kdcAdmin_pass \
+	mysql_root_password mysql_icinga_password \
 	nslcd_bind_passwd \
 	nut_monitor_passwd \
-	slapd_acctService_password slapd_krbAdmService_password slapd_olcRootPW \
-	mysql_root_password mysql_icinga_password
+	slapd_acctService_password slapd_krbAdmService_password slapd_olcRootPW
 
 DESTDIR = ${CURDIR}/tmp
 SUDO = sudo
@@ -39,11 +39,11 @@ BIN1=	templates/etc/dhcpd.conf \
 	files/etc/sysctl.conf
 
 # -rw-r-----
-HOSTNAMES=	templates/etc/hostname.em0 \
-		templates/etc/hostname.em1 \
-		templates/etc/hostname.carp0 \
+HOSTNAMES=	templates/etc/hostname.carp0 \
 		templates/etc/hostname.carp1 \
 		templates/etc/hostname.carp2 \
+		templates/etc/hostname.em0 \
+		templates/etc/hostname.em1 \
 		templates/etc/hostname.em4 \
 		templates/etc/hostname.pfsync0
 
