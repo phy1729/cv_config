@@ -14,6 +14,7 @@
   copy: src=driver.ppd dest=/etc/cups/ppd/{{ item }}.ppd owner=root group=lp mode=0644
   with_items:
   - Franklin
+  - Gutenburg
   - Koster
 
 - name: Copy cupsd.conf
