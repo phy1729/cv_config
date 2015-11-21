@@ -31,6 +31,7 @@ al.collegiumv.org ansible_python_interpreter=/usr/local/bin/python2
 rivest.collegiumv.org
 shamir.collegiumv.org
 adleman.collegiumv.org
+cocks.collegiumv.org
 
 [clients]
 argus.collegiumv.org
