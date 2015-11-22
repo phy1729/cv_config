@@ -1,0 +1,5 @@
+---
+- hosts: kiosk
+  sudo: yes
+  roles:
+  - kiosk

@@ -1,0 +1,3 @@
+SHELL=/bin/sh
+
+@reboot root su kiosk -c "sleep 10; startx -- :1 vt8 && chvt 8"
