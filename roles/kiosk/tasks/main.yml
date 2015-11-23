@@ -1,6 +1,12 @@
 ---
+- name: Create the kiosk group
+  group: name=kiosk state=present
+
 - name: Create a kiosk user
-  user: name=kiosk groups=kiosk,video
+  user: name=kiosk groups=kiosk,video state=present
+
+- name: Allow the kiosk user to start X
+  copy: src=Xwrapper.conf dest=/etc/X11/Xwrapper.config owner=root group=root mode=0644
 
 - name: Install xinitrc
   copy: src=xinitrc dest=/home/kiosk/.xinitrc owner=kiosk group=kiosk mode=0750
