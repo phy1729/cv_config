@@ -1,0 +1,4 @@
+#!/bin/bash
+
+ansible -i $INVENTORY_FILE clients:mediaboxen -K --sudo -m shell -a 'users=$(who | grep -v cv | cut -d" " -f1 | sort | uniq); [ -z $users ] && /sbin/reboot && echo "Rebooting..." || echo "$users"'
+
