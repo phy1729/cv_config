@@ -1,0 +1,44 @@
+---
+- name: Install dependencies
+  apt: pkg={{ item }} state=present
+  with_items:
+  - python-dev
+  - python-ldap
+  - python-flask
+
+- name: Configure firewall for ldap_api
+  copy: src=ldap_api.rules dest=/etc/iptables.d/ldap_api.rules owner=root group=root mode=0640
+  notify:
+  - iptables
+
+- name: Create the accountServices group
+  group: name=cv_account state=present system=yes
+
+- name: Create the accountServices user
+  user: name=cv_account group=cv_account state=present system=yes
+
+- name: Enable the proxy module
+  apache2_module: name={{ item }} state=present
+  with_items:
+  - proxy
+  - proxy_http
+  - headers
+  notify:
+  - apache2
+
+- name: Install the ldap_api service
+  copy: src=ldap_api dest=/opt owner=root group=root mode=0644 directory_mode=0755
+
+- name: Add site
+  copy: src={{ item }}.conf dest=/etc/apache2/sites-available/{{ item }}.conf owner=root group=root mode=0644
+  with_items:
+  - ldap-api
+  notify:
+  - apache2
+
+- name: Enable ldap_api site
+  file: src=../sites-available/{{ item }}.conf dest=/etc/apache2/sites-enabled/{{ item }}.conf state=link owner=root group=root
+  with_items:
+  - ldap-api
+  notify:
+  - apache2

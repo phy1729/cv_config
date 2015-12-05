@@ -20,3 +20,4 @@
   - preseed_site
   - tftp
   - jekyll
+  - ldap_restful
