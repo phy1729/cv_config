@@ -8,4 +8,5 @@
   - pam_mount
   - krb5_client
   - modpubkey
+  - modsession
   - cups-client
