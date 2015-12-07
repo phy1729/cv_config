@@ -1,7 +1,7 @@
 $TTL 3h
 
 @ IN SOA hydrogen.collegiumv.org. cvadmins.utdallas.edu. (
-	2015072201
+	2015120600
 	3h	;refresh
 	1h	;retry
 	1w	;expire
