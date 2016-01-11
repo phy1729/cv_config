@@ -7,6 +7,7 @@
   - mplayer
   - mpd
   - mpc
+  - mpv
   - ncmpcpp
   - tmux
 
@@ -15,3 +16,8 @@
 
 - name: Add cv to group audio
   user: name=cv groups=audio append=true
+
+- name: Copy Audio Firewall rules
+  copy: src=audio.rules dest=/etc/iptables.d owner=root group=root mode=0640
+  notify:
+  - iptables
