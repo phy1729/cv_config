@@ -1,4 +1,5 @@
 *filter
 -A OUTPUT -p udp -d 192.168.42.16 --dport 161 -j ACCEPT
+-A OUTPUT -p udp -d 192.168.42.17 --dport 161 -j ACCEPT
 -A OUTPUT -p udp -d 192.168.42.18 --dport 161 -j ACCEPT
 COMMIT
