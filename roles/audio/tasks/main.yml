@@ -21,3 +21,6 @@
   copy: src=audio.rules dest=/etc/iptables.d owner=root group=root mode=0640
   notify:
   - iptables
+
+- name: Configure Alsa with mono output
+  copy: src=asound.conf dest=/etc/asound.conf owner=root groupt=root mode=0644
