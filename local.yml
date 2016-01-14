@@ -1,5 +1,6 @@
 ---
 - hosts: clients:mediaboxen
+  strategy: free
   roles:
   - base
   - pull

@@ -1,5 +1,6 @@
 ---
 - hosts: gateway
+  serial: 1
   sudo: yes
   roles:
   - openbsd
