@@ -2,28 +2,22 @@
 ldap_server='ldap://ldap.collegiumv.org'
 dn="$(ldapwhoami -H "$ldap_server" -Q 2>/dev/null)" || { echo >&2 'Unable to obtain user DN'; exit 1; }
 dn="${dn#dn:}"
-BACKTITLE="Collegium V"
-TITLE="Change Desktop Environment"
-MENU="Choose a Desktop Environment"
-counter=0
-for session in /usr/share/xsessions/*
-do
-filename="${session##*/}"
-OPTIONS[counter]="${filename%.*}"
-counter="$(($counter+1))"
-OPTIONS[counter]="$(grep -Po "(?<=^Name=).*" $session)"
-counter="$(($counter+1))"
+i=0
+for session in /usr/share/xsessions/*; do
+	filename="${session##*/}"
+	options[i++]="${filename%.*}"
+	options[i++]="$(grep -Po '(?<=^Name=).*' "$session")"
 done
-HEIGHT="$((($counter+1)/2+10))"
-WIDTH=70
-CHOICE_HEIGHT="$(($counter/2))"
-CHOICE=$(dialog --clear \
-		--backtitle "$BACKTITLE" \
-		--title "$TITLE" \
-		--menu "$MENU" \
-		$HEIGHT $WIDTH $CHOICE_HEIGHT \
-		"${OPTIONS[@]}" \
-		2>&1 >/dev/tty)
+height="$((i/2+10))"
+width=70
+choice_height="$((i/2))"
+choice="$(dialog --clear \
+		--backtitle 'Collegium V' \
+		--title 'Change Desktop Environment' \
+		--menu 'Choose a Desktop Environment' \
+		$height $width $choice_height \
+		"${options[@]}" \
+		2>&1 >/dev/tty)"
 clear
-[ -z "$CHOICE" ] && exit 0
-printf "dn: $dn\nchangetype: modify\nreplace: desktopEnvironment\ndesktopEnvironment: $CHOICE\n-\n" | ldapmodify -H "$ldap_server" -Q || { echo >&2 'Could not update desktop environment'; exit 3; }
+[ -z "$choice" ] && exit 0
+printf "dn: %s\nchangetype: modify\nreplace: desktopEnvironment\ndesktopEnvironment: %s\n-\n" "$dn" "$choice" | ldapmodify -H "$ldap_server" -Q || { echo >&2 'Could not update desktop environment'; exit 3; }
