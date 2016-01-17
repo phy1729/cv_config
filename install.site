@@ -6,36 +6,31 @@ pkg_add "$( pkg_info -v 'python-<3' | awk '/^@name /{print $2}' )"
 ln -s /usr/local/bin/python2.7 /usr/bin/python
 
 # Install sudo
-pkg_add "$( pkg_info -v 'sudo' | awk '/^@name /{print $2}' | head -n1)"
+pkg_add "$(pkg_info -v 'sudo' | awk '/^@name /{print $2; exit;}')"
 
 # The installer overwrite the hostname.if of the if that was used during installation
 echo 'inet {{ internal_ip }} 255.255.255.0 NONE' > /etc/hostname.em1
 echo '129.110.157.1' > /etc/mygate
 
-files="/etc/dhcpd.conf /etc/hostname.* /etc/ntpd.conf /var/unbound/etc/unbound.conf"
+name="$(hostname -s)"
+case "$name" in
+	hydrogen)
+		int_ip="192.168.42.1"
+		ext_ip="129.110.157.11"
+		pf_ip="172.16.0.1"
+		other_int_ip="192.168.42.2"
+		advskew="10"
+		dhcpd_range="192.168.42.128 192.168.42.191"
+	helium)
+		int_ip="192.168.42.2"
+		ext_ip="129.110.157.12"
+		pf_ip="172.16.0.2"
+		other_int_ip="192.168.42.1"
+		advskew="20"
+		dhcpd_range="192.168.42.192 192.168.42.254"
+esac
 
-if [ $(hostname -s) = "hydrogen" ]; then
-	name="hydrogen"
-	int_ip="192.168.42.1"
-	ext_ip="129.110.157.11"
-	pf_ip="172.16.0.1"
-	other_int_ip="192.168.42.2"
-	advskew="10"
-	dhcpd_range="192.168.42.128 192.168.42.191"
-
-elif [ $(hostname -s) = "helium" ]; then
-	name="helium"
-	int_ip="192.168.42.2"
-	ext_ip="129.110.157.12"
-	pf_ip="172.16.0.2"
-	other_int_ip="192.168.42.1"
-	advskew="20"
-	dhcpd_range="192.168.42.192 192.168.42.254"
-else
-	exit
-fi
-
-for file in $files; do
+for file in /etc/dhcpd.conf /etc/hostname.* /etc/ntpd.conf /var/unbound/etc/unbound.conf; do
 	temp=$(<$file)
 	temp=$( echo "$temp" | sed "s/{{ name }}/$name/" )
 	temp=$( echo "$temp" | sed "s/{{ internal_ip }}/$int_ip/" )
