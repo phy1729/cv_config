@@ -1,0 +1,3 @@
+#!/bin/bash
+
+who | awk '$1!="cv"{u[$1]=1}; END{e=0; for (k in u){e=1; print k}; exit e}'

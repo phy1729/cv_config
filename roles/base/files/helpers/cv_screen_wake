@@ -1,0 +1,3 @@
+#!/bin/bash
+
+su lightdm -s /bin/bash -c "xset -display :0 dpms force on && echo Waking"
