@@ -2,6 +2,7 @@
 
 import fileinput
 
+
 class bcolors:
     FAIL = '\033[5;31m'
     ENDC = '\033[0m'
@@ -9,40 +10,54 @@ class bcolors:
 
 computers = []
 current = (None, [])
+lines = []
 for line in fileinput.input():
+    lines.append(line)
+counter = 0
+while counter < len(lines):
+    line = lines[counter]
     line = line.strip()
-    if current[1] == "FAILED" and ">>" not in line and "|" not in line:
-	continue
-    if current[0] is None:
-	host = line.split(" | ")[0].split(".")[0]
-	if "FAILED" in line:
-	    computers.append((host, ["FAILED"]))
-	    current = (None,"FAILED")
-	else:
-	    current = (host, [])
-	continue
     if line == "":
-	computers.append(current)
-	current = (None, [])
-	continue
-    current = (current[0], current[1] + [line])
+        counter += 1
+        continue
+    if current[1] == "FAILED" and ">>" not in line and "|" not in line:
+        counter += 1
+        continue
+    if current[0] is None:
+        host = line.split(" | ")[0].split(".")[0]
+        if "FAILED" in line:
+            computers.append((host, ["FAILED"]))
+            current = (None, "FAILED")
+        else:
+            current = (host, [])
+        counter += 1
+        continue
+    if ">>" in line and "|" in line:
+        computers.append(current)
+        current = (None, [])
+        continue
+    else:
+        current = (current[0], current[1] + [line])
+    counter += 1
 computers.sort(key=lambda computers: computers[0])
 maxH = 0
 maxC = 0
 for c in computers:
     maxH = max(maxH, len(c[0]))
     for i in c[1]:
-	maxC = max(len(i), maxC)
+        maxC = max(len(i), maxC)
 maxH += 2
 maxC += 2
 print " " + "-" * maxH + "|" + "-" * maxC
 for c in computers:
     print " " + bcolors.BOLD + c[0] + bcolors.ENDC + " " * (maxH-len(c[0])) + "|",
     for (i, line) in enumerate(c[1]):
-	if "FAILED" in line:
-	    print bcolors.FAIL + line + bcolors.ENDC
-	else:
-	    print line
-	if i < len(c[1])-1:
-	    print " " * (maxH+1) + "|",
+        if "FAILED" in line:
+            print bcolors.FAIL + line + bcolors.ENDC
+        else:
+            print line
+        if i < len(c[1])-1:
+            print " " * (maxH+1) + "|",
+    if len(c[1]) == 0:
+        print
     print " " + "-" * maxH + "|" + "-" * maxC
