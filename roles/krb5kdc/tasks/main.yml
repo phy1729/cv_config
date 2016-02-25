@@ -31,6 +31,12 @@
 - name: Initial KDC script remove
   file: path=/tmp/kdc.sh state=absent
 
+- name: Ensure kerberos is enabled at boot
+  service: name={{ item }} enabled=yes
+  with_items:
+  - krb5-kdc
+  - krb5-admin-server
+
 - name: Start the kerberos services
   service: name={{ item }} state=started
   with_items:
