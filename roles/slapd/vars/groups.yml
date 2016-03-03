@@ -21,6 +21,7 @@ slapd_groups:
   - sheila.kelly
   - vbrunell
   - Wendik
+  - Fladagus
 
 - name: Realm Admins
   gidNumber: 1337
@@ -35,3 +36,4 @@ slapd_groups:
   gidNumber: 9271
   members:
   - Siosilvar
+  - Fhqwhgads
