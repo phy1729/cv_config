@@ -26,6 +26,7 @@ na.collegiumv.org
 
 [nas]
 al.collegiumv.org ansible_python_interpreter=/usr/local/bin/python2
+si.collegiumv.org ansible_python_interpreter=/usr/local/bin/python2
 
 [mediaboxen]
 rivest.collegiumv.org

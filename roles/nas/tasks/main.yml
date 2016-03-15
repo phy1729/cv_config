@@ -2,27 +2,40 @@
 - name: Copy configuration
   copy: src={{ item }} dest=/etc/{{ item }} owner=root group=wheel mode=0644
   with_items:
-  - crontab
   - nsswitch.conf
-  - rc.conf
   - resolv.conf
   - pf.conf
+
+- name: Template rc.conf
+  template: src=rc.conf dest=/etc/rc.conf owner=root group=wheel mode=0644
+
 - name: Install packages
   pkgng: name={{ item }} state=present
   with_items:
   - sudo
   - nss-pam-ldapd
+
 - name: Copy nslcd config
   copy: src=nslcd.conf dest=/usr/local/etc/nslcd.conf owner=root group=wheel mode=0400
+
 - name: Copy znapdragon script
   copy: src=znapdragon/znapdragon dest=/usr/local/sbin/znapdragon owner=root group=wheel mode=0500
+  when: inventory_hostname == groups['nas'][0]
+
+- name: Copy crontab
+  copy: src=crontab dest=/etc/crontab owner=root group=wheel mode=0644
+  when: inventory_hostname == groups['nas'][0]
+
 - name: Copy mkhomes and listener
   copy: src={{ item }} dest=/usr/local/sbin/{{ item }} owner=root group=wheel mode=0500
   with_items:
   - mkhomes
   - mkhomes_listener
+  when: inventory_hostname == groups['nas'][0]
+
 - name: Copy mkhomes_listener rc.d script
   copy: src=mkhomes_listener.rc dest=/etc/rc.d/mkhomes_listener owner=root group=wheel mode=0555
+  when: inventory_hostname == groups['nas'][0]
 
 - zfs: name=zroot state=present checksum=sha256 compression=lz4 atime=off
 - zfs: name=zroot/ROOT state=present mountpoint=none
