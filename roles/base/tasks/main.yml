@@ -2,57 +2,71 @@
 - name: Configure networking
   template: src=interfaces.j2 dest=/etc/network/interfaces owner=root group=root mode=0644
   notify:
-  - networking
+    - networking
+
 - name: Configure hosts
   template: src=hosts.j2 dest=/etc/hosts owner=root group=root mode=0644
+
 - name: Configure resolv.conf
   copy: src=resolv.conf dest=/etc/resolv.conf owner=root group=root mode=0644
+
 - name: Add iptables script
   copy: src=iptables dest=/etc/network/if-up.d/iptables owner=root group=root mode=0740
+
 - name: Make iptables.d
   file: path=/etc/iptables.d state=directory owner=root group=root mode=0740
+
 - name: Configure IPv4 firewall
   copy: src={{ item }} dest=/etc/iptables.d/{{ item }} owner=root group=root mode=0640
   with_items:
     - 0common.rules
     - nrpe.rules
   notify:
-  - iptables
+    - iptables
+
 - name: Configure IPv6 firewall
   copy: src=ip6tables.conf dest=/etc/ip6tables.conf owner=root group=root mode=0640
   notify:
-  - iptables
+    - iptables
+
 - name: Set apt sources
   copy: src={{ item }} dest=/etc/apt/{{ item }} owner=root group=root mode=0644
   with_items:
-  - sources.list
+    - sources.list
+
 - name: Set apt proxy
   copy: src=apt.conf dest=/etc/apt/apt.conf owner=root group=root mode=0644
   when: "'utility' not in group_names"
+
 - name: Install common packages
   apt: pkg={{ item }} state=present update_cache=yes
   with_items:
-  - ethtool
-  - ntp
-  - openssh-server
+    - ethtool
+    - ntp
+    - openssh-server
+
 - name: Add SSH banner
   copy: src=ssh_banner dest=/etc/ssh/banner owner=root group=root mode=0644
 - name: Configure sshd
   template: src=sshd_config dest=/etc/ssh/sshd_config owner=root group=root mode=0644
   notify:
-  - sshd
+    - sshd
+
 - name: Configure ntpd
   copy: src=ntp.conf dest=/etc/ntp.conf owner=root group=root mode=0644
   notify:
-  -  ntp
+    -  ntp
+
 - name: Install NRPE and Nagios-Plugins
   apt: pkg={{ item }} state=present
   with_items:
     - nagios-nrpe-server
     - nagios-plugins
+
 - name: Copy nrpe config
   template: src=nrpe.cfg dest=/etc/nagios/nrpe.cfg owner=root group=root mode=0644
   notify: nrpe-server
+
 - name: Copy helper scripts
   copy: src=helpers/{{ item }} dest=/usr/local/bin/{{ item }} owner=root group=root mode=0755
   with_items:

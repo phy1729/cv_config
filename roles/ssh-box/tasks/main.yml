@@ -24,20 +24,25 @@
   - libcrypt-openssl-bignum-perl
   # For jabber in weechat
   - python-xmpp
+
 - name: Add weechat repository
   apt_repository: repo=ppa:nesthib/weechat-stable update_cache=yes
+
 - name: Install weechat-dev
   apt: pkg={{ item }} state=present
   with_items:
   - weechat-curses
   - weechat-plugins
+
 - name: Add pubkey help in zprofile
   file: src=zprofile dest=/etc/zsh/zprofile owner=root group=root mode=0644
+
 - name: Add bash Easter egg
   lineinfile: dest=/etc/bash.bashrc state=present line={{ item }}
   with_items:
-    - "'function command_not_found_handle { sl -l; }'"
+    - "function command_not_found_handle { sl -l; }"
+
 - name: Add zsh Easter egg
   lineinfile: dest=/etc/zsh/zshrc state=present line={{ item }}
   with_items:
-    - "'function command_not_found_handler { sl -l; }'"
+    - "function command_not_found_handler { sl -l; }"
