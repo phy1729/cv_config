@@ -14,17 +14,20 @@ Subsystem sftp /usr/lib/openssh/sftp-server
 PermitRootLogin no
 
 Banner /etc/ssh/banner
-{% if ansible_hostname == 'carbon' %}
 
 UsePAM yes
 
 AuthorizedKeysCommandUser authorizedkeyscommand
 AuthorizedKeysCommand /usr/local/sbin/ssh_pubkeys
-AuthenticationMethods publickey,password
+AuthenticationMethods publickey
+
+AllowGroups "Realm Admins"
+{% if ssh_groups is defined %}
+{% for group in ssh_groups %}
+AllowGroups "{{ group }}"
+{% endfor %}
+{% endif %}
 
 Match User cv
-  AuthenticationMethods publickey
-
-Match Address 192.168.42.0/24
-  AuthenticationMethods password
-{% endif %}
+  AuthorizedKeysFile %h/.ssh/authorized_keys
+  AllowGroups cv

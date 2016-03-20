@@ -11,7 +11,6 @@
   - apt_mirror
   - account_site
   - doc_site
-  - nslcd
   - nut_site
   - pasta_site
   - papercut_site
@@ -21,3 +20,4 @@
   - tftp
   - jekyll
   - ldap_restful
+  - realm_auth

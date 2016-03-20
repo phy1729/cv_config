@@ -1,13 +1,9 @@
 ---
-- name: Add AuthorizedKeysCommand script
-  copy: src=ssh_pubkeys dest=/usr/local/sbin/ssh_pubkeys owner=root group=root mode=0755
-- name: Create authorizedkeyscommand user
-  user: name=authorizedkeyscommand system=yes createhome=no shell=/bin/false state=present
-
 - name: Configure firewall for ssh-box
   copy: src=ssh-box.rules dest=/etc/iptables.d/ssh-box.rules owner=root group=root mode=0640
   notify:
   - iptables
+
 - name: Install ssh-box packages
   apt: pkg={{ item }} state=present
   with_items:

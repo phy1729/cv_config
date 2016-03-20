@@ -4,3 +4,4 @@
   roles:
   - base
   - papercut
+  - realm_auth

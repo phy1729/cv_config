@@ -7,3 +7,4 @@
   - base
   - slapd
   - krb5kdc
+  - realm_auth

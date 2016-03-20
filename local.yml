@@ -5,9 +5,7 @@
   - base
   - pull
   - client
-  - nslcd
-  - pam_mount
-  - krb5_client
   - modpubkey
   - modsession
   - cups-client
+  - realm_auth

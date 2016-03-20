@@ -1,0 +1,5 @@
+---
+ssh_groups:
+  - Local Admins
+
+persistMount: yes

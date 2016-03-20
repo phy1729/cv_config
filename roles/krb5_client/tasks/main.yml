@@ -7,3 +7,6 @@
 
 - name: Copy common-auth
   copy: src=common-auth dest=/etc/pam.d/common-auth owner=root group=root mode=0644
+
+- name: Copy common-session
+  copy: src=common-session dest=/etc/pam.d/common-session owner=root group=root mode=0644

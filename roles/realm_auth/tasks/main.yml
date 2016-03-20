@@ -1,0 +1,3 @@
+---
+- name: Copy sudoers file
+  copy: src=cv.base dest=/etc/sudoers.d/cv owner=root group=root mode=0644

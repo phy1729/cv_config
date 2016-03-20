@@ -3,9 +3,7 @@
   sudo: yes
   roles:
   - base
-  - nslcd
-  - pam_mount
   - ssh-box
   - krb5-tools
-  - krb5_client
   - modpubkey
+  - realm_auth

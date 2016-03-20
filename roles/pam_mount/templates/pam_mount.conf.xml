@@ -6,7 +6,7 @@
 	<volume fstype="nfs" server="192.168.42.13" path="/srv/ydrive" mountpoint="/mnt/ydrive" options="nolock" pgrp="Lounge Users" />
 	<mntoptions allow="nosuid,nodev,nolock,loop,encryption,fsck,nonempty,allow_root,allow_other" />
 	<mntoptions require="nosuid,nodev,nolock" />
-	{% if ansible_hostname == 'carbon' %}
+	{% if persistMount is defined %}
 	<logout wait="0" hup="0" term="0" kill="0" />
 	{% else %}
 	<logout wait="3000" hup="0" term="1" kill="1" />
