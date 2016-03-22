@@ -9,7 +9,6 @@
   - mpc
   - mpv
   - ncmpcpp
-  - tmux
 
 - name: Configure MPD
   copy: src=mpd.conf dest=/etc/mpd.conf owner=mpd group=audio mode=0640

@@ -80,3 +80,9 @@
     - cv_real_users
     - cv_reboot
     - cv_screen_wake
+
+- name: Install zsh and tmux everywhere
+  apt: name={{ item }} state=present
+  with_items:
+    - tmux
+    - zsh
