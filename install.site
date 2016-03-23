@@ -32,13 +32,13 @@ esac
 
 for file in /etc/dhcpd.conf /etc/hostname.* /etc/ntpd.conf /var/unbound/etc/unbound.conf; do
 	ed -s "$file" <<-EOF
-		s/{{ name }}/$name/
-		s/{{ internal_ip }}/$int_ip/
-		s/{{ external_ip }}/$ext_ip/
-		s/{{ pf_ip }}/$pf_ip/
-		s/{{ peer_internal_ip }}/$other_int_ip/
-		s/{{ advskew }}/$advskew/
-		s/{{ dhcpd_range }}/$dhcpd_range/
+		,s/{{ name }}/$name/
+		,s/{{ internal_ip }}/$int_ip/
+		,s/{{ external_ip }}/$ext_ip/
+		,s/{{ pf_ip }}/$pf_ip/
+		,s/{{ peer_internal_ip }}/$other_int_ip/
+		,s/{{ advskew }}/$advskew/
+		,s/{{ dhcpd_range }}/$dhcpd_range/
 		w
 	EOF
 done
