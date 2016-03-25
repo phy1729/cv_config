@@ -1,6 +1,5 @@
 ---
 dependencies:
-  - role: krb5-tools
-  - role: krb5_client
-  - role: nslcd
-  - role: pam_mount
+  - { role: krb5_client }
+  - { role: nslcd }
+  - { role: pam_mount }
