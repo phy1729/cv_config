@@ -2,30 +2,39 @@
 - name: Configure firewall for apache2
   copy: src=apache2.rules dest=/etc/iptables.d/apache2.rules owner=root group=root mode=0640
   notify:
-  - iptables
+    - iptables
+
 - name: Install packages for webserver
   apt: pkg={{ item }} state=present
   with_items:
-  - mailutils
-  - apache2
-  - php5
-  - php5-ldap
+    - mailutils
+    - apache2
+    - php5
+    - php5-ldap
+
 - name: Configure Apache2
   template: src=apache2.conf dest=/etc/apache2/ owner=root group=root mode=0644
   notify:
-  - apache2
+    - apache2
+
 - name: Enable PHP
   apache2_module: name=php5 state=present
+
+- name: Enable SSL
+  apache2_module: name=ssl  state=present
+
 - name: Add sites-available
   copy: src=sites-available dest=/etc/apache2/ owner=root group=root mode=0644 directory_mode=0755
   notify:
-  - apache2
+    - apache2
+
 - name: Create sites-enabled
   file: path=/etc/apache2/sites-enabled state=directory owner=root group=root mode=0755
+
 - name: Enable sites
   file: src=../sites-available/{{ item }}.conf dest=/etc/apache2/sites-enabled/{{ item }}.conf state=link owner=root group=root
   with_items:
-  - 000-default
-  - irc
+    - 000-default
+    - irc
   notify:
-  - apache2
+    - apache2

@@ -1,3 +1,5 @@
 *filter
+-A INPUT -p tcp --dport 443 -j ACCEPT
+
 -A OUTPUT -p tcp -d 192.168.42.11 --dport 9191 -j ACCEPT
 COMMIT

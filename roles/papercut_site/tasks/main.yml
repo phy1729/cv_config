@@ -21,3 +21,15 @@
   copy: src=paper.rules dest=/etc/iptables.d/ owner=root group=root mode=0640
   notify:
   - iptables
+
+- name: Create SSL Directory
+  file: path=/etc/ssl/local state=directory owner=root group=www-data mode=0750
+
+- name: Copy SSL files
+  copy: src=secret/{{ item }} dest=/etc/ssl/local/{{ item }} owner=root group=www-data mode=0640 directory_mode=0750
+  with_items:
+    - paper_collegiumv_org_cert.cer
+    - paper_collegiumv_org_interm.cer
+    - papercut_key.pem
+  notify:
+    - apache2
