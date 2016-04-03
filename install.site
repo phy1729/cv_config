@@ -21,6 +21,7 @@ case "$name" in
 		other_int_ip="192.168.42.2"
 		advskew="10"
 		dhcpd_range="192.168.42.128 192.168.42.191"
+		;;
 	helium)
 		int_ip="192.168.42.2"
 		ext_ip="129.110.157.12"
@@ -28,6 +29,7 @@ case "$name" in
 		other_int_ip="192.168.42.1"
 		advskew="20"
 		dhcpd_range="192.168.42.192 192.168.42.254"
+		;;
 esac
 
 for file in /etc/dhcpd.conf /etc/hostname.* /etc/ntpd.conf /var/unbound/etc/unbound.conf; do
@@ -46,3 +48,7 @@ done
 echo 'Defaults !lecture
 Defaults:%wheel !env_reset
 %wheel ALL=(ALL) SETENV:ALL' >> /etc/sudoers
+
+# Generate control keys
+unbound-control-setup
+nsd-control-setup
