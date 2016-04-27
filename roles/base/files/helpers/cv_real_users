@@ -1,3 +1,7 @@
 #!/bin/bash
 
-who | awk '$1!="cv"{u[$1]=1}; END{e=0; for (k in u){e=1; print k}; exit e}'
+if [ -z "${SUDO_USER}" ] ; then
+    who | awk '$1!="'"$(whoami)"'"{u[$1]=1}; END{e=0; for (k in u){e=1; print k}; exit e}'
+else
+    who | awk '$1!="'"${SUDO_USER}"'"{u[$1]=1}; END{e=0; for (k in u){e=1; print k}; exit e}'
+fi
