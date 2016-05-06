@@ -2,10 +2,11 @@
 - hosts: clients:mediaboxen
   strategy: free
   roles:
-  - base
-  - pull
-  - client
-  - modpubkey
-  - modsession
-  - cups-client
-  - realm_auth
+    - network
+    - xbps-repoconf
+    - core-daemons
+    - core-programs
+    - sshd
+    - client
+    - netlogon
+    - cups-client
