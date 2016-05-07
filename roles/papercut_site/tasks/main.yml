@@ -1,21 +1,13 @@
 ---
-- name: Enable the proxy module
-  apache2_module: name={{ item }} state=present
-  with_items:
-  - proxy
-  - proxy_http
-  notify:
-  - apache2
-
 - name: Add PaperCut Site
-  copy: src=paper.conf dest=/etc/apache2/sites-available/paper.conf owner=root group=root mode=0644
+  copy: src=paper.conf dest=/etc/nginx/sites-available/paper.conf owner=root group=root mode=0644
   notify:
-    - apache2
+    - nginx
 
 - name: Enable paper site
-  file: src=../sites-available/paper.conf dest=/etc/apache2/sites-enabled/paper.conf state=link owner=root group=root
+  file: src=../sites-available/paper.conf dest=/etc/nginx/sites-enabled/paper.conf state=link owner=root group=root
   notify:
-    - apache2
+    - nginx
 
 - name: Install firewall rules
   copy: src=paper.rules dest=/etc/iptables.d/ owner=root group=root mode=0640
@@ -23,13 +15,13 @@
   - iptables
 
 - name: Create SSL Directory
-  file: path=/etc/ssl/local state=directory owner=root group=www-data mode=0750
+  file: path=/etc/ssl/local state=directory owner=root group=nginx mode=0750
 
 - name: Copy SSL files
-  copy: src=secret/{{ item }} dest=/etc/ssl/local/{{ item }} owner=root group=www-data mode=0640 directory_mode=0750
+  copy: src=secret/{{ item }} dest=/etc/ssl/local/{{ item }} owner=root group=nginx mode=0640 directory_mode=0750
   with_items:
     - paper_collegiumv_org_cert.cer
     - paper_collegiumv_org_interm.cer
     - papercut_key.pem
   notify:
-    - apache2
+    - nginx
