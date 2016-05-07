@@ -1,0 +1,10 @@
+---
+- name: Copy IRC site config
+  copy: src=irc_site.conf dest=/etc/nginx/sites-available/irc_site.conf owner=root group=root mode=0644
+  notify:
+  - nginx
+
+- name: Enable IRC Site
+  file: src=../sites-available/irc_site.conf dest=/etc/nginx/sites-enabled/irc_site.conf state=link owner=root group=root
+  notify:
+  - nginx
