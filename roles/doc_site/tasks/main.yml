@@ -1,11 +1,11 @@
 ---
 - name: Install dependencies
-  apt: name={{ item }} state=present
+  xbps: name={{ item }} state=present
   with_items:
-  - ruby-full
-  - ruby-dev
+  - ruby
+  - ruby-devel
   - nodejs
-  - build-essential
+  - base-devel
   - git
 
 - name: Install firewall rules
@@ -25,12 +25,16 @@
 - name: Build site
   command: jekyll build --destination=/var/www/cvdoc/ chdir=/tmp/doc_site
 
+
+- name: Fix Site permissions
+  file: path=/var/www/cvdoc owner=root group=nginx recurse=yes
+
 - name: Copy Site descriptor
-  copy: src=cvdoc.conf dest=/etc/apache2/sites-available/cvdoc.conf owner=root group=root mode=0644
+  copy: src=cvdoc.conf dest=/etc/nginx/sites-available/cvdoc.conf owner=root group=root mode=0644
   notify:
-  - apache2
+  - nginx
 
 - name: Enable Site
-  file: src=../sites-available/cvdoc.conf dest=/etc/apache2/sites-enabled/cvdoc.conf state=link owner=root group=root
+  file: src=../sites-available/cvdoc.conf dest=/etc/nginx/sites-enabled/cvdoc.conf state=link owner=root group=root
   notify:
-  - apache2
+  - nginx
