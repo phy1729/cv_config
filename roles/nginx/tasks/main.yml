@@ -1,0 +1,22 @@
+---
+- name: Install nginx
+  xbps: pkg=nginx state=present
+
+- name: Install firewall rules
+  copy: src=nginx.rules dest=/etc/iptables.d/nginx.rules owner=root group=root mode=0640
+  notify:
+    - iptables
+
+- name: Configure nginx
+  copy: src=nginx.conf dest=/etc/nginx/ owner=root group=root mode=0644 validate='nginx -t -c %s'
+  notify:
+    - nginx
+
+- name: Create sites-available
+  file: path=/etc/nginx/sites-available state=directory owner=root group=root mode=0755
+
+- name: Create sites-enabled
+  file: path=/etc/nginx/sites-enabled state=directory owner=root group=root mode=0755
+
+- name: Enable nginx
+  file: src=/etc/sv/nginx dest=/var/service/nginx state=link owner=root group=root
