@@ -1,3 +1,0 @@
----
-- name: Copy modpubkey
-  copy: src=modpubkey dest=/usr/local/bin/modpubkey owner=root group=root mode=0755

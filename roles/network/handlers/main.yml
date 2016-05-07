@@ -1,0 +1,6 @@
+---
+- name: dhcpcd
+  command: sv restart dhcpcd
+
+- name: iptables
+  command: /usr/libexec/dhcpcd-hooks/99-iptables

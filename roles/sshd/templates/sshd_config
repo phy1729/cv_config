@@ -10,7 +10,7 @@ KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
 MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160
 
 UsePrivilegeSeparation sandbox
-Subsystem sftp /usr/lib/openssh/sftp-server
+Subsystem sftp /usr/libexec/sftp-server
 PermitRootLogin no
 
 Banner /etc/ssh/banner

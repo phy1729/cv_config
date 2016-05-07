@@ -1,0 +1,19 @@
+---
+- name: Configure firewall
+  copy: src=xbps.rules dest=/etc/iptables.d/ owner=root group=root mode=0640
+  notify:
+    - iptables
+
+- name: Create xbps.d
+  file: path=/etc/xbps.d state=directory owner=root group=root mode=0755
+
+- name: Configure XBPS repositories
+  copy: src={{ item }}.conf dest=/etc/xbps.d/{{ item }}.conf owner=root group=root mode=0644
+  with_items:
+    - 00-repository-main
+    - 10-repository-nonfree
+    - 10-repository-multilib
+    - 10-repository-multilib-nonfree
+
+- name: Sync XBPS
+  xbps: update_cache=yes

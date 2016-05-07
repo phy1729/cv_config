@@ -1,0 +1,19 @@
+---
+- name: Add SSH banner
+  copy: src=ssh_banner dest=/etc/ssh/banner owner=root group=root mode=0644
+  notify:
+    - sshd
+
+- name: Add AuthorizedKeysCommand script
+  copy: src=ssh_pubkeys dest=/usr/local/sbin/ssh_pubkeys owner=root group=root mode=0755
+
+- name: Create authorizedkeyscommand user
+  user: name=authorizedkeyscommand system=yes createhome=no shell=/bin/false state=present
+
+- name: Install ldapsearch and associated toosl
+  xbps: pkg=openldap state=present
+
+- name: Configure sshd
+  template: src=sshd_config dest=/etc/ssh/sshd_config owner=root group=root mode=0644
+  notify:
+    - sshd

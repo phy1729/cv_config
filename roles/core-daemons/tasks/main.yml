@@ -1,0 +1,25 @@
+---
+- name: Install core-daemons
+  xbps: pkg={{ item }} state=present
+  with_items:
+    - cronie
+    - ntp
+    - socklog-void
+
+- name: Configure openntpd
+  copy: src=ntp.conf dest=/etc/ntpd.conf owner=root group=root mode=0644
+  notify:
+    - ntp
+
+- name: Disable dhcpcd ntp hook
+  file: path=/usr/libexec/50-ntp.conf state=absent
+  notify:
+    - dhcpcd
+
+- name: Enable core-daemons
+  file: src=/etc/sv/{{ item }} dest=/var/service/{{ item }} state=link owner=root group=root
+  with_items:
+    - crond
+    - ntpd
+    - socklog-unix
+    - nanoklogd

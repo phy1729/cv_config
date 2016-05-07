@@ -1,3 +1,0 @@
----
-- name: Copy modsession
-  copy: src=modsession dest=/usr/local/bin/modsession owner=root group=root mode=0755

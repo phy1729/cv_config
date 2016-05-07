@@ -1,0 +1,35 @@
+---
+- name: Configure hosts
+  template: src=hosts.j2 dest=/etc/hosts owner=root group=root mode=0644
+
+- name: Configure hostname
+  template: src=hostname.j2 dest=/etc/hostname owner=root group=root mode=0644
+
+- name: Install iptables
+  xbps: pkg=iptables state=present
+
+- name: Add dhcpcd iptables hook
+  copy: src=99-iptables dest=/usr/share/dhcpcd/hooks/99-iptables owner=root group=root mode=0740
+  notify:
+    - dhcpcd
+
+- name: Enable dhcpcd iptables hook
+  file: src=/usr/share/dhcpcd/hooks/99-iptables dest=/usr/libexec/dhcpcd-hooks/99-iptables state=link owner=root group=root
+  notify:
+    - dhcpcd
+
+- name: Make iptables.d
+  file: path=/etc/iptables.d state=directory owner=root group=root mode=0740
+
+- name: Configure IPv4 firewall
+  copy: src={{ item }} dest=/etc/iptables.d/{{ item }} owner=root group=root mode=0640
+  with_items:
+    - 0common.rules
+  notify:
+    - iptables
+
+- name: Configure IPv6 firewall
+  copy: src=ip6tables.conf dest=/etc/ip6tables.conf owner=root group=root mode=0640
+  notify:
+    - iptables
+
