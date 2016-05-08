@@ -1,13 +1,13 @@
 ---
 - name: Copy Site descriptor
-  copy: src=preseed.conf dest=/etc/apache2/sites-available/preseed.conf owner=root group=root mode=0644
+  copy: src=preseed.conf dest=/etc/nginx/sites-available/preseed.conf owner=root group=root mode=0644
   notify:
-  - apache2
+  - nginx
 
 - name: Enable Site
-  file: src=../sites-available/preseed.conf dest=/etc/apache2/sites-enabled/preseed.conf state=link owner=root group=root
+  file: src=../sites-available/preseed.conf dest=/etc/nginx/sites-enabled/preseed.conf state=link owner=root group=root
   notify:
-  - apache2
+  - ningx
 
 - name: Copy Install Configs
   copy: src=preseed/ dest=/var/www/preseed owner=root group=root mode=0644 directory_mode=0755
