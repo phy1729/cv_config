@@ -1,11 +1,13 @@
 ---
 - name: Copy pasta files
   copy: src=pasta dest=/var/www/ owner=root group=root mode=0644 directory_mode=0755
+
 - name: Add pasta site
-  copy: src=pasta.conf dest=/etc/apache2/sites-available/pasta.conf owner=root group=root mode=0644
+  copy: src=pasta.conf dest=/etc/nginx/sites-available/pasta.conf owner=root group=root mode=0644
   notify:
-  - apache2
+    - nginx
+
 - name: Enable pasta site
-  file: src=../sites-available/pasta.conf dest=/etc/apache2/sites-enabled/pasta.conf state=link owner=root group=root
+  file: src=../sites-available/pasta.conf dest=/etc/nginx/sites-enabled/pasta.conf state=link owner=root group=root
   notify:
-  - apache2
+    - nginx
