@@ -1,18 +1,20 @@
 dn: cn=config
 objectClass: olcGlobal
 cn: config
-olcRootDSE: /etc/ldap/slapd.d/rootDSE.ldif
+olcRootDSE: /etc/openldap/slapd.d/rootDSE.ldif
 olcGentleHUP: TRUE
 olcIdleTimeout: 60
 olcAuthzRegexp: {0}uid=([^,]*)(/[^,]*)?(,cn=collegiumv.org)?,cn=gssapi,cn=auth uid=$1,ou=People,dc=collegiumv,dc=org
+{% if groups['dc']|length > 1 %}
 {% for dc in groups['dc'] %}
 olcServerID: {{ loop.index-1 }} ldap://{{ hostvars[dc]['ansible_fqdn'] }}
 {% endfor %}
+{% endif %}
 
 dn: cn=module{0},cn=config
 objectClass: olcModuleList
 cn: module{0}
-olcModulePath: /usr/lib/ldap
+olcModulePath: /usr/libexec/openldap
 # You can't change these with Ansible
 olcModuleLoad: {0}back_mdb
 olcModuleLoad: {1}syncprov
@@ -41,18 +43,20 @@ dn: olcDatabase={1}mdb,cn=config
 objectClass: olcDatabaseConfig
 objectClass: olcMdbConfig
 olcDatabase: {1}mdb
-olcDbDirectory: /var/lib/ldap
+olcDbDirectory: /var/lib/openldap
 olcSuffix: dc=collegiumv,dc=org
 olcRootDN: cn=config
 olcDbIndex: uid,uidNumber eq
 # For Kerberos
 olcDbIndex: krbPrincipalName eq,sub
 # For syncprov
+{% if groups['dc']|length > 1 %}
 olcDbIndex: objectclass,entryCSN,entryUUID eq
 olcMirrorMode: TRUE
 {% for dc in groups['dc'] %}
 olcSyncRepl: {{ '{' }}{{ loop.index-1 }}{{ '}' }}rid=01{{ loop.index-1 }} provider="ldap://{{ hostvars[dc]['ansible_fqdn'] }}" binddn="cn=config" bindmethod=simple credentials="{{ slapd_olcRootPW }}" searchbase="dc=collegiumv,dc=org" type=refreshAndPersist retry="5 5 120 +" timeout=3
 {% endfor %}
+{% endif %}
 # A few entries use userPassword
 olcAccess: {0}to attrs=userPassword
   by * auth

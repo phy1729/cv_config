@@ -1,41 +1,48 @@
 ---
 - name: Obtain lockout
-  file: path=/etc/ldap/noslapd state=touch owner=root group=root mode=0000
-- name: Stop slapd
-  service: name=slapd state=stopped
+  file: path=/etc/openldap/noslapd state=touch owner=root group=root mode=0000
+
 - name: Remove default config
   file: path={{ item }} state=absent
   with_items:
-  - "/etc/ldap/slapd.d/"
-  - "/var/lib/ldap/"
+    - "/etc/openldap/slapd.ldif"
+    - "/etc/openldap/slapd.conf"
+    - "/var/lib/openldap/"
+
 - name: Create slapd config directory
-  file: path="/etc/ldap/slapd.d/cn=config/" state=directory owner=openldap group=openldap mode=0755
+  file: path="/etc/openldap/slapd.d/cn=config/" state=directory owner=ldap group=ldap mode=0755
+
 - name: Create slapd database directory
-  file: path=/var/lib/ldap/ state=directory owner=openldap group=openldap mode=0700
+  file: path=/var/lib/openldap/ state=directory owner=ldap group=ldap mode=0700
+
 - name: Copy bootstrap LDIF
-  template: src=bootstrap.ldif dest=/tmp/bootstrap.ldif owner=openldap group=root mode=0600
+  template: src=bootstrap.ldif dest=/tmp/bootstrap.ldif owner=ldap group=root mode=0600
+
 - name: Add bootstrap LDIF to database
-  command: slapadd -n0 -F /etc/ldap/slapd.d -l /tmp/bootstrap.ldif
-  become_user: openldap
+  command: slapadd -n0 -F /etc/openldap/slapd.d -l /tmp/bootstrap.ldif
+  become_user: ldap
+
 - name: Copy RootDSE LDIF
-  template: src=rootDSE.ldif dest=/etc/ldap/slapd.d/rootDSE.ldif owner=openldap group=openldap mode=0600
+  template: src=rootDSE.ldif dest=/etc/openldap/slapd.d/rootDSE.ldif owner=ldap group=ldap mode=0600
+
 - name: Copy schemata
-  copy: src={{ item }} dest=/tmp/{{ item }} owner=openldap group=root mode=0600
+  copy: src={{ item }} dest=/tmp/{{ item }} owner=ldap group=root mode=0600
   when: init and (inventory_hostname == groups['dc'][0])
   with_items:
-  - "{{ schemata }}"
+    - "{{ schemata }}"
+
 - name: Add schemata
-  command: slapadd -n0 -F /etc/ldap/slapd.d -l /tmp/{{ item }}
-  become_user: openldap
+  command: slapadd -n0 -F /etc/openldap/slapd.d -l /tmp/{{ item }}
+  become_user: ldap
   when: init and (inventory_hostname == groups['dc'][0])
   with_items:
-  - "{{ schemata }}"
+    - "{{ schemata }}"
+
 - name: Delete bootstrap and schema LDIFs
   file: path=/tmp/{{ item }} state=absent
   with_items:
-  - bootstrap.ldif
-  - "{{ schemata }}"
+    - bootstrap.ldif
+    - "{{ schemata }}"
+
 - name: Release Lockout
-  file: path=/etc/ldap/noslapd state=absent
-- name: Start slapd
-  service: name=slapd state=started
+  file: path=/etc/openldap/noslapd state=absent

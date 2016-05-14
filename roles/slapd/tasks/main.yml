@@ -1,32 +1,49 @@
 ---
 - name: Include group configuration
   include_vars: groups.yml
+
 - name: Configure firewall
   template: src=slapd.rules dest=/etc/iptables.d/slapd.rules owner=root group=root mode=0640
   notify:
-  - iptables
-- name: Add slapd repository
-  apt_repository: repo=ppa:rtandy/openldap-backports update_cache=yes
+    - iptables
+
 - name: Install slapd
-  apt: pkg=slapd state=present
+  xbps: pkg={{ item }} state=present
+  with_items:
+    - openldap
+    - libsasl
+    - cyrus-sasl
+    - cyrus-sasl-modules
+    - cyrus-sasl-modules-gssapi
+    - cyrus-sasl-modules-ldap
   register: slapd
+
 - name: Bootstrap slapd
   include: bootstrap.yml
-  when: slapd.changed
+  when: init
+
+- name: Enable service
+  file: src=/etc/sv/slapd dest=/var/service/slapd state=link owner=root group=root
+
+- name: Wait for ldap to start up
+  wait_for: host=127.0.0.1 port=389 state=started
+
 - name: Install python-ldap
-  apt: pkg=python-ldap state=present
+  xbps: pkg=python-ldap state=present
+
 - name: Copy LDIF files
-  template: src={{ item }}.ldif dest=/tmp/{{ item }}.ldif owner=openldap group=root mode=0600
+  template: src={{ item }}.ldif dest=/tmp/{{ item }}.ldif owner=ldap group=root mode=0600
   with_items: "{{ LDIFfiles }}"
+
 - name: Add LDIF to database
   ldap: src=/tmp/{{ item }}.ldif bind_dn="cn=config" base64_passwd="{{ slapd_olcRootPW | b64encode }}"
   when: inventory_hostname == groups['dc'][0]
   with_items: "{{ LDIFfiles }}"
+
 - name: Add sync to database
   ldap: src=/tmp/sync.ldif bind_dn="cn=config" base64_passwd="{{ slapd_olcRootPW | b64encode }}"
   when: inventory_hostname != groups['dc'][0]
+
 - name: Delete LDIF files
   file: path=/tmp/{{ item }}.ldif state=absent
   with_items: "{{ LDIFfiles }}"
-- name: Install ldap-utils
-  apt: pkg=ldap-utils state=present

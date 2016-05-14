@@ -3,9 +3,11 @@
   config.ldif instead.
     -- phy1729
 dn: olcDatabase={0}config,cn=config
+{% if groups['dc']|length > 1 %}
 objectClass: olcDatabaseConfig
 olcDatabase: {0}config
 {% for dc in groups['dc'] %}
 olcSyncRepl: {{ '{' }}{{ loop.index-1 }}{{ '}' }}rid=00{{ loop.index-1 }} provider="ldap://{{ hostvars[dc]['ansible_fqdn'] }}" binddn="cn=config" bindmethod=simple credentials="{{ slapd_olcRootPW }}" searchbase="cn=config" type=refreshAndPersist retry="5 5 120 +" timeout=3
 {% endfor %}
 olcMirrorMode: TRUE
+{% endif %}

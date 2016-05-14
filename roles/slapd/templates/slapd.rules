@@ -3,7 +3,4 @@
 {% for dc in groups['dc'] %}
 -A OUTPUT -d {{ hostvars[dc]['ansible_default_ipv4']['address'] }} -p tcp --dport 389 -j ACCEPT
 {% endfor %}
-# for the launchpad.net PPA
--A OUTPUT -d 91.189.89.222 -p tcp --dport 443 -j ACCEPT
--A OUTPUT -d 91.189.89.223 -p tcp --dport 443 -j ACCEPT
 COMMIT
