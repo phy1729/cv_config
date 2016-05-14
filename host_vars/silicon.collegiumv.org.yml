@@ -1,0 +1,7 @@
+---
+monitor_UPS:
+  secondary:
+    ID: secondary
+    host: nitrogen.collegiumv.org
+    power_factor: 1
+    mode: slave

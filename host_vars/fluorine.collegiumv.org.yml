@@ -1,0 +1,15 @@
+---
+connected_UPS:
+  audio:
+    name: Audio
+    driver: usbhid-ups
+    port: auto
+    desc: Audio Server UPS
+    serial: AS0805144117
+
+monitor_UPS:
+  audio:
+    ID: Audio
+    host: localhost
+    power_factor: 1
+    mode: master

@@ -1,0 +1,31 @@
+---
+connected_UPS:
+  primary:
+    name: Primary
+    driver: usbhid-ups
+    port: auto
+    desc: Primary UPS
+    serial: AS1248310719
+  secondary:
+    name: Secondary
+    driver: usbhid-ups
+    port: auto
+    desc: Secondary UPS
+    serial: 3S1444X01839
+
+monitor_UPS:
+  primary:
+    ID: primary
+    host: localhost
+    power_factor: 1
+    mode: master
+  secondary:
+    ID: secondary
+    host: localhost
+    power_factor: 0
+    mode: master
+  audio:
+    ID: audio
+    host: fluorine.collegiumv.org
+    power_factor: 0
+    mode: slave

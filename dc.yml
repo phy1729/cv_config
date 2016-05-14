@@ -12,3 +12,4 @@
     - slapd
     - krb5kdc
     - netlogon
+    - upsmon

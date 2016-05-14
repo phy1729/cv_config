@@ -1,0 +1,7 @@
+---
+monitor_UPS:
+  primary:
+    ID: primary
+    host: nitrogen.collegiumv.org
+    power_factor: 1
+    mode: slave

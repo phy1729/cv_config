@@ -1,34 +1,34 @@
 ---
-- name: Add Dependencies
-  apt: pkg={{ item }} state=present
-  with_items:
-  - nut-server
-  - nut-client
+- name: Install NUT
+  xbps: pkg=network-ups-tools state=present
 
 - name: Configure UPS Drivers
-  copy: src=ups.conf dest=/etc/nut/ups.conf owner=root group=nut mode=0640
+  template: src=ups.conf dest=/etc/ups/ups.conf owner=root group=nut mode=0640
   notify:
-  - nut
+    - upsdrvctl
 
 - name: Configure NUT
-  copy: src=nut.conf dest=/etc/nut/nut.conf owner=root group=nut mode=0640
+  copy: src=nut.conf dest=/etc/ups/nut.conf owner=root group=nut mode=0640
   notify:
-  - nut
+    - upsd
 
 - name: Set nut network passwords
-  template: src=upsd.users dest=/etc/nut/upsd.users owner=root group=nut mode=0640
+  template: src=upsd.users dest=/etc/ups/upsd.users owner=root group=nut mode=0640
   notify:
-  - nut
-
-- name: Create the nutmon user
-  user: name=nutmon system=yes group=nut
-
-- name: Configure UPSmon
-  template: src=upsmon.conf dest=/etc/nut/upsmon.conf owner=root group=nut mode=0640
-  notify:
-  - nut
+    - upsd
 
 - name: Configure UPSD
-  copy: src=upsd.conf dest=/etc/nut/upsd.conf owner=root group=nut mode=0644
+  copy: src=upsd.conf dest=/etc/ups/upsd.conf owner=root group=nut mode=0644
   notify:
-  - nut
+    - upsd
+
+- name: Install firewall rules
+  copy: src=upsd.rules dest=/etc/iptables.d/upsd.rules owner=root group=root mode=0640
+  notify:
+    - iptables
+
+- name: Enable NUT services
+  file: src=/etc/sv/{{ item }} dest=/var/service/{{ item }} state=link owner=root group=root
+  with_items:
+    - upsd
+    - upsdrvctl

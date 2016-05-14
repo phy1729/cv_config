@@ -9,3 +9,5 @@
     - sshd
     - audio
     - netlogon
+    - nut-server
+    - upsmon

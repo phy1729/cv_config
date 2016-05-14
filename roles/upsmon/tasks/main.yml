@@ -1,0 +1,16 @@
+---
+- name: Install upsmon
+  xbps: pkg=network-ups-tools state=present
+
+- name: Configure UPSmon
+  template: src=upsmon.conf dest=/etc/ups/upsmon.conf owner=root group=nut mode=0640
+  notify:
+    - upsmon
+
+- name: Install UPSmon rules
+  template: src=upsmon.rules dest=/etc/iptables.d/upsmon.rules owner=root group=root mode=0640
+  notify:
+    - iptables
+
+- name: Enable UPSmon
+  file: src=/etc/sv/upsmon dest=/var/service/upsmon state=link owner=root group=root mode=0755

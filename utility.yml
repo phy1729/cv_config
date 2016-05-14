@@ -20,3 +20,5 @@
   - xbps-mini-repo
   - wol
   - netlogon
+  - nut-server
+  - upsmon

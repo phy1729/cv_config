@@ -1,0 +1,5 @@
+*filter
+{% for unit in monitor_UPS %}
+-A OUTPUT -p tcp -d {{ monitor_UPS[unit].host }} --dport 3493 -j ACCEPT
+{% endfor %}
+COMMIT

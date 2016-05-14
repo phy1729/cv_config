@@ -1,3 +1,6 @@
 ---
-- name: nut
-  service: name=nut-server state=restarted
+- name: upsd
+  command: sv restart upsd
+
+- name: upsdrvctl
+  command: sv restart upsdrvctl
