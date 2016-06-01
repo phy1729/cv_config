@@ -1,33 +1,40 @@
 ---
 - name: Add tftp-hpa Package
-  apt: pkg={{ item }} state=present
-  with_items:
-  - tftp-hpa
-  - tftpd-hpa
-
-- name: Configure tftp-hpa
-  copy: src=tftpd-hpa dest=/etc/default/ owner=root group=root mode=0644
-  notify:
-  - tftpd-hpa
+  xbps: pkg=tftp-hpa state=present
 
 - name: Install TFTP Rules
   copy: src=tftp.rules dest=/etc/iptables.d owner=root group=root mode=0640
   notify:
   - iptables
 
-- name: Add conntrack_tftp module
-  lineinfile: dest=/etc/modules line=ip_conntrack_tftp
+- name: Ensure modules-load.d exists
+  file: path=/etc/modules-load.d state=directory owner=root group=root mode=0755
+
+- name: Configure tftp_conntrack module
+  copy: src=tftp.conf dest=/etc/modules-load.d/tftp.conf owner=root group=root mode=0644
   notify:
-  - kmod
+    - ip_conntrack_tftp
 
-- name: Create Ubuntu TFTP Root
-  file: path=/srv/tftp/ubuntu state=directory mode=0755 owner=root group=root
+- name: Create TFTP Root
+  file: path=/srv/tftp/void state=directory mode=0755 owner=root group=root
 
-- name: Download the Ubuntu Installer
-  get_url: url=http://archive.ubuntu.com/ubuntu/dists/trusty-updates/main/installer-amd64/current/images/netboot/netboot.tar.gz dest=/tmp/netboot.tar.gz
+- name: Copy TFTP archive
+  unarchive: src=netboot.tar.gz dest=/srv/tftp/void owner=root group=root mode=0644 directory_mode=0755 creates=/srv/tftp/void/initrd
 
-- name: Expand the Ubuntu Installer
-  unarchive: src=/tmp/netboot.tar.gz dest=/srv/tftp/ubuntu/ copy=no creates=/srv/tftp/ubuntu/ubuntu-installer
+- name: Fix tftp root permissions
+  file: path=/srv/tftp/void state=directory owner=root group=root mode=0755
 
-- name: Install the CV Boot Menu Patch
-  copy: src=ubuntu-bootmenu.cfg dest=/srv/tftp/ubuntu/ubuntu-installer/amd64/boot-screens/txt.cfg owner=root group=root mode=0664
+- name: Fix pxelinux config permissions
+  file: path=/srv/tftp/void/pxelinux.cfg state=directory owner=root group=root mode=0755
+
+- name: Configure pxe environment
+  copy: src=default dest=/srv/tftp/void/pxelinux.cfg/default owner=root group=root mode=0644
+
+- name: Create tftp service directory
+  file: path=/etc/sv/tftpd state=directory owner=root group=root mode=0755
+
+- name: Install tftp-hpa service file
+  copy: src=tftp-run dest=/etc/sv/tftpd/run owner=root group=root mode=0755
+
+- name: Enable tftpd
+  file: src=/etc/sv/tftpd dest=/var/service/tftpd state=link owner=root group=root mode=0755

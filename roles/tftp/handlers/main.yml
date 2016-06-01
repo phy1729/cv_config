@@ -1,6 +1,6 @@
 ---
 - name: tftpd-hpa
-  service: name=tftpd-hpa state=restarted
+  command: sv restart tftpd
 
-- name: kmod
-  service: name=kmod state=started
+- name: ip_conntrack_tftp
+  modprobe: name=ip_conntrack_tftp state=present

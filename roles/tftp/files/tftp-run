@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# *very* important!
+modprobe ip_conntrack_tftp
+
+exec in.tftpd -L -s /srv/tftp/void
