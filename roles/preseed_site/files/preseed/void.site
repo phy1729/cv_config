@@ -1,0 +1,20 @@
+#!/bin/sh
+
+printf "Linking default services"
+chroot ${target} ln -s /etc/sv/dhcpcd /etc/runit/runsvdir/default/dhcpcd
+chroot ${target} ln -s /etc/sv/sshd /etc/runit/runsvdir/default/sshd
+
+printf "Installing python"
+xbps-install -r ${target} -R ${xbpsrepository} -Sy python
+
+ip=$(ip -4 -oneline a  | awk "/inet 192\\.168\\.42\\./{ sub(\"192.168.42.\",\"\",\$4); sub(\"/24\",\"\",\$4); print\$4 }")
+
+if [ $ip -ge 20 -a $ip -lt 64 ] ; then
+    mkdir -p ${target}/etc/sv/firstboot
+    xbps-uhelper fetch "http://preseed.collegiumv.org/firstBootClient.sh>${target}/etc/sv/firstboot/run"
+    chmod +x ${target}/etc/sv/firstboot/run
+    chroot ${target} ln -s /etc/sv/firstboot /etc/runit/runsvdir/default/firstboot
+fi
+sync
+
+reboot -f

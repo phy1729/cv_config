@@ -20,3 +20,8 @@
 
 - name: Enable nginx
   file: src=/etc/sv/nginx dest=/var/service/nginx state=link owner=root group=root
+
+- name: Configure nginx firewall rules
+  copy: src=nginx.rules dest=/etc/iptables.d/nginx.rules owner=root group=root mode=0640
+  notify:
+    - iptables
