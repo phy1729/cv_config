@@ -10,3 +10,4 @@
     - core-daemons
     - core-programs
     - slapd
+    - krb5kdc

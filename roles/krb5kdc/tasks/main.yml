@@ -5,53 +5,77 @@
   - iptables
 
 - name: Install the kerberos packages
-  apt: name={{ item }} state=present
-  register: install
-  with_items:
-  - krb5-kdc
-  - krb5-admin-server
-  - krb5-kdc-ldap
+  xbps: pkg=mit-krb5 state=present
+
+- name: Ensure the kdc configuration directory exists
+  file: path=/var/krb5kdc state=directory owner=root group=root mode=0755
 
 - name: Create the kdc configuration
-  template: src=kdc.conf dest=/etc/krb5kdc/kdc.conf owner=root group=root mode=0644
+  template: src=kdc.conf dest=/var/krb5kdc/kdc.conf owner=root group=root mode=0644
   notify: krb5kdc
+
+- name: Copy krb5.conf
+  copy: src=krb5.conf dest=/etc/krb5.conf owner=root group=root mode=0644
 
 - name: Copy the kdc acl
-  copy: src=kadm5.acl dest=/etc/krb5kdc/kadm5.acl owner=root group=root mode=0644
+  copy: src=kadm5.acl dest=/var/krb5kdc/kadm5.acl owner=root group=root mode=0644
   notify: krb5kdc
 
-- name: Initial KDC script copy
-  template: src=kdc_bootstrap.sh dest=/tmp/kdc.sh owner=root group=root mode=0700
-  when: init and install.changed and (inventory_hostname == groups['dc'][0])
+- name: Configure KDC<->LDAP (1/3)
+  template: src=kdc_stashpass.sh dest=/tmp/kdc_stashpass.sh owner=root group=root mode=0700
+  when: init
 
-- name: Initial KDC script run
-  shell: /tmp/kdc.sh
-  when: init and install.changed and (inventory_hostname == groups['dc'][0])
+- name: Configure KDC<->LDAP (2/3)
+  command: /tmp/kdc_stashpass.sh
+  when: init
 
-- name: Initial KDC script remove
-  file: path=/tmp/kdc.sh state=absent
+- name: Configure KDC<->LDAP (3/3)
+  file: path=/tmp/kdc_stashpass.sh state=absent
 
-- name: Ensure kerberos is enabled at boot
-  service: name={{ item }} enabled=yes
+- name: Bootstrap the KDC (1/3)
+  template: src=kdc_bootstrap.sh dest=/tmp/kdc_bootstrap.sh owner=root group=root mode=0700
+  when: init and (inventory_hostname == groups['dc'][0])
+
+- name: Bootstrap the KDC (2/3)
+  shell: /tmp/kdc_bootstrap.sh
+  when: init and (inventory_hostname == groups['dc'][0])
+
+- name: Bootstrap the KDC (3/3)
+  file: path=/tmp/kdc_bootstrap.sh state=absent
+
+- name: Propogate the stash file (1/3)
+  template: src=kdc_genstash.sh dest=/tmp/kdc_genstash.sh owner=root group=root mode=0700
+  when: init
+
+- name: Propogate the stash file (2/3)
+  shell: /tmp/kdc_genstash.sh
+  when: init
+
+- name: Propogate the stash file (3/3)
+  file: path=/tmp/kdc_genstash.sh state=absent
+  when: init
+
+- name: Enable krb5 services
+  file: src=/etc/sv/{{ item }} dest=/var/service/{{ item }} state=link owner=root group=root
   with_items:
-  - krb5-kdc
-  - krb5-admin-server
+    - krb5kdc
+    - kadmind
 
-- name: Start the kerberos services
-  service: name={{ item }} state=started
-  with_items:
-  - krb5-kdc
-  - krb5-admin-server
+- name: Wait for kdc to become available
+  wait_for: host=127.0.0.1 port=88 state=started
 
-- name: KAdmin script copy
+- name: Wait for kadmind to become available
+  wait_for: host=127.0.0.1 port=749 state=started
+
+- name: kadmin initial user setup (1/3)
   template: src=kadmin.sh dest=/tmp/kadmin.sh owner=root group=root mode=0700
-  when: init and install.changed and (inventory_hostname == groups['dc'][0])
+  when: init and (inventory_hostname == groups['dc'][0])
 
-- name: KAdmin script run
+- name: kadmin initial user setup (2/3)
   shell: /tmp/kadmin.sh
-  when: init and install.changed and (inventory_hostname == groups['dc'][0])
+  when: init and (inventory_hostname == groups['dc'][0])
 
-- name: KAdmin script remove
+- name: kadmin initial user setup (3/3)
   file: path=/tmp/kdc.sh state=absent
 
 - name: Kerberize LDAP
