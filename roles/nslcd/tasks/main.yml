@@ -2,20 +2,28 @@
 - name: Configure firewall
   copy: src=nslcd.rules dest=/etc/iptables.d/nslcd.rules owner=root group=root mode=0640
   notify:
-  - iptables
+    - iptables
+
 - name: Install libpam-ldapd
-  apt: name=libpam-ldapd state=present
-- name: Stop nscd
-  service: name=nscd state=stopped enabled=no
+  xbps: pkg=nss-pam-ldapd state=present
+
 - name: Configure libpam-ldapd
   copy: src=nslcd.conf dest=/etc/nslcd.conf owner=root group=nslcd mode=0640
   notify:
-  - nslcd
+    - nslcd
+
 - name: Add ldap to nsswitch
   lineinfile: "dest=/etc/nsswitch.conf regexp='^{{ item }}:' insertafter=regex line='{{ item }}:         files ldap'"
   with_items:
-  - passwd
-  - group
-  - shadow
+    - passwd
+    - group
+    - shadow
+
+- name: Ensure ldap config directory exists
+  file: path=/etc/openldap state=directory owner=root group=root mode=0755
+
 - name: Add default ldap.conf
-  copy: src=ldap.conf dest=/etc/ldap/ldap.conf owner=root group=root mode=0644
+  copy: src=ldap.conf dest=/etc/openldap/ldap.conf owner=root group=root mode=0644
+
+- name: Enable nslcd
+  file: src=/etc/sv/nslcd dest=/var/service/nslcd state=link

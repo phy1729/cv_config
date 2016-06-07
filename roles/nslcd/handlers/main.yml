@@ -1,2 +1,2 @@
 - name: nslcd
-  service: name=nslcd state=restarted
+  command: sv restart nslcd
