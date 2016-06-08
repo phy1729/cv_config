@@ -1,0 +1,26 @@
+---
+- name: Install netlogon packages
+  xbps: pkg={{ item }} state=present
+  with_items:
+    - pam-krb5
+    - pam-mount
+    - mit-krb5
+    - libnfs
+    - nfs-utils
+
+- name: Configure system-auth
+  copy: src=system-auth dest=/etc/pam.d/system-auth owner=root group=root mode=0644
+
+- name: Install Kerberos Conf
+  copy: src=krb5.conf dest=/etc/krb5.conf owner=root group=root mode=0644
+
+- name: Configure pam_mount
+  template: src=pam_mount.conf.xml dest=/etc/security/pam_mount.conf.xml owner=root group=root mode=0644
+
+- name: Copy firewall rules
+  copy: src=netlogon.rules dest=/etc/iptables.d/netlogon.rules owner=root group=root mode=0640
+  notify:
+    - iptables
+
+- name: Grant Realm Admins full sudo
+  copy: src=cv.base dest=/etc/sudoers.d/cv_base owner=root group=root mode=0644

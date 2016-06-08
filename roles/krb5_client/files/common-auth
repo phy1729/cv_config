@@ -1,6 +1,0 @@
-auth	[success=2 default=ignore]	pam_unix.so nullok_secure
-auth	[success=1 default=ignore]	pam_krb5.so nullok_secure try_first_pass minimum_uid=1729
-auth	requisite			pam_deny.so
-auth	required			pam_permit.so
-auth	optional			pam_mount.so
-auth	optional			pam_cap.so
