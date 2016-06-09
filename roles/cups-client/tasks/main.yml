@@ -1,12 +1,9 @@
 ---
 - name: Install Printing Packages
-  apt: pkg={{ item }} state=present
-  with_items:
-  - cups
-  - cups-client
+  xbps: pkg=cups state=present
 
 - name: Configure Cups as a Client
-  copy: src=cups dest=/etc owner=root group=lp mode=0644 directory_mode=0755
+  copy: src=client.conf dest=/etc/cups/client.conf owner=root group=lp mode=0644
 
 - name: Disable local cups interface
   template: src=cupsd.conf dest=/etc/cups/cupsd.conf owner=root group=lp mode=0644
