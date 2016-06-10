@@ -1,5 +1,5 @@
 #!/bin/sh
 [ -f /etc/nowake ] && exit 0
 while IFS= read -r mac; do
-	etherwake "$mac"
+	wol "$mac"
 done < "$1"

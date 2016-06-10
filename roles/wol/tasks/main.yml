@@ -1,0 +1,23 @@
+---
+- name: Install wol
+  xbps: pkg=wol state=present
+
+- name: Install wakeAll
+  copy: src=wakeAll dest=/usr/local/sbin/wakeAll owner=root group=root mode=0700
+
+- name: Configure wakeAll
+  copy: src=macs.list dest=/etc/macs.list owner=root group=root mode=0400
+
+- name: Install runit service (1/3)
+  file: path=/etc/sv/wakeAll state=directory owner=root group=root mode=0755
+
+- name: Install runit service (2/3)
+  copy: src=run dest=/etc/sv/wakeAll/run owner=root group=root mode=0755
+
+- name: Install runit service (3/3)
+  file: src=/etc/sv/wakeAll dest=/var/service/wakeAll state=link
+
+- name: Install firewall rules
+  copy: src=wakeAll.rules dest=/etc/iptables.d/wakeAll.rules owner=root group=root mode=0640
+  notify:
+    - iptables

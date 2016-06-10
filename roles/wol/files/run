@@ -1,0 +1,4 @@
+#!/bin/sh
+
+wakeAll /etc/macs.list
+sleep 60
