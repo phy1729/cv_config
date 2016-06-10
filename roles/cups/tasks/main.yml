@@ -1,6 +1,9 @@
 ---
 - name: Add Printing Packages
-  apt: pkg=cups state=present
+  xbps: pkg={{ item }} state=present
+  with_items:
+    - cups
+    - cups-filters
 
 - name: Copy CUPS configuration data
   copy: src=cups dest=/etc owner=root group=lp mode=0644 directory_mode=0755
@@ -26,3 +29,6 @@
   copy: src=cups.rules dest=/etc/iptables.d owner=root group=root mode=0640
   notify:
     - iptables
+
+- name: Enable CUPS service
+  file: src=/etc/sv/cupsd dest=/var/service/cupsd state=link
