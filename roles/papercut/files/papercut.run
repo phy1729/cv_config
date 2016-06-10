@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cd /home/papercut/server/bin/linux-x64
+exec chpst -u papercut:papercut ./app-monitor

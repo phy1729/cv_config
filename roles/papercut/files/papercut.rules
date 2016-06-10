@@ -1,10 +1,17 @@
 *filter
+# Papercut Website
 -A INPUT -p tcp -s 192.168.42.0/24 --dport 9191 -j ACCEPT
 
+# LDAP & Kerberos
 -A OUTPUT -p tcp -d 192.168.42.4/31 --dport 445 -j ACCEPT
 -A OUTPUT -p tcp -d 192.168.42.4/31 --dport 636 -j ACCEPT
 -A OUTPUT -p tcp -d 192.168.42.4/31 --dport 389 -j ACCEPT
+-A OUTPUT -p tcp -d 192.168.42.4/31 --dport 88 -j ACCEPT
+-A OUTPUT -p udp -d 192.168.42.4/31 --dport 88 -j ACCEPT
+-A OUTPUT -p tcp -d 192.168.42.4/31 --dport 749 -j ACCEPT
+-A OUTPUT -p udp -d 192.168.42.4/31 --dport 749 -j ACCEPT
 
+# SNMP for printer monitoring
 -A OUTPUT -p udp -d 192.168.42.16 --dport 161 -j ACCEPT
 -A OUTPUT -p udp -d 192.168.42.17 --dport 161 -j ACCEPT
 -A OUTPUT -p udp -d 192.168.42.18 --dport 161 -j ACCEPT

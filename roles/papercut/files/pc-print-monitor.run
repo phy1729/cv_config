@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cd /home/papercut/providers/print/linux-x64
+exec chpst -u papercut:papercut ./pc-print-monitor
