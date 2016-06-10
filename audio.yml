@@ -1,7 +1,11 @@
 ---
 - hosts: audio
-  sudo: yes
+  become: yes
   roles:
-  - base
-  - audio
-  - realm_auth
+    - network
+    - xbps-repoconf
+    - core-daemons
+    - core-programs
+    - sshd
+    - audio
+    - netlogon

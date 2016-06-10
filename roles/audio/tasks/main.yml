@@ -1,8 +1,8 @@
 ---
 - name: Add audio packages
-  apt: pkg={{ item }} state=present
+  xbps: pkg={{ item }} state=present
   with_items:
-  - alsa-base
+  - alsa-lib
   - alsa-utils
   - mplayer
   - mpd
@@ -10,11 +10,17 @@
   - mpv
   - ncmpcpp
 
+- name: Set ownership on /var/lib/mpd
+  file: path=/var/lib/mpd state=directory owner=root group=mpd mode=0775
+
 - name: Configure MPD
   copy: src=mpd.conf dest=/etc/mpd.conf owner=mpd group=audio mode=0640
 
 - name: Add cv to group audio
   user: name=cv groups=audio append=true
+
+- name: Add mpd to group audio
+  user: name=mpd groups=audio append=true
 
 - name: Copy Audio Firewall rules
   copy: src=audio.rules dest=/etc/iptables.d owner=root group=root mode=0640
@@ -23,3 +29,9 @@
 
 - name: Configure Alsa with mono output
   copy: src=asound.conf dest=/etc/asound.conf owner=root group=root mode=0644
+
+- name: Enable services
+  file: src=/etc/sv/{{ item }} dest=/var/service/{{ item }} state=link
+  with_items:
+    - alsa
+    - mpd
