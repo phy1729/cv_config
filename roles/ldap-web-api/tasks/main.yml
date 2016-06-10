@@ -1,0 +1,39 @@
+---
+- name: Install dependencies
+  xbps: pkg={{ item }} state=present
+  with_items:
+  - python-ldap
+  - python-Flask
+
+- name: Configure firewall for ldap-web-api
+  copy: src=ldap-web-api.rules dest=/etc/iptables.d/ldap-web-api.rules owner=root group=root mode=0640
+  notify:
+  - iptables
+
+- name: Create the accountServices group
+  group: name=cv_account state=present system=yes
+
+- name: Create the accountServices user
+  user: name=cv_account group=cv_account state=present system=yes
+
+- name: Install daemon
+  copy: src=ldap-web-api dest=/opt owner=root group=root mode=0644 directory_mode=0755
+
+- name: Install service file (1/2)
+  file: path=/etc/sv/ldap-web-api state=directory owner=root group=root mode=0755
+
+- name: Install service file (2/2)
+  copy: src=run dest=/etc/sv/ldap-web-api/run owner=root group=root mode=0755
+
+- name: Enable service
+  file: src=/etc/sv/ldap-web-api dest=/var/service/ldap-web-api state=link
+
+- name: Enable nginx site (1/2)
+  copy: src=ldap-web-api.conf dest=/etc/nginx/sites-available/ldap-web-api.conf owner=root group=root mode=0644
+  notify:
+    - nginx
+
+- name: Enable nginx site (2/2)
+  file: src=../sites-available/ldap-web-api.conf dest=/etc/nginx/sites-enabled/ldap-web-api.conf state=link
+  notify:
+    - nginx
