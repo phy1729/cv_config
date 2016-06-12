@@ -1,0 +1,8 @@
+---
+- name: Install mosh
+  xbps: pkg=mosh state=present
+
+- name: Install mosh firewall rules
+  copy: src=mosh.rules dest=/etc/iptables.d/mosh.rules owner=root group=root mode=0640
+  notify:
+    - iptables

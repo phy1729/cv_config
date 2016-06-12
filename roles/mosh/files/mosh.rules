@@ -1,0 +1,3 @@
+*filter
+-A INPUT -p udp --dport 60001:60999 -j ACCEPT
+COMMIT
