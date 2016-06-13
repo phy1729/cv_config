@@ -1,7 +1,7 @@
 $TTL 10m
 
 @ IN SOA hydrogen.collegiumv.org. cvadmins.utdallas.edu. (
-	2016062800
+	2016063000
 	1h	;refresh
 	3m	;retry
 	2w	;expire
@@ -46,20 +46,18 @@ p	IN CNAME	phosphorus
 account	IN CNAME	nitrogen
 accounts	IN CNAME	account
 dns	IN CNAME	lithium
-doc		IN CNAME	nitrogen
-icinga  IN CNAME        nitrogen
 irc	IN CNAME	nitrogen
 ldap	IN A	192.168.42.4
 ldap	IN A	192.168.42.5
 ldap-api        IN CNAME        nitrogen
 minecraft	IN CNAME	oxygen
 ntp	IN CNAME	lithium
-nut	IN CNAME	nitrogen
+doc     IN CNAME        nitrogen
 paper   IN CNAME        nitrogen
 pasta	IN CNAME	nitrogen
 pkgs    IN CNAME        nitrogen
 preseed	IN CNAME	nitrogen
-wiki	IN CNAME	nitrogen
+repo    IN CNAME        nitrogen
 www	IN CNAME	collegiumv.org.
 
 franklin	IN A	192.168.42.16

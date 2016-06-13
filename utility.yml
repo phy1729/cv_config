@@ -1,23 +1,19 @@
 ---
-- hosts: all
-  gather_facts: true
-
 - hosts: utility
-  sudo: yes
+  become: yes
   roles:
-  - base
-  - exim4
-  - etherwake
-  - apt_mirror
-  - account_site
-  - doc_site
-  - nut_site
-  - pasta_site
-  - papercut_site
-  - icinga
+  - network
+  - xbps-repoconf
+  - core-programs
+  - core-daemons
+  - sshd
   - inspircd
+  - doc_site
+  - jekyll_site
+  - pasta_site
   - preseed_site
   - tftp
-  - jekyll
-  - ldap_restful
-  - realm_auth
+  - void-mirror
+  - ldap-web-api
+  - xbps-mini-repo
+  - wol

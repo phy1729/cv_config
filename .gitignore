@@ -2,3 +2,4 @@
 /roles/preseed_site/files/site.tgz
 /tmp*/
 /secret/
+netboot.tar.gz
