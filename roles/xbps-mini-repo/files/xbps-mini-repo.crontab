@@ -1,0 +1,1 @@
+0 0 * * * mini-repo /opt/xbps-mini-repo/xbps-mini-builder 2>&1 > /dev/null

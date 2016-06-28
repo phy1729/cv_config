@@ -1,0 +1,49 @@
+---
+- name: Install requirements
+  xbps: pkg={{ item }} state=present
+  with_items:
+    - git-all
+    - xtools
+    - make
+
+- name: Create xbuilder group
+  group: name=xbuilder system=yes
+
+- name: Create builder user
+  user: name=mini-repo system=yes
+
+- name: Create build directory
+  file: path=/opt/xbps-mini-repo state=directory owner=mini-repo group=root mode=0755
+
+- name: Obtain the xbps-mini-builder scripts
+  git: repo=https://github.com/the-maldridge/xbps-mini-builder.git dest=/opt/xbps-mini-repo depth=1
+
+- name: Alter script ownership
+  file: path=/opt/xbps-mini-repo/xbps-mini-builder owner=mini-repo group=root mode=0755
+
+- name: Copy config
+  copy: src={{ item }} dest=/opt/xbps-mini-repo/{{ item }} owner=root group=root mode=644
+  with_items:
+    - packages.list
+    - xbps-src.conf
+
+- name: Copy signing keys
+  copy: src=secret/xbps-mini-repo dest=/opt/xbps-mini-repo/id_rsa owner=mini-repo group=root mode=0400
+
+- name: Install firewall rules
+  copy: src=mini-repo.rules dest=/etc/iptables.d/mini-repo.rules owner=root group=root mode=0640
+  notify:
+    - iptables
+
+- name: Copy crontab entry
+  copy: src=xbps-mini-repo.crontab dest=/etc/cron.d/mini-repo owner=root group=root mode=0644
+
+- name: Copy nginx configuration
+  copy: src=mini-repo.conf dest=/etc/nginx/sites-available/mini-repo.conf owner=root group=root mode=0644
+  notify:
+    - nginx
+
+- name: Enable nginx configuration
+  file: src=../sites-available/mini-repo.conf dest=/etc/nginx/sites-enabled/mini-repo.conf state=link
+  notify:
+    - nginx

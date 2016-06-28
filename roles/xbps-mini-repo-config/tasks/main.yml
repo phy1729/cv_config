@@ -1,0 +1,11 @@
+---
+- name: Install repo config
+  copy: src={{ item }}.conf dest=/etc/xbps.d/{{ item }}.conf owner=root group=root mode=0644
+  with_items:
+    - collegiumv
+    - collegiumv-nonfree
+
+- name: Install repo keys
+  copy: src={{ item }}.plist dest=/var/db/xbps/keys/{{ item }}.plist owner=root group=root mode=0644
+  with_items:
+    - 4c:97:63:03:42:fa:a4:04:9b:9b:a6:c7:12:eb:93:20
