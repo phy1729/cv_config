@@ -1,9 +1,12 @@
 ---
 - hosts: ssh
-  sudo: yes
+  become: yes
   roles:
-  - base
-  - ssh-box
-  - krb5-tools
-  - modpubkey
-  - realm_auth
+    - network
+    - xbps-repoconf
+    - core-daemons
+    - core-programs
+    - sshd
+    - mosh
+    - ssh-box
+    - netlogon
