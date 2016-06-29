@@ -1,7 +1,10 @@
 ---
 - hosts: print
-  sudo: yes
+  become: yes
   roles:
-  - base
-  - papercut
-  - realm_auth
+    - network
+    - xbps-repoconf
+    - core-daemons
+    - core-programs
+    - sshd
+    - papercut
