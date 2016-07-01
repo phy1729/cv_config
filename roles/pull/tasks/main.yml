@@ -1,7 +1,6 @@
 ---
-- name: Install pip
-  apt: name=python-pip state=present
 - name: Install ansible
-  pip: name=ansible state=present
+  xbps: pkg=ansible state=present
+
 - name: Add ansible-pull cron job
-  copy: src=crontab dest=/etc/crontab owner=root group=root mode=0644
+  copy: src=crontab dest=/etc/cron.d/pull owner=root group=root mode=0644
