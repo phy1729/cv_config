@@ -4,7 +4,7 @@ cn: config
 olcRootDSE: /etc/openldap/slapd.d/rootDSE.ldif
 olcGentleHUP: TRUE
 olcIdleTimeout: 60
-olcAuthzRegexp: {0}uid=([^,]*)(/[^,]*)?(,cn=collegiumv.org)?,cn=gssapi,cn=auth uid=$1,ou=People,dc=collegiumv,dc=org
+olcAuthzRegexp: {0}uid=([^,]*)(/[^,]*)?(,cn=collegiumv.org)?,cn=gss-spnego,cn=auth uid=$1,ou=People,dc=collegiumv,dc=org
 {% if groups['dc']|length > 1 %}
 {% for dc in groups['dc'] %}
 olcServerID: {{ loop.index-1 }} ldap://{{ hostvars[dc]['ansible_fqdn'] }}
