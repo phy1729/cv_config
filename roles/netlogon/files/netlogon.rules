@@ -1,15 +1,8 @@
 *filter
-# NFS
--A OUTPUT -p tcp -d 192.168.42.13 --dport 2049 -j ACCEPT
--A OUTPUT -p udp -d 192.168.42.13 --dport 2049 -j ACCEPT
 
-# Portmapper
--A OUTPUT -p tcp -d 192.168.42.13 --dport 111 -j ACCEPT
--A OUTPUT -p udp -d 192.168.42.13 --dport 111 -j ACCEPT
-
-# mountd
--A OUTPUT -p tcp -d 192.168.42.13 --dport 729 -j ACCEPT
--A OUTPUT -p udp -d 192.168.42.13 --dport 729 -j ACCEPT
+# Fileserver
+-A OUTPUT -d 192.168.42.12/30 -j ACCEPT
+-A INPUT -s 192.168.42.12/30 -j ACCEPT
 
 # Kerberos
 -A OUTPUT -p tcp -d 192.168.42.4/31 --dport 88 -j ACCEPT

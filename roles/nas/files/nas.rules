@@ -1,0 +1,19 @@
+*filter
+# In from clients
+-A INPUT -s 192.168.42.4/30 -j ACCEPT
+-A INPUT -s 192.168.42.8/29 -j ACCEPT
+-A INPUT -s 192.168.42.20/30 -j ACCEPT
+-A INPUT -s 192.168.42.32/27 -j ACCEPT
+
+# Out to clients
+-A OUTPUT -d 192.168.42.4/30 -j ACCEPT
+-A OUTPUT -d 192.168.42.8/29 -j ACCEPT
+-A OUTPUT -d 192.168.42.20/30 -j ACCEPT
+-A OUTPUT -d 192.168.42.32/27 -j ACCEPT
+
+# mkhomes poking port
+-A INPUT -p tcp -s 192.168.42.7 --dport 1729 -j ACCEPT
+
+# rsyncd
+-A INPUT -p tcp -s 192.168.42.12/30 --dport 873 -j ACCEPT
+COMMIT

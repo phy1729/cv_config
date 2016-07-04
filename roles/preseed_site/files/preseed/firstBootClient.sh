@@ -1,7 +1,12 @@
 #!/bin/bash
 
 # Wait until we can talk to the repo
-while ! ping -c1 repo.collegiumv.org &>/dev/null; do :; done
+while true; do
+    if ping -c1 repo.collegiumv.org ; then
+        break
+    fi
+    sleep 5
+done
 
 # This script runs the first boot install tasks on the hardware
 xbps-install -R http://repo.collegiumv.org/current -Syu

@@ -15,7 +15,7 @@ for user in $users; do
 	home="/srv/homes/$user"
 
 	if [ ! -d "$home" ]; then
-		zfs create -o refquota=10G "zroot$home"
+		zfs create -o refquota=10G "tank$home"
 		chown "$user:1729" "$home"
 		chmod 700 "$home"
 	fi
@@ -37,5 +37,16 @@ for home in /srv/homes/*; do
 	done
 
 	# If we've gotten here, the user is no longer in the directory.
-	zfs rename "zroot/srv/homes/$home" "zroot/var/archives/$home"
+	zfs rename "tank/srv/homes/$home" "tank/archives/$home"
 done
+
+# Update the exports for the active home folders
+secType=sys
+echo "/srv/ydrive 192.168.42.0/24(rw,no_subtree_check,sec=${secType})" > /etc/exports
+
+for home in /srv/homes/* ; do
+    echo "${home} 192.168.42.0/24(rw,no_subtree_check,sec=${secType})" >> /etc/exports
+done
+
+# Make the updates live
+exportfs -r

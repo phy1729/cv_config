@@ -1,5 +1,12 @@
 ---
 - hosts: nas
-  sudo: yes
+  become: yes
+  become_method: sudo
   roles:
-  - nas
+    - network
+    - xbps-repoconf
+    - core-daemons
+    - core-programs
+    - sshd
+    - nslcd
+    - nas

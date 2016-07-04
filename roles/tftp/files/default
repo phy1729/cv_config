@@ -21,9 +21,14 @@ MENU COLOR border       * #00000000 #00000000 none
 MENU COLOR sel          * #ffffffff #FF5255FF *
 
 LABEL linux
-MENU LABEL Void Linux 4.5.5_1 x86_64
+MENU LABEL Single Disk Endpoints
 KERNEL vmlinuz
 APPEND initrd=initrd root=/dev/null auto autourl=http://preseed.collegiumv.org/autoinstall.cfg loglevel=4 vconsole.unicode=1 vconsole.keymap=us locale.LANG=en_US.UTF-8 
+
+Label linux-zfs
+MENU LABEL Fileservers
+KERNEL vmlinuz
+APPEND initrd=initrd root=/dev/null auto autourl=http://preseed.collegiumv.org/fileserver.cfg loglevel=4 vconsole.unicode=1 vconsole.keymap=us local.LANG=en_US.UTF-8
 
 LABEL c
 MENU LABEL Boot first HD found by BIOS

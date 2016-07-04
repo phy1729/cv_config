@@ -1,0 +1,1 @@
+find /srv -maxdepth 2 -type d -path '/srv/ydrive' -o -path '/srv/warpdrive' -o -path '/srv/homes/*' | xargs -P8 -I{} rsync -azu --partial --inplace --delete --password-file "/etc/rsync.key" --exclude ".zfs" {}/ rsync://cv_sync@"$1"{}

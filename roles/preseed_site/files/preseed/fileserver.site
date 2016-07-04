@@ -1,0 +1,19 @@
+#!/bin/sh
+
+printf "Linking default services"
+chroot ${target} ln -s /etc/sv/dhcpcd /etc/runit/runsvdir/default/dhcpcd
+chroot ${target} ln -s /etc/sv/sshd /etc/runit/runsvdir/default/sshd
+
+printf "Installing build deps"
+xbps-install -r ${target} -R ${xbpsrepository} -Sy python
+
+mkdir ${target}/etc/sv/firstboot
+xbps-uhelper fetch "http://preseed.collegiumv.org/firstbootFileserver.sh>${target}/etc/sv/firstboot/run"
+chmod +x ${target}/etc/sv/firstboot/run
+chroot ${target} ln -s /etc/sv/firstboot /etc/runit/runsvdir/default/firstboot
+
+mkdir -p ${target}/etc/xbps.d
+echo "repository=http://repo.collegiumv.org/current" > ${target}/etc/xbps.d/00-repository-main.conf
+
+sync
+reboot -f

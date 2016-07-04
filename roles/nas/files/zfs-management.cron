@@ -1,0 +1,2 @@
+*/5	*	*	*	*	root	export ZPOOL=tank && /usr/local/sbin/znapdragon
+0	0	*	*	*	root	/usr/local/sbin/mkhomes

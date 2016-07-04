@@ -1,15 +1,15 @@
 $TTL 10m
 
 @ IN SOA hydrogen.collegiumv.org. cvadmins.utdallas.edu. (
-	2016063000
-	1h	;refresh
-	3m	;retry
-	2w	;expire
-	1h )	;negative cache
+        2016070901
+        1h	;refresh
+        3m	;retry
+        2w	;expire
+        1h )	;negative cache
 
-	IN NS	hydrogen.collegiumv.org.
-	IN NS	helium.collegiumv.org.
-	IN A	192.168.42.7
+        IN NS	hydrogen.collegiumv.org.
+        IN NS	helium.collegiumv.org.
+        IN A	192.168.42.7
 
 hydrogen	IN A	192.168.42.1
 helium		IN A	192.168.42.2
@@ -51,6 +51,7 @@ ldap	IN A	192.168.42.4
 ldap	IN A	192.168.42.5
 ldap-api        IN CNAME        nitrogen
 minecraft	IN CNAME	oxygen
+nfs     IN CNAME        aluminium
 ntp	IN CNAME	lithium
 doc     IN CNAME        nitrogen
 paper   IN CNAME        nitrogen

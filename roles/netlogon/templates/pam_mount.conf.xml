@@ -3,8 +3,8 @@
 <pam_mount>
   <debug enable="0" />
   <msg-authpw>CV Password:</msg-authpw>
-  <volume fstype="nfs" server="192.168.42.13" path="/srv/homes/%(USER)" mountpoint="~" options="sec=sys,nolock" pgrp="Lounge Users" />
-  <volume fstype="nfs" server="192.168.42.13" path="/srv/ydrive" mountpoint="/mnt/ydrive" options="nolock" pgrp="Lounge Users" />
+  <volume fstype="nfs4" server="nfs.collegiumv.org" path="/srv/homes/%(USER)" mountpoint="~" options="sec=sys,nolock" pgrp="Lounge Users" />
+  <volume fstype="nfs4" server="nfs.collegiumv.org" path="/srv/ydrive" mountpoint="/mnt/ydrive" options="nolock" pgrp="Lounge Users" />
   <mntoptions allow="nosuid,nodev,nolock,loop,encryption,fsck,nonempty,allow_root,allow_other" />
   <mntoptions require="nosuid,nodev,nolock" />
   {% if persistMount is defined %}

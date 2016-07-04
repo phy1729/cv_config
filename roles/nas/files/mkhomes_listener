@@ -1,6 +1,5 @@
 #!/bin/sh
 
-while /usr/local/bin/sudo -u nobody -- /usr/bin/nc -l 1729; do
-	/usr/local/sbin/mkhomes
-	sleep 60
-done
+chpst -u nobody:nogroup /usr/bin/nc -l 1729
+/usr/local/sbin/mkhomes
+sleep 60

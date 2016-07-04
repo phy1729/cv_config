@@ -14,6 +14,7 @@ PLAIN_SECRETS = account_admin_password account_salt \
 	inspircd_modules_cloak_key \
 	krb_db_enc_pass kdcAdmin_pass \
 	mysql_root_password mysql_icinga_password \
+	nas_rsyncd_passwd \
 	nslcd_bind_passwd \
 	nut_monitor_passwd \
 	slapd_acctService_password slapd_krbAdmService_password slapd_olcRootPW
