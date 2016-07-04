@@ -15,6 +15,9 @@ if [ $ip -ge 20 -a $ip -lt 64 ] ; then
     chmod +x ${target}/etc/sv/firstboot/run
     chroot ${target} ln -s /etc/sv/firstboot /etc/runit/runsvdir/default/firstboot
 fi
-sync
 
+mkdir ${target}/etc/xbps.d
+echo "repository=http://repo.collegiumv.org/current" > ${target}/etc/xbps.d/00-repository-main.conf
+
+sync
 reboot -f
