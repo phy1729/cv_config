@@ -1,18 +1,25 @@
 ---
+- name: Install packages
+  xbps: pkg={{ item }} state=present
+  with_items:
+    - autox
+    - feh
+    - xorg
+
 - name: Create the kiosk group
   group: name=kiosk state=present
 
 - name: Create a kiosk user
   user: name=kiosk groups=kiosk,video state=present
 
-- name: Allow the kiosk user to start X
-  copy: src=Xwrapper.conf dest=/etc/X11/Xwrapper.config owner=root group=root mode=0644
-
 - name: Install xinitrc
   copy: src=xinitrc dest=/home/kiosk/.xinitrc owner=kiosk group=kiosk mode=0750
 
-- name: Install reboot cron
-  copy: src=startup dest=/etc/cron.d/startup owner=root group=root mode=0750
-
 - name: Ensure announcements path exists
   file: path=/opt/announcements state=directory owner=kiosk group=kiosk mode=0755
+
+- name: Configure autox
+  copy: src=conf dest=/etc/sv/autox/conf owner=root group=root mode=0755
+
+- name: Enable autox
+  file: src=/etc/sv/autox dest=/var/service/autox state=link owner=root group=root mode=0755
