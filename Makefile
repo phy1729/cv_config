@@ -29,7 +29,6 @@ NSD_G = 97
 
 # -rw-r--r--
 BIN1=	templates/etc/dhcpd.conf \
-	files/etc/hosts \
 	templates/etc/ntpd.conf \
 	files/etc/pkg.conf \
 	files/etc/rc.conf.local \
@@ -59,6 +58,7 @@ site:
 	${SUDO} ${INSTALL} -d -o ${ROOT_U} -g ${WHEEL_G} -m 755 ${DESTDIR}/var/unbound/etc
 	${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 550 install.site ${DESTDIR}
 	cd roles/openbsd; \
+		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 644 files/etc/hosts ${DESTDIR}/etc/hosts.new; \
 		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 644 ${BIN1} ${DESTDIR}/etc; \
 		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 640 ${HOSTNAMES} ${DESTDIR}/etc; \
 		${SUDO} ${INSTALL} -c -o ${ROOT_U} -g ${WHEEL_G} -m 640 files/etc/mygate ${DESTDIR}/etc; \

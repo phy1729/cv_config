@@ -12,6 +12,9 @@ pkg_add "$(pkg_info -v 'sudo' | awk '/^@name /{print $2; exit;}')"
 echo 'inet {{ internal_ip }} 255.255.255.0 NONE' > /etc/hostname.em1
 echo '129.110.157.1' > /etc/mygate
 
+# Similarly, the installer overwrites the hosts file
+mv /etc/hosts.new /etc/hosts
+
 name="$(hostname -s)"
 case "$name" in
 	hydrogen)
