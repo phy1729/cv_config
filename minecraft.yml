@@ -1,7 +1,0 @@
----
-- hosts: minecraft
-  sudo: yes
-  roles:
-  - base
-  - spigot
-  - realm_auth
