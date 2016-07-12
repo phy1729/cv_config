@@ -1,5 +1,5 @@
 ---
 - hosts: dc:ssh:utility:minecraft:audio:nut:print:mediaboxen:clients
-  sudo: yes
+  become: yes
   tasks:
-  - apt: update_cache=yes upgrade=safe purge=yes
+    - xbps: update_cache=yes upgrade=yes
