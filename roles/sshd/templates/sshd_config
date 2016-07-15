@@ -30,4 +30,5 @@ AllowGroups "{{ group }}"
 
 Match User cv
   AuthorizedKeysFile %h/.ssh/authorized_keys
+  AuthorizedKeysCommand /bin/true
   AllowGroups cv
