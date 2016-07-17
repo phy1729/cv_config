@@ -4,6 +4,8 @@
   with_items:
   - python-ldap
   - python-Flask
+  - uwsgi
+  - uwsgi-python
 
 - name: Configure firewall for ldap-web-api
   copy: src=ldap-web-api.rules dest=/etc/iptables.d/ldap-web-api.rules owner=root group=root mode=0640

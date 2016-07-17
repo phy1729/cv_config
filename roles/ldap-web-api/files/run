@@ -1,4 +1,3 @@
 #!/bin/sh
 
-cd /opt/ldap-web-api
-exec chpst -u cv_account:cv_account python main.py > /dev/null
+exec uwsgi /opt/ldap-web-api/uwsgi.ini
