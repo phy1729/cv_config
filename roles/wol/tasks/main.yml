@@ -3,7 +3,7 @@
   xbps: pkg=wol state=present
 
 - name: Install wakeAll
-  copy: src=wakeAll dest=/usr/local/sbin/wakeAll owner=root group=root mode=0700
+  copy: src=wakeAll dest=/usr/local/sbin/wakeAll owner=root group=root mode=0755
 
 - name: Configure wakeAll
   copy: src=macs.list dest=/etc/macs.list owner=root group=root mode=0400
