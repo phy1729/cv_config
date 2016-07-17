@@ -14,5 +14,5 @@
 	path = roles/client
 	url = https://github.com/collegiumv/cv_client.git
 [submodule "roles/account_site/files/accountService"]
-	path = roles/account_site/files/accountService
+	path = roles/account_site/files/account-services
 	url = https://github.com/collegiumv/cv_account.git

@@ -18,7 +18,7 @@
         "bindPW":"{{ slapd_acctService_password | replace("\\", "\\\\") | replace("\"", "\\\"") }}"
     },
     "krb5":{
-        "aprinc":"krb5root/admin",
-        "apass":"{{ kdcAdmin_pass | replace("\\", "\\\\") | replace("\"", "\\\"") }}"
+        "aprinc":"account-services/admin",
+        "atab":"/opt/account-services/krb5.keytab"
     }
 }

@@ -1,60 +1,65 @@
 ---
 - name: Install dependencies
-  apt: pkg={{ item }} state=present
+  xbps: pkg={{ item }} state=present
   with_items:
-  - python-dev
+  - python-devel
   - python-ldap
-  - python-flask
+  - python-Flask
+  - mit-krb5-client
 
 - name: Configure firewall for account_site
   copy: src=account_site.rules dest=/etc/iptables.d/account_site.rules owner=root group=root mode=0640
   notify:
   - iptables
 
-- name: Create the accountServices group
+- name: Create the account-servicess group
   group: name=cv_account state=present system=yes
 
-- name: Create the accountServices user
+- name: Create the account-servicess user
   user: name=cv_account group=cv_account state=present system=yes
 
-- name: Enable the proxy module
-  apache2_module: name={{ item }} state=present
-  with_items:
-  - proxy
-  - proxy_http
-  notify:
-  - apache2
-
 - name: Install the account service
-  copy: src=accountService dest=/opt owner=root group=root mode=0644 directory_mode=0755
+  copy: src=account-services dest=/opt owner=root group=root mode=0644 directory_mode=0755
 
 - name: Create config directory
-  file: path=/opt/accountService/config state=directory owner=root group=cv_account mode=0750
+  file: path=/opt/account-services/config state=directory owner=root group=cv_account mode=0750
 
 - name: Create the log directory
-  file: path=/opt/accountService/log state=directory owner=cv_account group=root mode=0700
+  file: path=/opt/account-services/log state=directory owner=cv_account group=root mode=0700
 
 - name: Copy secrets
-  copy: src=secret/account_{{ item }} dest=/opt/accountService/config/{{ item }} owner=root group=cv_account mode=0640
+  copy: src=secret/account_{{ item }} dest=/opt/account-services/config/{{ item }} owner=root group=cv_account mode=0640
   with_items:
   - access.list
   - words.txt
 
+- name: Copy keytab
+  copy: src=secret/krb5_account-services-admin.keytab dest=/opt/account-services/krb5.keytab owner=cv_account group=cv_account mode=0400
+
 - name: Copy Configuration
-  template: src=settings.json dest=/opt/accountService/config/settings.json owner=root group=cv_account mode=0640
+  template: src=settings.json dest=/opt/account-services/config/settings.json owner=root group=cv_account mode=0640
+
+- name: Configure account-services service (1/3)
+  file: path=/etc/sv/account-services state=directory owner=root group=root mode=0755
+
+- name: Configure account-services service (2/3)
+  copy: src=run dest=/etc/sv/account-services/run owner=root group=root mode=0755
+
+- name: Configure account-services service (3/3)
+  file: src=/etc/sv/account-services dest=/var/service/account-services state=link owner=root group=root mode=0755
 
 - name: Add account sites
-  copy: src={{ item }}.conf dest=/etc/apache2/sites-available/{{ item }}.conf owner=root group=root mode=0644
+  copy: src={{ item }}.conf dest=/etc/nginx/sites-available/{{ item }}.conf owner=root group=root mode=0644
   with_items:
   - account
   - accounts
   notify:
-  - apache2
+  - nginx
 
 - name: Enable account sites
-  file: src=../sites-available/{{ item }}.conf dest=/etc/apache2/sites-enabled/{{ item }}.conf state=link owner=root group=root
+  file: src=../sites-available/{{ item }}.conf dest=/etc/nginx/sites-enabled/{{ item }}.conf state=link owner=root group=root
   with_items:
   - account
   - accounts
   notify:
-  - apache2
+  - nginx

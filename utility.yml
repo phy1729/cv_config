@@ -8,6 +8,7 @@
   - core-daemons
   - sshd
   - inspircd
+  - account_site
   - doc_site
   - jekyll_site
   - pasta_site

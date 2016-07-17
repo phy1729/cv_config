@@ -1,7 +1,19 @@
 *filter
+# Kerberos
+-A OUTPUT -p tcp -d 192.168.42.4/31 --dport 88 -j ACCEPT
+-A OUTPUT -p udp -d 192.168.42.4/31 --dport 88 -j ACCEPT
+-A OUTPUT -p tcp -d 192.168.42.4/31 --dport 749 -j ACCEPT
+-A OUTPUT -p udp -d 192.168.42.4/31 --dport 749 -j ACCEPT
+
 # LDAP
 -A OUTPUT -p tcp -d 192.168.42.4/31 --dport 389 -j ACCEPT
 
 # Fileserver
 -A OUTPUT -p tcp -d 192.168.42.13 --dport 1729 -j ACCEPT
+
+# E-Mail
+-A OUTPUT -p tcp -d 10.180.15.187 --dport 25 -j ACCEPT
+-A OUTPUT -p tcp -d 10.180.15.188 --dport 25 -j ACCEPT
+-A OUTPUT -p tcp -d 10.182.70.205 --dport 25 -j ACCEPT
+-A OUTPUT -p tcp -d 10.182.70.208 --dport 25 -j ACCEPT
 COMMIT
