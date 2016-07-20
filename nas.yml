@@ -10,3 +10,4 @@
     - sshd
     - nslcd
     - nas
+    - netlogon

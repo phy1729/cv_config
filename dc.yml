@@ -11,3 +11,4 @@
     - core-programs
     - slapd
     - krb5kdc
+    - netlogon
