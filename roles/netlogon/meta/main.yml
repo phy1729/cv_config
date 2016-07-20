@@ -1,3 +1,4 @@
 ---
 dependencies:
   - {role: nslcd}
+  - {role: krb5_conf }
