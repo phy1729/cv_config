@@ -1,4 +1,4 @@
 #!/bin/sh
 
 # for when you really need to exit 0
-{ cv_real_users || exit 0; } && reboot
+{ /usr/local/bin/cv_real_users || exit 0; } && shutdown -rP now

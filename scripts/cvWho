@@ -1,3 +1,3 @@
 #!/bin/bash
 
-ansible -i $INVENTORY_FILE clients:mediaboxen -m shell -a "cv_real_users; exit 0"
+ansible -i $INVENTORY_FILE clients:mediaboxen -m shell -a "/usr/local/bin/cv_real_users; exit 0"

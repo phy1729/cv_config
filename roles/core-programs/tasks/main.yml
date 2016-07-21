@@ -4,7 +4,6 @@
   with_items:
     - cv_real_users
     - cv_reboot
-    - cv_screen_wake
     - modpubkey
     - modsession
 
