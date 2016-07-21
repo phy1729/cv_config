@@ -1,0 +1,22 @@
+#!/bin/bash
+
+inventory="$( dirname "${BASH_SOURCE[0]}" )/../inventory"
+
+if [ -f "${inventory}" ] ; then
+    echo "Using inventory at ${inventory}"
+else
+    echo "No inventory found!"
+    exit 1
+fi
+
+echo "Collecting host keys"
+echo "# START CV SECTION" > /tmp/cv_hostkeys
+for host in $(grep collegiumv.org "${inventory}") ; do
+    ssh-keyscan -t ed25519 "${host}" 2>/dev/null >> /tmp/cv_hostkeys
+done
+echo "# END CV SECTION" >> /tmp/cv_hostkeys
+
+echo "Updating ~/.ssh/known_hosts"
+sed -i "/# START CV SECTION/,/# END CV SECTION/d" ~/.ssh/known_hosts
+cat /tmp/cv_hostkeys >> ~/.ssh/known_hosts
+echo "Update complete"
