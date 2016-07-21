@@ -1,29 +1,29 @@
 [gateway]
-h.collegiumv.org
-he.collegiumv.org
+hydrogen.collegiumv.org
+helium.collegiumv.org
 
 [dc]
-be.collegiumv.org
-b.collegiumv.org
+beryllium.collegiumv.org
+boron.collegiumv.org
 
 [ssh]
-c.collegiumv.org
+carbon.collegiumv.org
 
 [utility]
-n.collegiumv.org
+nitrogen.collegiumv.org
 
 [audio]
-f.collegiumv.org
+fluorine.collegiumv.org
 
 [nut]
-ne.collegiumv.org
+neon.collegiumv.org
 
 [print]
-na.collegiumv.org
+sodium.collegiumv.org
 
 [nas]
-al.collegiumv.org
-si.collegiumv.org
+aluminium.collegiumv.org
+silicon.collegiumv.org
 
 [mediaboxen]
 rivest.collegiumv.org
