@@ -1,4 +1,0 @@
----
-mysql_root_password: "{{ lookup('file', 'secret/mysql_root_password') }}"
-mysql_icinga_password: "{{ lookup('file', 'secret/mysql_icinga_password') }}"
-icinga_cvadmin_password: "{{ lookup('file', 'secret/icinga_cvadmin_password') }}"

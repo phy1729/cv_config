@@ -8,14 +8,11 @@ SECRET_TARGETS = ${PLAIN_SECRETS} \
 	inspircd_inspircd_power_diepass inspircd_inspircd_power_restartpass inspircd_opers \
 	paper_cert
 
-PLAIN_SECRETS = account_admin_password account_salt \
+PLAIN_SECRETS = account_salt \
 	inspircd_links_madhax_recvpass inspircd_links_madhax_sendpass \
-	inspircd_links_minecraft_recvpass inspircd_links_minecraft_sendpass \
 	inspircd_modules_cloak_key \
 	krb_db_enc_pass kdcAdmin_pass \
-	mysql_root_password mysql_icinga_password \
 	nas_rsyncd_passwd \
-	nslcd_bind_passwd \
 	nut_monitor_passwd \
 	slapd_acctService_password slapd_krbAdmService_password slapd_olcRootPW
 

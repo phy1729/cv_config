@@ -1,3 +1,0 @@
----
-- name: exim4
-  service: name=exim4 state=restarted

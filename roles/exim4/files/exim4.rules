@@ -1,7 +1,0 @@
-*filter
-# smtp.utdallas.edu
--A OUTPUT -p tcp -d 10.180.15.188 --dport 25 -j ACCEPT
--A OUTPUT -p tcp -d 10.180.15.187 --dport 25 -j ACCEPT
--A OUTPUT -p tcp -d 10.182.70.205 --dport 25 -j ACCEPT
--A OUTPUT -p tcp -d 10.182.70.208 --dport 25 -j ACCEPT
-COMMIT

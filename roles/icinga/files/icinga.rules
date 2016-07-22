@@ -1,7 +1,0 @@
-*filter
--A OUTPUT -p tcp --dport 443 -j ACCEPT
--A OUTPUT -p tcp -d 192.168.42.4/31 --dport 88 -j ACCEPT
--A OUTPUT -p tcp -d 192.168.42.4/31 --dport 464 -j ACCEPT
--A OUTPUT -p tcp -d 192.168.42.4/31 --dport 749 -j ACCEPT
--A OUTPUT -p tcp -d 192.168.42.8 --dport 25565 -j ACCEPT
-COMMIT
