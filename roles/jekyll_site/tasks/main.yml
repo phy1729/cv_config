@@ -29,7 +29,7 @@
   command: jekyll build --destination=/var/www/home/ chdir=/tmp/cv_jekyll
 
 - name: Fix CV Site permissions
-  file: path=/var/www/home owner=root group=nginx recurse=yes
+  file: path=/var/www/home owner=root group=nginx mode=go+rX recurse=yes
 
 - name: Copy CV Site descriptor
   copy: src=jekyll.conf dest=/etc/nginx/sites-available/ owner=root group=root mode=0644
