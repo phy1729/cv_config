@@ -2,39 +2,38 @@
 - name: Install dependencies
   xbps: name={{ item }} state=present
   with_items:
-  - ruby
-  - ruby-devel
-  - nodejs
-  - base-devel
-  - git
+    - python-pip
+    - git-all
 
 - name: Install firewall rules
   copy: src=cvdoc.rules dest=/etc/iptables.d/cvdoc.rules owner=root group=root mode=0640
   notify:
-  - iptables
+    - iptables
 
-- name: Install Jekyll
-  gem: name=jekyll state=present user_install=no
+- name: Install mkdocs
+  pip: name=mkdocs state=present
+
+- name: Remove old site files
+  file: path=/tmp/doc_site state=absent
 
 - name: Get Site Files
   git: clone=yes depth=1 force=yes dest=/tmp/doc_site repo=https://github.com/collegiumv/cv_doc.git
 
-- name: Create Jekyll site folder
+- name: Create site folder
   file: path=/var/www/cvdoc state=directory owner=root group=root mode=0755
 
-- name: Build site
-  command: jekyll build --destination=/var/www/cvdoc/ chdir=/tmp/doc_site
-
+- name: Build documentation
+  command: mkdocs build -cd /var/www/cvdoc chdir=/tmp/doc_site
 
 - name: Fix Site permissions
-  file: path=/var/www/cvdoc owner=root group=nginx recurse=yes
+  file: path=/var/www/cvdoc owner=root group=nginx mode=og+rX recurse=yes
 
 - name: Copy Site descriptor
   copy: src=cvdoc.conf dest=/etc/nginx/sites-available/cvdoc.conf owner=root group=root mode=0644
   notify:
-  - nginx
+    - nginx
 
 - name: Enable Site
   file: src=../sites-available/cvdoc.conf dest=/etc/nginx/sites-enabled/cvdoc.conf state=link owner=root group=root
   notify:
-  - nginx
+    - nginx
