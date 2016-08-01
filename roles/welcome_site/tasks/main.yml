@@ -1,0 +1,19 @@
+---
+- name: Create site directory
+  file: path=/var/www/welcome state=directory owner=root group=root mode=0755
+
+- name: Copy site contents
+  copy: src=welcome/ dest=/var/www/welcome owner=root group=root mode=0755
+
+- name: Correct Site Permissions
+  file: path=/var/www/welcome state=directory recurse=yes owner=root group=root mode=og+rX
+
+- name: Add Welcome site
+  copy: src=welcome.conf dest=/etc/nginx/sites-available/welcome.conf owner=root group=root mode=0644
+  notify:
+    - nginx
+
+- name: Enable Welcome site
+  file: src=../sites-available/welcome.conf dest=/etc/nginx/sites-enabled/welcome.conf state=link owner=root group=root
+  notify:
+    - nginx

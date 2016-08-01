@@ -14,6 +14,7 @@
   - jekyll_site
   - pasta_site
   - preseed_site
+  - welcome_site
   - tftp
   - void-mirror
   - ldap-web-api
