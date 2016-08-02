@@ -38,3 +38,17 @@ slapd_groups:
   members:
   - Siosilvar
   - Fhqwhgads
+
+- name: Council
+  gidNumber: 1340
+  members:
+    - Fhqwhgads
+    - Geo130030
+    - Lacie.tn
+    - andrew.s707
+    - charibane
+    - dappiah
+    - fxw130930
+    - halewis
+    - maldridge
+    - shayan.monadjemi

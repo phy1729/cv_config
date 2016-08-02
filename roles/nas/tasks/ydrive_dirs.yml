@@ -1,0 +1,9 @@
+---
+- name: Create Public Shares
+  file: path=/srv/ydrive/{{ item }} owner=root group=root mode=0755
+  with_items:
+    - installs
+    - papercut
+
+- name: Create Council Share
+  file: path=/srv/ydrive/council state=directory owner=root group=Council mode=0775

@@ -30,9 +30,11 @@
 - name: Make propertyless children
   zfs: name=tank/{{ item }} state=present
   with_items:
-  - srv/homes
-  - srv/warpdrive
-  - srv/ydrive
+    - srv/homes
+    - srv/warpdrive
+    - srv/ydrive
+
+- include: ydrive_dirs.yml
 
 - name: Configure rsyncd
   copy: src=rsyncd.conf dest=/etc/rsyncd.conf owner=root group=root mode=0644
