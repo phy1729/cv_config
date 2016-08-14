@@ -20,5 +20,8 @@ ansible-pull -U https://github.com/collegiumv/cv_config.git
 rm -rf /etc/sv/firstboot
 rm -rf /var/service/firstboot
 
+# Lock the lcoal account used for recovery of failed ansible-pull
+passwd -l cv
+
 # Reboot so that everything starts up cleanly
 shutdown -r now
