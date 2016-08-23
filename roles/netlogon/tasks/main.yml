@@ -2,11 +2,12 @@
 - name: Install netlogon packages
   xbps: pkg={{ item }} state=present
   with_items:
+    - hxtools
+    - libnfs
+    - mit-krb5
+    - nfs-utils
     - pam-krb5
     - pam-mount
-    - mit-krb5
-    - libnfs
-    - nfs-utils
 
 - name: Configure system-auth
   copy: src=system-auth dest=/etc/pam.d/system-auth owner=root group=root mode=0644

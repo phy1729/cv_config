@@ -10,7 +10,7 @@
   {% if persistMount is defined %}
   <logout wait="0" hup="0" term="0" kill="0" />
   {% else %}
-  <logout wait="3000" hup="0" term="1" kill="1" />
+  <logout wait="5" hup="0" term="1" kill="1" />
   {% endif%}
   <mkmountpoint enable="1" remove="true" />
 </pam_mount>
