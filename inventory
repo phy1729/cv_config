@@ -30,7 +30,7 @@ adleman.collegiumv.org
 [kiosk]
 cocks.collegiumv.org
 
-[clients]
+[client_academic]
 argus.collegiumv.org
 busterjangle.collegiumv.org
 crossroads.collegiumv.org
@@ -38,6 +38,8 @@ dominic.collegiumv.org
 emery.collegiumv.org
 flintlock.collegiumv.org
 greenhouse.collegiumv.org
+
+[client_gaming]
 ivy.collegiumv.org
 julin.collegiumv.org
 kittens.collegiumv.org
@@ -45,6 +47,8 @@ latchkey.collegiumv.org
 mandrel.collegiumv.org
 niblick.collegiumv.org
 oberon.collegiumv.org
+
+[client_quiet]
 quicksilver.collegiumv.org
 redwing.collegiumv.org
 sunbeam.collegiumv.org
@@ -52,3 +56,8 @@ touchstone.collegiumv.org
 unicorn.collegiumv.org
 vixen.collegiumv.org
 wigwam.collegiumv.org
+
+[clients:children]
+client_academic
+client_gaming
+client_quiet
