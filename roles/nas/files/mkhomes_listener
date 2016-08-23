@@ -2,4 +2,4 @@
 
 chpst -u nobody:nogroup /usr/bin/nc -l 1729
 /usr/local/sbin/mkhomes
-sleep 60
+sleep 1
