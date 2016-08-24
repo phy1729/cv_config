@@ -1,0 +1,57 @@
+---
+# Options specified in this file will be applied to the default
+# interface as determined by the results of the variable
+# {{ ansible_default_ipv4.interface }}
+
+# Network addressing mode: this token may be set to either 'dhcp' or
+# 'static'.  Static mode requires additional parameters.
+network_address_mode: static
+
+# Network address for use in static mode.  Netmask must be specified
+# in CIDR format.  If you do not specify this value the current
+# address as assigned by DHCP will be made static.
+# network_address: 192.168.1.42/24
+
+# Network Gateway to be used in static mode.  If you do not specify
+# this value the current gateway as assigned by DHCP will be made
+# static.
+# network_gateway: 192.168.1.1
+
+# DNS mode, may be set to either 'dhcp' or 'static'.  Static mode
+# requires dhcp servers to be specified manually.
+network_dns_mode: static
+
+# DNS servers to be used in static mode.
+network_dns:
+  - 192.168.42.3
+
+# If using dhcpcd, options to request from the dhcp server.  Options
+# shown here are the dhcpcd defaults and should be safe on most
+# networks.  Option 'rapid_commit' is deemed safe here as it also
+# requires the matching option to be set on the DHCP server.
+network_dhcp_options:
+  - rapid_commit
+  - domain_name_servers
+  - domain_name
+  - domain_search
+  - host_name
+  - classless_static_routes
+  - ntp_servers
+  - interface_mtu
+
+
+# It's also possible to specify static interfaces like so if you know
+# the interface names in advance:
+# network_static_interfaces:
+#   eth0:
+#     address: 172.16.3.2/24
+#     gateway: 172.16.3.1
+#     dns:
+#       - 172.16.3.250
+#       - 172.16.3.251
+
+# Finally the firewall policy may be set to accept if you prefer not
+# use the built in firewall handler to use fragment iptables
+# instructions.  Valid options are 'ACCEPT' and 'DROP'.
+network_input_policy: DROP
+network_output_policy: DROP

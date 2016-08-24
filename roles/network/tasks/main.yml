@@ -8,6 +8,20 @@
 - name: Install iptables
   xbps: pkg=iptables state=present
 
+- name: Install iptables-reload command
+  copy: src=iptables-reload dest=/usr/local/sbin/iptables-reload owner=root group=root mode=0755
+
+- name: Configure dhcpcd
+  template: src=dhcpcd.conf.j2 dest=/etc/dhcpcd.conf owner=root group=root mode=0644
+  vars:
+    network_netmask: "{{ ansible_default_ipv4.address }}/{{ ansible_default_ipv4.netmask }}"
+    network_cidr: "{{ ansible_default_ipv4.address }}/{{ network_netmask | ipaddr('prefix') }}"
+  notify:
+    - dhcpcd
+
+- name: Enable dhcpcd
+  file: src=/etc/sv/dhcpcd dest=/var/service/dhcpcd state=link
+
 - name: Add dhcpcd iptables hook
   copy: src=99-iptables dest=/usr/share/dhcpcd/hooks/99-iptables owner=root group=root mode=0740
   notify:
@@ -21,15 +35,12 @@
 - name: Make iptables.d
   file: path=/etc/iptables.d state=directory owner=root group=root mode=0740
 
-- name: Configure IPv4 firewall
-  copy: src={{ item }} dest=/etc/iptables.d/{{ item }} owner=root group=root mode=0640
-  with_items:
-    - 0common.rules
+- name: Configure base rules for IPv4 firewall
+  template: src=0common.rules.j2 dest=/etc/iptables.d/0common.rules owner=root group=root mode=0640
   notify:
     - iptables
 
-- name: Configure IPv6 firewall
+- name: Configure base rules for IPv6 firewall
   copy: src=ip6tables.conf dest=/etc/ip6tables.conf owner=root group=root mode=0640
   notify:
     - iptables
-

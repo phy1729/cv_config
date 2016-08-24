@@ -3,4 +3,4 @@
   command: sv restart dhcpcd
 
 - name: iptables
-  command: /usr/libexec/dhcpcd-hooks/99-iptables
+  command: /usr/local/sbin/iptables-reload

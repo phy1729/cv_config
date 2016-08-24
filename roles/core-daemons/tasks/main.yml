@@ -11,6 +11,11 @@
   notify:
     - ntp
 
+- name: Install ntp rules
+  copy: src=ntp.rules dest=/etc/iptables.d/ntp.rules owner=root group=root mode=0640
+  notify:
+    - iptables
+
 - name: Disable dhcpcd ntp hook
   file: path=/usr/libexec/50-ntp.conf state=absent
   notify:
