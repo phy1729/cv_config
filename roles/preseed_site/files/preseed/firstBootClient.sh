@@ -11,7 +11,10 @@ done
 # This script runs the first boot install tasks on the hardware
 xbps-install -R http://repo.collegiumv.org/current -Syu
 xbps-install -R http://repo.collegiumv.org/current -Syu
-xbps-install -R http://repo.collegiumv.org/current -y curl fbv ansible git-all
+xbps-install -R http://repo.collegiumv.org/current -y curl fbv ansible git-all python-pip
+
+# Install ipaddr filter for python
+pip install netaddr
 
 # Attempt to run the main ansible installer
 ansible-pull -U https://github.com/collegiumv/cv_config.git
