@@ -19,3 +19,6 @@
 [submodule "roles/welcome_site/files/welcome"]
 	path = roles/welcome_site/files/welcome
 	url = https://github.com/collegiumv/cv_welcome.git
+[submodule "roles/netdata"]
+	path = roles/netdata
+	url = https://github.com/void-ansible-roles/netdata

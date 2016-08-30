@@ -10,3 +10,4 @@
     - client
     - netlogon
     - cups-client
+    - netdata
