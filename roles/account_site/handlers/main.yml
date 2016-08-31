@@ -1,0 +1,4 @@
+---
+- name: account-services
+  command: sv restart account-services
+  ignore_errors: yes

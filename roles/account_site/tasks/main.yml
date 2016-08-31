@@ -30,8 +30,10 @@
 - name: Copy secrets
   copy: src=secret/account_{{ item }} dest=/opt/account-services/config/{{ item }} owner=root group=cv_account mode=0640
   with_items:
-  - access.list
-  - words.txt
+    - access.list
+    - words.txt
+  notify:
+    - account-services
 
 - name: Copy keytab
   copy: src=secret/krb5_account-services-admin.keytab dest=/opt/account-services/krb5.keytab owner=cv_account group=cv_account mode=0400
