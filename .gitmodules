@@ -22,3 +22,6 @@
 [submodule "roles/netdata"]
 	path = roles/netdata
 	url = https://github.com/void-ansible-roles/netdata
+[submodule "roles/jekyll"]
+	path = roles/jekyll
+	url = https://github.com/void-ansible-roles/jekyll.git
