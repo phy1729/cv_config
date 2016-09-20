@@ -7,6 +7,6 @@ dn="${dn#dn:}"
 tmp="$(mktemp)" || { echo >&2 'Cannot open a temporary file' && exit 2; }
 
 ldapsearch -LLL -o ldif-wrap=no -H "$ldap_server" -l 3 -Q -b "$dn" -s base '(objectClass=*)' authorizedKeys | sed '/^authorizedKeys: /!d;s///' > "$tmp"
-"${EDITOR:-/usr/bin/vi}" "$tmp"
+"${EDITOR:-vi}" "$tmp"
 awk 'BEGIN { print "dn: '"$dn"'\nchangeType: modify\nreplace: authorizedKeys" }; /^ssh-/{ print "authorizedKeys: " $0 }' "$tmp" | ldapmodify -H "$ldap_server" -Q || { echo >&2 'Could not update authroized keys'; rm "$tmp"; exit 3; }
 rm "$tmp"
