@@ -1,6 +1,5 @@
 #!/bin/bash
-ldap_server='ldap://ldap.collegiumv.org'
-dn="$(ldapwhoami -H "$ldap_server" -Q 2>/dev/null)" || { echo >&2 'Unable to obtain user DN'; exit 1; }
+dn="$(ldapwhoami -Q 2>/dev/null)" || { echo >&2 'Unable to obtain user DN'; exit 1; }
 dn="${dn#dn:}"
 i=0
 for session in /usr/share/xsessions/*; do
@@ -20,4 +19,4 @@ choice="$(dialog --clear \
 		2>&1 >/dev/tty)"
 clear
 [ -z "$choice" ] && exit 0
-printf "dn: %s\nchangetype: modify\nreplace: desktopEnvironment\ndesktopEnvironment: %s\n-\n" "$dn" "$choice" | ldapmodify -H "$ldap_server" -Q || { echo >&2 'Could not update desktop environment'; exit 3; }
+printf "dn: %s\nchangetype: modify\nreplace: desktopEnvironment\ndesktopEnvironment: %s\n-\n" "$dn" "$choice" | ldapmodify -Q || { echo >&2 'Could not update desktop environment'; exit 3; }
