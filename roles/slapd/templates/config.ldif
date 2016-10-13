@@ -4,7 +4,7 @@ cn: config
 olcRootDSE: /etc/openldap/slapd.d/rootDSE.ldif
 olcGentleHUP: TRUE
 olcIdleTimeout: 60
-olcAuthzRegexp: {0}uid=([^,]*)(/[^,]*)?(,cn=collegiumv.org)?,cn=gssapi,cn=auth uid=$1,ou=People,dc=collegiumv,dc=org
+olcAuthzRegexp: {0}uid=([^,]*)(/[^,]*)?(,cn=collegiumv.org)?,cn=gss-spnego,cn=auth uid=$1,ou=People,dc=collegiumv,dc=org
 {% if groups['dc']|length > 1 %}
 {% for dc in groups['dc'] %}
 olcServerID: {{ loop.index-1 }} ldap://{{ hostvars[dc]['ansible_fqdn'] }}
@@ -69,9 +69,9 @@ olcAccess: {2}to dn.exact="ou=People,dc=collegiumv,dc=org" attrs=children
 olcAccess: {3}to dn.one="ou=People,dc=collegiumv,dc=org" attrs=entry
   by dn.exact="cn=acctService,dc=collegiumv,dc=org" =a break
   by * break
-olcAccess: {4}to dn.children="ou=People,dc=collegiumv,dc=org" attrs=cn,displayName,gidNumber,givenName,homeDirectory,netID,o,objectClass,sn,uid,uidNumber
+olcAccess: {4}to dn.children="ou=People,dc=collegiumv,dc=org" attrs=gidNumber,homeDirectory,netID,objectClass,uid,uidNumber
   by * read
-olcAccess: {5}to dn.children="ou=People,dc=collegiumv,dc=org" attrs=ou,title
+olcAccess: {5}to dn.children="ou=People,dc=collegiumv,dc=org" attrs=cn,displayName,givenName,o,ou,sn,title
   by group.exact="cn=Realm Admins,ou=Group,dc=collegiumv,dc=org" write
   by * read
 olcAccess: {6}to dn.children="ou=People,dc=collegiumv,dc=org" attrs=description
