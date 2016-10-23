@@ -20,5 +20,5 @@
   notify:
     - iptables
 
-- name: Grant Realm Admins full sudo
+- name: Grant Server Admins full sudo
   copy: src=cv.base dest=/etc/sudoers.d/cv_base owner=root group=root mode=0644

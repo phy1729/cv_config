@@ -21,7 +21,7 @@ AuthorizedKeysCommandUser authorizedkeyscommand
 AuthorizedKeysCommand /usr/local/sbin/ssh_pubkeys
 AuthenticationMethods publickey
 
-AllowGroups "Realm Admins"
+AllowGroups "Server Admins"
 {% if ssh_groups is defined %}
 {% for group in ssh_groups %}
 AllowGroups "{{ group }}"
