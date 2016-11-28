@@ -1,6 +1,5 @@
 ---
 - hosts: clients:mediaboxen
-  strategy: free
   roles:
     - network
     - xbps-repoconf
