@@ -1,0 +1,3 @@
+#!/bin/bash
+
+ansible "$@" -i $INVENTORY_FILE clients:mediaboxen -K --sudo -m command -a "/usr/local/bin/cv_poweroff" | ansible_table

@@ -1,7 +1,12 @@
 #!/bin/bash
 
 if [ -z "${SUDO_USER}" ] ; then
-    who | awk '$1!="'"$(whoami)"'"{u[$1]=1}; END{e=0; for (k in u){e=1; print k}; exit e}'
+    user="$(who | awk '$1!="'"$(whoami)"'"{u[$1]=1}; END{e=0; for (k in u){e=1; print k}; exit e}')"
+    rc=$?
 else
-    who | awk '$1!="'"${SUDO_USER}"'"{u[$1]=1}; END{e=0; for (k in u){e=1; print k}; exit e}'
+    user="$(who | awk '$1!="'"${SUDO_USER}"'"{u[$1]=1}; END{e=0; for (k in u){e=1; print k}; exit e}')"
+    rc=$?
 fi
+
+getent passwd "${user}" | cut -d':' -f5
+exit $rc

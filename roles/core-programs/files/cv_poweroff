@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# for when you really need to exit 0
+{ /usr/local/bin/cv_real_users || exit 0; } && poweroff
