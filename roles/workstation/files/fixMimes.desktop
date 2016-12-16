@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Fix File Associations
+Comment=Reset to system file associations
+GenericName=System MIME association syncronizer
+Type=Application
+Exec=fixMimes
+Categories=Utility;Application;Preferences;Accessories;
+Icon=emblem-synchronizing

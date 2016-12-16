@@ -1,0 +1,8 @@
+#!/bin/sh
+
+
+mkdir -p ~/.config
+mkdir -p ~/.local/share/applications
+
+cp /etc/xdg/mimeapps.list ~/.config/mimeapps.list
+ln -sf ~/.config/mimeapps.list ~/.local/share/applications/mimeapps.list

@@ -1,0 +1,5 @@
+*filter
+# It'd be nice to make this more restrictive, but gaming.
+-A INPUT -j ACCEPT
+-A OUTPUT -j ACCEPT
+COMMIT

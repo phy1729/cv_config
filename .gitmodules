@@ -1,18 +1,12 @@
 [submodule "roles/inspircd/files/inspircd-bin"]
 	path = roles/inspircd/files/inspircd-bin
 	url = https://github.com/collegiumv/inspircd-bin.git
-[submodule "roles/spigot"]
-	path = roles/spigot
-	url = https://github.com/collegiumv/ansible-minecraft
 [submodule "library/ansible_ldap"]
 	path = library/ansible_ldap
 	url = https://github.com/dinoocch/ansible_ldap.git
 [submodule "roles/nas/files/znapdragon"]
 	path = roles/nas/files/znapdragon
-	url = https://github.com/phy1729/znapdragon.git
-[submodule "client"]
-	path = roles/client
-	url = https://github.com/collegiumv/cv_client.git
+	url = https://github.com/collegiumv/znapdragon.git
 [submodule "roles/account_site/files/accountService"]
 	path = roles/account_site/files/account-services
 	url = https://github.com/collegiumv/cv_account.git
@@ -25,3 +19,36 @@
 [submodule "roles/jekyll"]
 	path = roles/jekyll
 	url = https://github.com/void-ansible-roles/jekyll.git
+[submodule "roles/cinnamon"]
+	path = roles/cinnamon
+	url = https://github.com/void-ansible-roles/cinnamon.git
+[submodule "roles/lxde"]
+	path = roles/lxde
+	url = https://github.com/void-ansible-roles/lxde.git
+[submodule "roles/xorg"]
+	path = roles/xorg
+	url = https://github.com/void-ansible-roles/xorg.git
+[submodule "roles/lightdm"]
+	path = roles/lightdm
+	url = https://github.com/void-ansible-roles/lightdm.git
+[submodule "roles/lightdm-webkit-greeter"]
+	path = roles/lightdm-webkit-greeter
+	url = https://github.com/void-ansible-roles/lightdm-webkit-greeter.git
+[submodule "roles/i3"]
+	path = roles/i3
+	url = https://github.com/void-ansible-roles/i3.git
+[submodule "roles/awesome"]
+	path = roles/awesome
+	url = https://github.com/void-ansible-roles/awesome.git
+[submodule "roles/xfce4"]
+	path = roles/xfce4
+	url = https://github.com/void-ansible-roles/xfce4.git
+[submodule "roles/bspwm"]
+	path = roles/bspwm
+	url = https://github.com/void-ansible-roles/bspwm.git
+[submodule "roles/dbus"]
+	path = roles/dbus
+	url = https://github.com/void-ansible-roles/dbus.git
+[submodule "library/ansible_xbps"]
+	path = library/ansible_xbps
+	url = https://github.com/void-ansible-roles/ansible_xbps.git

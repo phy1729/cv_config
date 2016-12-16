@@ -1,0 +1,277 @@
+- name: Configure firewall
+  copy:
+    src: workstation.rules
+    dest: /etc/iptables.d/workstation.rules
+    owner: root
+    group: root
+    mode: 0640
+  notify:
+    - iptables
+
+- name: Install graphics libraries
+  xbps:
+    pkg:
+      - libXrandr-32bit
+      - libXt-32bit
+      - mesa-ati-dri-32bit
+      - mesa-intel-dri-32bit
+    state: present
+
+- name: Install various system services
+  xbps:
+    pkg:
+      - ConsoleKit2
+      - cgmanager
+    state: present
+
+- name: Install editing suites
+  xbps:
+    pkg:
+      - gimp
+      - inkscape
+      - libreoffice
+    state: present
+
+- name: Install programming tools
+  xbps:
+    pkg:
+      - base-devel
+      - eclipse
+      - codeblocks
+      - gdb
+      - ghc
+      - git-all
+      - openjdk
+      - R
+      - racket
+      - spim
+      - rust
+      - cargo
+      - texlive-bin
+      - valgrind
+      - xterm
+    state: present
+
+- name: Install additional editors
+  xbps:
+    pkg:
+      - emacs
+      - gedit
+      - neovim
+      - python-neovim
+      - python3.4-neovim
+      - gvim
+      - sublime-text3
+    state: present
+
+- name: Install media playback programs
+  xbps: 
+    pkg:
+      - audacity
+      - alsa-lib
+      - alsa-utils
+      - libdvdcss
+      - mpv
+      - pulseaudio
+      - vlc
+    state: present
+
+- name: Install Web Browsers
+  xbps: 
+    pkg:
+      - chromium
+      - firefox
+      - google-chrome
+      - opera
+    state: present
+
+- name: Install Scanner programs
+  xbps: 
+    pkg:
+      - simple-scan
+      - sane
+      - sane-epkowa
+      - iscan
+      - iscan-data
+      - iscan-plugin-gt-s650
+    state: present
+    
+- name: Install additional misc. programs
+  xbps: 
+    pkg:
+      - evince
+      - feh
+      - fuse-exfat
+      - gnome-screenshot
+      - gnupg2
+      - google-fonts-ttf
+      - htop
+      - keepassx2
+      - mlocate
+      - mosh
+      - redshift
+      - redshift-gtk
+      - rxvt-unicode
+      - scrot
+      - sl
+      - tcpdump
+      - thunderbird
+      - tmux
+      - tree
+      - urxvt-perls
+      - wine-32bit
+      - wps-office
+      - xclip
+      - xcursor-themes
+      - xscreensaver
+      - xsel
+      - zsh
+    state: present
+    
+- name: Install archive management software
+  xbps:
+    pkg:
+      - dtrx
+      - p7zip
+      - thunar-archive-plugin
+      - unzip
+      - xarchiver
+    state: present
+    
+- name: Copy lightdm scripts
+  copy:
+    src: "{{ item }}"
+    dest: /usr/local/bin/{{ item }}
+    owner: root
+    group: root
+    mode: 0755
+  with_items:
+    - fixScreens
+    - lightdm-setup
+    - lightdm-cleanup
+
+- name: Make Various graphical services use system-auth
+  file:
+    src: /etc/pam.d/system-auth
+    dest: /etc/pam.d/{{ item }}
+    state: link
+    force: yes
+  with_items:
+    - lightdm
+    - cinnamon-screensaver
+    - cinnamon-desktop
+
+- name: Make xbps ignore the system-auth links
+  lineinfile:
+    dest: /etc/xbps.d/preserved-files.conf
+    line: "preserve=/etc/pam.d/{{ item }}"
+    create: yes
+    state: present
+  with_items:
+    - lightdm
+    - cinnamon-screensaver
+    - cinnamon-desktop
+
+- name: Assures that app-default exists
+  file:
+    path: /usr/lib/X11/app-defaults
+    state: directory
+
+- name: Copy xscreensaver app-default config
+  copy:
+    src: XScreenSaver
+    dest: /usr/lib/X11/app-defaults/XScreenSaver
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Copy sudoers file
+  copy:
+    src: cv.sudoers
+    dest: /etc/sudoers.d/cv_local
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Copy change-password
+  copy:
+    src: change_password.py
+    dest: /usr/local/bin/change-password
+    owner: root
+    group: root
+    mode: 0555
+
+- name: Copy custom *.desktop files
+  copy:
+    src: "{{ item }}.desktop"
+    dest: /usr/share/applications/{{ item }}.desktop
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - change-password
+    - fixScreens
+    - fixMimes
+    - pc-client-linux
+    - xscreensaver
+
+- name: Set XDG Autostarts
+  file:
+    src: /usr/share/applications/{{item}}.desktop
+    dest: /etc/xdg/autostart/{{ item }}.desktop
+    state: link
+  with_items:
+    - fixScreens
+    - pc-client-linux
+
+- name: Install change-password dependencies
+  xbps:
+    pkg: python-tkinter
+    state: present
+
+- name: Copy Old Session Killer
+  copy:
+    src: kill-old-users.sh
+    dest: /usr/local/sbin/kill-old-users.sh
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Add Old Session Killer to Crontab
+  copy:
+    src: cleanup
+    dest: /etc/cron.d/cleanup
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Set default mimeapps.list
+  copy:
+    src: mimeapps.list
+    dest: /etc/xdg/mimeapps.list
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Link alternate default mimeapps.list
+  file:
+    src: /etc/xdg/mimeapps.list
+    dest: /usr/share/applications/mimeapps.list
+    state: link
+
+- name: Copy fixMimes
+  copy:
+    src: fixMimes
+    dest: /usr/local/bin/fixMimes
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Enable various services
+  file:
+    src: /etc/sv/{{ item }}
+    dest: /var/service/{{ item }}
+    state: link
+  with_items:
+    - consolekit
+    - cgmanager

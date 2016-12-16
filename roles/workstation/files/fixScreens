@@ -1,0 +1,15 @@
+#!/bin/sh
+
+for i in 1 2; do read -r mon$i x$i y$i; done <<EOF
+$(xrandr | awk '/^Screen /{ next; }; /connected/{ disp=$1; next; }; /+/{ match($0, "[0-9]+x[0-9]+( |*)\+",ret); sub("x", " ", ret[0]); print disp " " ret[0] }' 2>/dev/null)
+EOF
+
+[ -z "$mon2" ] && xrandr --output "$mon1" --auto --primary && exit
+
+if [ "$x1" -gt "$x2" ]; then
+	xrandr --output "$mon1" --auto --primary
+	xrandr --output "$mon2" --auto --right-of "$mon1"
+else
+	xrandr --output "$mon2" --auto --primary
+	xrandr --output "$mon1" --auto --right-of "$mon2"
+fi

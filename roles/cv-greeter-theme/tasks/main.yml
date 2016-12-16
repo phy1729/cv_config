@@ -1,0 +1,46 @@
+---
+- name: Install Greeter Dependencies
+  xbps:
+    pkg:
+      - git-all
+      - ImageMagick
+    state: present
+
+- name: Deploy cv-greeter-theme
+  git:
+    repo: https://github.com/collegiumv/cv_greeter_theme.git
+    dest: /usr/share/lightdm-webkit/themes/cv
+    version: december
+    force: yes
+
+- name: Force mode on theme folder
+  file:
+    path: /usr/share/lightdm-webkit/themes/cv
+    state: directory
+    recurse: yes
+    owner: root
+    group: root
+    mode: ugo+rX
+
+- name: Download assets
+  get_url:
+    url: "{{ item }}"
+    dest: /usr/share/lightdm-webkit/themes/cv/
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - http://code.jquery.com/jquery-2.1.4.min.js
+    - http://upload.wikimedia.org/wikipedia/commons/c/c6/VISTA%27s_infrared_view_of_the_Orion_Nebula.jpg
+
+- name: Scale Wallpaper down
+  command: convert /usr/share/lightdm-webkit/themes/cv/VISTA%27s_infrared_view_of_the_Orion_Nebula.jpg -resize 3000x3000 -rotate 90 /usr/share/lightdm-webkit/themes/cv/wallpaper.jpg
+  args:
+    creates: /usr/share/lightdm-webkit/themes/cv/wallpaper.jpg
+
+- name: Fix Wallpaper Permissions
+  file:
+    path: /usr/share/lightdm-webkit/themes/cv/wallpaper.jpg
+    owner: root
+    group: root
+    mode: 0644

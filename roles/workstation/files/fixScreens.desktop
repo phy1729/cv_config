@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Fix Screen Layout
+Comment=Reset Screen Layout to normal
+GenericName=Screen Layout Script
+Type=Application
+Exec=fixScreens
+Categories=Utility;Application;Preferences;Accessories;
+Icon=network-workgroup

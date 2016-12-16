@@ -1,0 +1,7 @@
+---
+- hosts: workstation:mediaboxen
+  roles:
+    - sshd
+    - netlogon
+    - netdata
+    - workstation

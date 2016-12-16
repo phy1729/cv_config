@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=PaperCut Client Linux
+GenericName=PaperCut Client
+Comment=Display papercut client
+Type=Application
+Exec=/mnt/ydrive/papercut/pc-client-linux.sh

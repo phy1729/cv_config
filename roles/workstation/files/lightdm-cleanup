@@ -1,0 +1,5 @@
+#!/bin/sh
+
+/usr/bin/pkill -u lightdm dbus
+/usr/bin/pkill -u lightdm dbus-launch
+/usr/bin/sv restart lightdm

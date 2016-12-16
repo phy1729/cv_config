@@ -1,0 +1,15 @@
+---
+dependencies:
+  - { role: network }
+  - { role: xbps-mini-repo-config }
+  - { role: xbps-repoconf }
+  - { role: core-programs }
+  - { role: core-daemons }
+  - { role: cups-client }
+  - { role: cv-greeter-theme }
+  - { role: awesome }
+  - { role: bspwm }
+  - { role: cinnamon }
+  - { role: i3 }
+  - { role: lxde }
+  - { role: xfce4 }

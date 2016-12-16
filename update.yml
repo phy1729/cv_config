@@ -1,5 +1,5 @@
 ---
-- hosts: dc:ssh:utility:minecraft:audio:print:mediaboxen:clients
+- hosts: dc:ssh:utility:audio:print:mediaboxen:workstation:kiosk
   become: yes
   tasks:
     - xbps: update_cache=yes upgrade=yes
