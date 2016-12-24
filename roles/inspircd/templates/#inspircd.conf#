@@ -1,3 +1,4 @@
+
 <config format="xml">
 # http://wiki.inspircd.org/Configuration
 <pid file="/var/run/inspircd/inspircd.pid">

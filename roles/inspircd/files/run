@@ -1,9 +1,0 @@
-#!/bin/bash
-
-# hack to wait for the network to come up
-sleep 30
-
-cd /opt/inspircd
-mkdir run
-chown -R irc:irc run
-exec chpst -u irc:irc /opt/inspircd/bin/inspircd --nofork 2>/dev/null

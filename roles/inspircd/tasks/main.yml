@@ -1,35 +1,28 @@
 ---
-- name: Install GNUTLS
-  xbps: pkg=gnutls state=present
+- name: Install InspIRCd
+  xbps:
+    pkg: inspircd
+    state: present
 
 - name: Configure firewall for InspIRCd
-  copy: src=inspircd.rules dest=/etc/iptables.d/inspircd.rules owner=root group=root mode=0640
+  copy:
+    src: inspircd.rules
+    dest: /etc/iptables.d/inspircd.rules
+    owner: root
+    group: root
+    mode: 0640
   notify:
     - iptables
 
-- name: Copy InspIRCd build artifacts
-  copy: src=inspircd-bin/bin dest=/opt/inspircd owner=root group=root mode=0755 directory_mode=0755
-  notify:
-    - inspircd
-
-- name: Copy InspIRCd modules
-  copy: src=inspircd-bin/modules dest=/opt/inspircd owner=root group=root mode=0644 directory_mode=0755
-  notify:
-    - inspircd
-
 - include_vars: secret/inspircd_opers.yml
 
-- name: Create irc group
-  group: name=irc state=present system=yes
-
-- name: Create irc user
-  user: name=irc group=irc state=present system=yes createhome=no
-
-- name: Create configuration directory
-  file: path=/opt/inspircd/conf state=directory owner=root group=irc mode=0750
-
 - name: Configure InspIRCd
-  template: src={{ item }} dest=/opt/inspircd/conf/{{ item }} owner=root group=irc mode=0640
+  template:
+    src: "{{ item }}"
+    dest: /etc/inspircd/{{ item }}
+    owner: root
+    group: inspircd
+    mode: 0640
   with_items:
     - inspircd.conf
     - links.conf
@@ -40,25 +33,29 @@
   notify:
     - inspircd
 
+- name: Configure OpenSSL
+  copy:
+    src: dhparams.pem
+    dest: /etc/inspircd/dhparams.pem
+    owner: root
+    group: root
+    mode: 0644
+
 - name: Copy SSL key and cert
-  copy: src=secret/inspircd_{{ item }} dest=/opt/inspircd/conf/{{ item }} owner=root group=irc mode=0640
+  copy:
+    src: secret/inspircd_{{ item }}
+    dest: /etc/inspircd/{{ item }}
+    owner: root
+    group: inspircd
+    mode: 0640
   with_items:
     - cert.pem
     - key.pem
   notify:
     - inspircd
 
-- name: Make data directory
-  file: path=/opt/inspircd/{{ item }} state=directory owner=irc group=irc mode=0700
-  with_items:
-    - data
-    - logs
-
-- name: Create runit service dir
-  file: path=/etc/sv/inspircd state=directory owner=root group=root mode=0755
-
-- name: Copy runit task
-  copy: src=run dest=/etc/sv/inspircd/run owner=root group=root mode=0755
-
 - name: Enable inspircd runit service
-  file: src=/etc/sv/inspircd dest=/var/service/inspircd state=link
+  file:
+    src: /etc/sv/inspircd
+    dest: /var/service/inspircd
+    state: link

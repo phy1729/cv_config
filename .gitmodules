@@ -1,6 +1,3 @@
-[submodule "roles/inspircd/files/inspircd-bin"]
-	path = roles/inspircd/files/inspircd-bin
-	url = https://github.com/collegiumv/inspircd-bin.git
 [submodule "library/ansible_ldap"]
 	path = library/ansible_ldap
 	url = https://github.com/dinoocch/ansible_ldap.git
