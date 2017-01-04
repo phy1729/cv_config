@@ -10,7 +10,6 @@
   git:
     repo: https://github.com/collegiumv/cv_greeter_theme.git
     dest: /usr/share/lightdm-webkit/themes/cv
-    version: december
     force: yes
 
 - name: Force mode on theme folder
