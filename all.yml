@@ -5,3 +5,5 @@
 - include: utility.yml
 - include: audio.yml
 - include: nas.yml
+- include: printserver.yml
+- include: workstation.yml

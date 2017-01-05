@@ -1,6 +1,7 @@
 ---
 - hosts: ssh
   become: yes
+  become_method: sudo
   roles:
     - network
     - xbps-repoconf

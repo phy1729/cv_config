@@ -1,5 +1,6 @@
 ---
 - hosts: dc:ssh:utility:audio:print:mediaboxen:workstation:kiosk
   become: yes
+  become_method: sudo
   tasks:
     - xbps: update_cache=yes upgrade=yes
