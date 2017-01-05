@@ -1,25 +1,48 @@
 ---
 - name: Install packages
-  xbps: pkg={{ item }} state=present
-  with_items:
-    - autox
-    - feh
-    - xorg
+  xbps:
+    pkg:
+      - autox
+      - feh
+    state: present
 
 - name: Create the kiosk group
-  group: name=kiosk state=present
+  group:
+    name: kiosk
+    state: present
 
 - name: Create a kiosk user
-  user: name=kiosk groups=kiosk,video state=present
+  user:
+    name: kiosk
+    groups: kiosk,video
+    state: present
 
 - name: Install xinitrc
-  copy: src=xinitrc dest=/home/kiosk/.xinitrc owner=kiosk group=kiosk mode=0750
+  copy:
+    src: xinitrc
+    dest: /home/kiosk/.xinitrc
+    owner: kiosk
+    group: kiosk
+    mode: 0750
 
 - name: Ensure announcements path exists
-  file: path=/opt/announcements state=directory owner=kiosk group=kiosk mode=0755
+  file:
+    path: /opt/announcements
+    state: directory
+    owner: kiosk
+    group: kiosk
+    mode: 0755
 
 - name: Configure autox
-  copy: src=conf dest=/etc/sv/autox/conf owner=root group=root mode=0755
+  copy:
+    src: conf
+    dest: /etc/sv/autox/conf
+    owner: root
+    group: root
+    mode: 0755
 
 - name: Enable autox
-  file: src=/etc/sv/autox dest=/var/service/autox state=link owner=root group=root mode=0755
+  file:
+    src: /etc/sv/autox
+    dest: /var/service/autox
+    state: link
