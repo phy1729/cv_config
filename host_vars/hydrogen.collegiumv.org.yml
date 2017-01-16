@@ -5,4 +5,3 @@ internal_ip: 192.168.42.1
 peer_internal_ip: 192.168.42.2
 pf_ip: 172.16.0.1
 advskew: 10
-dhcpd_range: 192.168.42.128 192.168.42.191

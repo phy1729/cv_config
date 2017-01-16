@@ -1,55 +1,117 @@
 ---
 - name: Copy hostname files
-  template: src={{ item }} dest=/etc/ owner=root group=wheel mode=0640
+  template:
+    src: "{{ item }}"
+    dest: /etc/
+    owner: root
+    group: wheel
+    mode: 0640
   with_items:
-  - etc/hostname.carp0
-  - etc/hostname.carp1
-  - etc/hostname.carp2
-  - etc/hostname.em0
-  - etc/hostname.em1
-  - etc/hostname.em4
-  - etc/hostname.pfsync0
+    - etc/hostname.carp0
+    - etc/hostname.carp1
+    - etc/hostname.carp2
+    - etc/hostname.em0
+    - etc/hostname.em1
+    - etc/hostname.em4
+    - etc/hostname.pfsync0
   notify:
-  - netstart
+    - netstart
+
 - name: Copy mygate file
-  copy: src=etc/mygate dest=/etc/mygate owner=root group=wheel mode=0640
+  copy:
+    src: etc/mygate
+    dest: /etc/mygate
+    owner: root
+    group: wheel
+    mode: 0640
   notify:
-  - netstart
+    - netstart
+
 - name: Copy firewall
-  copy: src=etc/pf.conf dest=/etc/pf.conf owner=root group=wheel mode=0600
+  copy:
+    src: etc/pf.conf
+    dest: /etc/pf.conf
+    owner: root
+    group: wheel
+    mode: 0600
   notify:
-  - pf
+    - pf
+
 - name: Copy dhcpd config
-  template: src=etc/dhcpd.conf dest=/etc/dhcpd.conf owner=root group=wheel mode=0644
+  copy:
+    src: etc/dhcpd.conf
+    dest: /etc/dhcpd.conf
+    owner: root
+    group: wheel
+    mode: 0644
   notify:
-  -  dhcpd
+    - dhcpd
+
 - name: Copy ntpd config
-  template: src=etc/ntpd.conf dest=/etc/ntpd.conf owner=root group=wheel mode=0644
+  template:
+    src: etc/ntpd.conf
+    dest: /etc/ntpd.conf
+    owner: root
+    group: wheel
+    mode: 0644
   notify:
-  - ntpd
+    - ntpd
+
 - name: Copy common config
-  copy: src={{ item }} dest=/{{ item }} owner=root group=wheel mode=0644
+  copy:
+    src: "{{ item }}"
+    dest: /{{ item }}
+    owner: root
+    group: wheel
+    mode: 0644
   with_items:
-  - etc/hosts
-  - etc/pkg.conf
-  - etc/rc.conf.local
-  - etc/rc.local
-  - etc/rc.securelevel
-  - etc/resolv.conf.boot
-  - etc/resolv.conf.final
-  - etc/sysctl.conf
+    - etc/hosts
+    - etc/pkg.conf
+    - etc/rc.local
+    - etc/rc.securelevel
+    - etc/resolv.conf.boot
+    - etc/resolv.conf.final
+    - etc/sysctl.conf
+
+- name: Configure rc.conf.local
+  template:
+    src: etc/rc.conf.local
+    dest: /etc/rc.conf.local
+    owner: root
+    group: wheel
+    mode: 0644
+
 - name: Copy nsd config
-  copy: src=var/nsd/etc/nsd.conf dest=/var/nsd/etc/nsd.conf owner=root group=_nsd mode=0640 validate='nsd-checkconf %s'
+  copy:
+    src: var/nsd/etc/nsd.conf
+    dest: /var/nsd/etc/nsd.conf
+    owner: root
+    group: _nsd
+    mode: 0640
+    validate: 'nsd-checkconf %s'
   notify:
-  - nsd
+    - nsd
+
 - name: Add master zones
-  copy: src=var/nsd/zones/{{ item }} dest=/var/nsd/zones/{{ item }} owner=root group=wheel mode=0644
+  copy:
+    src: var/nsd/zones/{{ item }}
+    dest: /var/nsd/zones/{{ item }}
+    owner: root
+    group: wheel
+    mode: 0644
   with_items:
-  - collegiumv.org
-  - 42.168.192.in-addr.arpa
+    - collegiumv.org
+    - 42.168.192.in-addr.arpa
   notify:
-  - nsd
+    - nsd
+
 - name: Copy unbound config
-  template: src=var/unbound/etc/unbound.conf dest=/var/unbound/etc/unbound.conf owner=root group=wheel mode=0644 validate='unbound-checkconf /var/unbound/../../%s'
+  template:
+    src: var/unbound/etc/unbound.conf
+    dest: /var/unbound/etc/unbound.conf
+    owner: root
+    group: wheel
+    mode: 0644
+    validate: 'unbound-checkconf /var/unbound/../../%s'
   notify:
-  - unbound
+    - unbound

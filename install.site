@@ -23,7 +23,6 @@ case "$name" in
 		pf_ip="172.16.0.1"
 		other_int_ip="192.168.42.2"
 		advskew="10"
-		dhcpd_range="192.168.42.128 192.168.42.191"
 		;;
 	helium)
 		int_ip="192.168.42.2"
@@ -31,11 +30,10 @@ case "$name" in
 		pf_ip="172.16.0.2"
 		other_int_ip="192.168.42.1"
 		advskew="20"
-		dhcpd_range="192.168.42.192 192.168.42.254"
 		;;
 esac
 
-for file in /etc/dhcpd.conf /etc/hostname.* /etc/ntpd.conf /var/unbound/etc/unbound.conf; do
+for file in /etc/rc.conf.local /etc/hostname.* /etc/ntpd.conf /var/unbound/etc/unbound.conf; do
 	temp=$(<$file)
 	temp=$( echo "$temp" | sed "s/{{ name }}/$name/" )
 	temp=$( echo "$temp" | sed "s/{{ internal_ip }}/$int_ip/" )
@@ -43,7 +41,6 @@ for file in /etc/dhcpd.conf /etc/hostname.* /etc/ntpd.conf /var/unbound/etc/unbo
 	temp=$( echo "$temp" | sed "s/{{ pf_ip }}/$pf_ip/" )
 	temp=$( echo "$temp" | sed "s/{{ peer_internal_ip }}/$other_int_ip/" )
 	temp=$( echo "$temp" | sed "s/{{ advskew }}/$advskew/" )
-	temp=$( echo "$temp" | sed "s/{{ dhcpd_range }}/$dhcpd_range/" )
 	echo "$temp" > $file
 done
 

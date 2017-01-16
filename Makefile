@@ -26,10 +26,10 @@ WHEEL_G = 0
 NSD_G = 97
 
 # -rw-r--r--
-BIN1=	templates/etc/dhcpd.conf \
-	templates/etc/ntpd.conf \
+BIN1=	templates/etc/ntpd.conf \
+	templates/etc/rc.conf.local \
+	files/etc/dhcpd.conf \
 	files/etc/pkg.conf \
-	files/etc/rc.conf.local \
 	files/etc/rc.local \
 	files/etc/rc.securelevel \
 	files/etc/resolv.conf.boot \
