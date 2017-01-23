@@ -3,7 +3,6 @@
 SECRETS_DIR = secret
 
 SECRET_TARGETS = ${PLAIN_SECRETS} \
-	icinga_cvadmin_password \
 	inspircd_cert \
 	inspircd_inspircd_power_diepass inspircd_inspircd_power_restartpass inspircd_opers \
 	paper_cert
@@ -98,10 +97,6 @@ inspircd_inspircd_power_restartpass:
 
 inspircd_opers:
 	./inspircd_opers > ${SECRETS_DIR}/inspircd_opers.yml
-
-icinga_cvadmin_password:
-	@echo "Icinga admin password"
-	@openssl passwd -1 > ${SECRETS_DIR}/icinga_cvadmin_password
 
 paper_cert:
 	${MAKE} role=papercut fqdn=paper.collegiumv.org certreq
